@@ -2,7 +2,9 @@
 
 **Date**: 2026-02-26
 **Format**: ~5 minute presentation + live demo
+**By**: Akshay Gupta & Kailash Yogeshwar
 **Audience**: SeekOut leadership & engineering
+
 
 ---
 
