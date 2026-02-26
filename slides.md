@@ -6,14 +6,6 @@
 
 ---
 
-## Slide 0: Title
-
-**JobPilot**
-
-Kailash Yogeshwar & Akshay Gupta
-
----
-
 ## Slide 1: The Moat Has Shifted
 
 **Key message**: Software moats are commoditizing. The moat is now users and networks.
@@ -51,21 +43,21 @@ Kailash Yogeshwar & Akshay Gupta
 
 ## Slide 4: This Is a Validated Market
 
-**Key message**: You don't need to guess whether people want this solved — they already do. Six Chrome extensions competing for the same use case.
+**Key message**: You don't need to guess whether people want this solved — they already do.
 
-| Extension | Chrome Users | Rating | Reviews |
-|-----------|-------------|--------|---------|
-| **Simplify Copilot** | 500,000 | 4.9 ★ | 3,500 |
-| **Teal** | 200,000 | 4.9 ★ | 3,100 |
-| **Careerflow** | 200,000 | 4.4 ★ | 283 |
-| **JobFill (Autofill Smartly)** | 20,000 | 4.3 ★ | 113 |
-| **LazyApply** | 20,000 | 3.0 ★ | 174 |
+| | Simplify | Jobright | Teal |
+|--|----------|----------|------|
+| **Users** | 1M+ job seekers, 400K Chrome installs | 520K+ users | 85K+ users |
+| **Growth** | 100M+ applications filled | 30x YoY | Series A (Jan 2025) |
+| **Funding** | $4.35M (YC W21, Craft Ventures) | $3.2M (backed by Indeed's venture arm) | $19M total |
+| **Revenue** | ~$4.2M estimated | Profitable | Freemium, $9/wk premium |
+| **Team** | ~10 employees | Small team | Small team |
 
-**Combined Chrome installs: ~940K users** across these 5 extensions.
+**Also in the space**: LazyApply (~50K downloads), Sonara (shut down, acquired by BOLD)
 
 **Market size**: AI recruitment tools market $1.78B (2024) → $7.12B by 2033 (17.4% CAGR). AI usage for resumes/cover letters more than doubled from Feb 2024 to Jan 2025.
 
-**Bottom line**: Small teams, modest funding, nearly 1M Chrome extension users. The demand is overwhelming.
+**Bottom line**: Small teams, modest funding, already millions of users and real revenue. The demand is overwhelming.
 
 ---
 
@@ -158,33 +150,40 @@ More reasons to use the extension
 
 ---
 
-## Appendix: Competitor Chrome Extensions
+## Appendix: Competitor Deep Dive
 
-### Simplify Copilot — 500,000 Chrome users
-- **Rating**: 4.9 stars, 3,500 reviews
-- **Funding**: $4.35M (YC W21, Craft Ventures) · Valuation: $20M
-- **Revenue**: ~$4.2M estimated · ~10 employees
+### Simplify Copilot
+- **Users**: 400K+ Chrome users, 1M+ job seekers globally, 100M+ applications
+- **Funding**: $4.35M across 3 seed rounds (Craft Ventures, Y Combinator W21)
+- **Revenue**: ~$4.2M estimated
+- **Valuation**: $20M (as of Sept 2022)
+- **Rating**: 4.86 stars, ~2,800 reviews
+- **Team**: ~10 employees
 - **What they do**: Autofill job applications, job tracker, AI resumes
-- 1M+ job seekers globally, 100M+ applications filled
 
-### Teal — 200,000 Chrome users
-- **Rating**: 4.9 stars, 3,100 reviews · Chrome Web Store Favorite 2023
+### Jobright
+- **Users**: 520K+ professionals, 30x YoY growth
+- **Funding**: $3.2M (June 2025, led by Translink Capital, backed by Indeed)
+- **Revenue**: Profitable
+- **What they do**: AI career agent that auto-finds, customizes, and submits applications
+- **Claim**: Cuts job search time by 80%, doubles interview rates
+
+### Teal
+- **Users**: 85K+ job seekers
 - **Funding**: $19M total (Series A, Jan 2025, CityLight Capital + Flybridge)
 - **Revenue**: Freemium model, Teal+ at $9/wk or $29/mo or $79/3mo
-- **What they do**: Job tracker, AI resume builder, bookmarks from 40+ job boards
+- **What they do**: AI resume builder, job tracker, interview coach, Chrome extension
 
-### Careerflow — 200,000 Chrome users
-- **Rating**: 4.4 stars, 283 reviews
-- **What they do**: Job application tracker, ATS resume checker, autofill, LinkedIn optimization
-
-### JobFill (Autofill Smartly) — 20,000 Chrome users
-- **Rating**: 4.3 stars, 113 reviews
-- **What they do**: Smart autofill for any form, custom rules, auto-capture, AI job description summarization, resume tailoring
-
-### LazyApply — 20,000 Chrome users
-- **Rating**: 3.0 stars, 174 reviews (poor)
+### LazyApply
+- **Users**: ~50K downloads
 - **Pricing**: $99-$999/year
+- **Rating**: 1.9-2.5 stars on Trustpilot (poor)
 - **Issues**: Users report LinkedIn accounts flagged, inaccurate submissions
+
+### Sonara (Defunct)
+- **Peak traffic**: 290K monthly visits
+- **Status**: Shut down Feb 2024, acquired by BOLD (parent of LiveCareer, Zety)
+- **Pricing was**: $20-$80/month
 
 ### Market Data
 - AI recruitment tools market: $1.78B (2024) → $7.12B by 2033 (17.4% CAGR)
