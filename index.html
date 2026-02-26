@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobPilot — Hackathon Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+  <style>
+    :root {
+      --seekout-blue: #4A90D9;
+      --seekout-teal: #2DD4BF;
+      --accent-purple: #A78BFA;
+      --accent-orange: #FB923C;
+      --bg-dark: #0f172a;
+      --bg-card: rgba(255, 255, 255, 0.05);
+      --text-muted: #94a3b8;
+    }
+
+    .reveal {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 32px;
+      color: #e2e8f0;
+    }
+
+    .reveal .slides {
+      text-align: left;
+    }
+
+    .reveal .slides section {
+      padding: 40px 60px;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: -0.02em;
+      color: #f1f5f9;
+    }
+
+    .reveal h1 {
+      font-size: 2.4em;
+      line-height: 1.1;
+    }
+
+    .reveal h2 {
+      font-size: 1.6em;
+      margin-bottom: 0.6em;
+      line-height: 1.2;
+    }
+
+    .reveal h3 {
+      font-size: 1.1em;
+      color: var(--seekout-teal);
+      margin-bottom: 0.4em;
+    }
+
+    .reveal p, .reveal li {
+      font-size: 0.72em;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    .reveal ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .reveal ul li {
+      position: relative;
+      padding-left: 1.4em;
+      margin-bottom: 0.5em;
+    }
+
+    .reveal ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--seekout-teal);
+      font-weight: 600;
+    }
+
+    .reveal .highlight {
+      color: var(--seekout-teal);
+      font-weight: 600;
+    }
+
+    .reveal .highlight-blue {
+      color: var(--seekout-blue);
+      font-weight: 600;
+    }
+
+    .reveal .highlight-purple {
+      color: var(--accent-purple);
+      font-weight: 600;
+    }
+
+    .reveal .subtitle {
+      font-size: 0.65em;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 0.3em;
+    }
+
+    .reveal .key-message {
+      font-size: 0.8em;
+      color: var(--seekout-teal);
+      font-weight: 500;
+      font-style: italic;
+      margin-bottom: 1em;
+      padding-left: 1em;
+      border-left: 3px solid var(--seekout-teal);
+    }
+
+    .reveal .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 1em;
+    }
+
+    .reveal .stat-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .reveal .stat-card .stat-value {
+      font-size: 1.4em;
+      font-weight: 800;
+      color: var(--seekout-teal);
+      display: block;
+    }
+
+    .reveal .stat-card .stat-label {
+      font-size: 0.55em;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 4px;
+    }
+
+    .reveal table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.55em;
+      margin-top: 0.8em;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .reveal table th {
+      background: rgba(74, 144, 217, 0.2);
+      color: var(--seekout-blue);
+      font-weight: 600;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .reveal table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+
+    .reveal table tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .reveal .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 1em;
+    }
+
+    .reveal .comparison-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .reveal .comparison-card.bad {
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .reveal .comparison-card.good {
+      border-color: rgba(45, 212, 191, 0.3);
+    }
+
+    .reveal .comparison-card .card-label {
+      font-size: 0.55em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5em;
+      display: block;
+    }
+
+    .reveal .comparison-card.bad .card-label {
+      color: #ef4444;
+    }
+
+    .reveal .comparison-card.good .card-label {
+      color: var(--seekout-teal);
+    }
+
+    .reveal .comparison-card p {
+      font-size: 0.6em;
+      line-height: 1.5;
+    }
+
+    .reveal .flywheel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 0.8em;
+    }
+
+    .reveal .flywheel-step {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 10px 28px;
+      font-size: 0.6em;
+      color: #e2e8f0;
+      text-align: center;
+      width: 80%;
+    }
+
+    .reveal .flywheel-arrow {
+      font-size: 0.7em;
+      color: var(--seekout-teal);
+    }
+
+    .reveal .flywheel-step:first-child {
+      border-color: var(--seekout-teal);
+      background: rgba(45, 212, 191, 0.08);
+    }
+
+    .reveal .demo-steps {
+      counter-reset: step;
+      padding-left: 0;
+    }
+
+    .reveal .demo-steps li {
+      padding-left: 2.2em;
+      margin-bottom: 0.5em;
+    }
+
+    .reveal .demo-steps li::before {
+      content: counter(step);
+      counter-increment: step;
+      background: var(--seekout-teal);
+      color: var(--bg-dark);
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.75em;
+    }
+
+    .reveal .bottom-line {
+      background: rgba(45, 212, 191, 0.08);
+      border: 1px solid rgba(45, 212, 191, 0.2);
+      border-radius: 8px;
+      padding: 14px 20px;
+      margin-top: 1em;
+      font-size: 0.65em;
+      color: var(--seekout-teal);
+      font-weight: 500;
+    }
+
+    .reveal .title-slide h1 {
+      font-size: 2.8em;
+      background: linear-gradient(135deg, #f1f5f9, var(--seekout-teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .reveal .title-slide .meta {
+      font-size: 0.55em;
+      color: var(--text-muted);
+      margin-top: 1.5em;
+    }
+
+    .reveal .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 0.8em;
+    }
+
+    .reveal .col-section {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .reveal .market-footer {
+      font-size: 0.52em;
+      color: var(--text-muted);
+      margin-top: 0.8em;
+      text-align: center;
+    }
+
+    .reveal .appendix-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 0.6em;
+    }
+
+    .reveal .appendix-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .reveal .appendix-card h3 {
+      font-size: 0.75em;
+      margin-bottom: 0.4em;
+    }
+
+    .reveal .appendix-card p,
+    .reveal .appendix-card li {
+      font-size: 0.5em;
+      margin-bottom: 0.2em;
+    }
+
+    .reveal .section-number {
+      font-size: 4em;
+      font-weight: 800;
+      color: rgba(45, 212, 191, 0.1);
+      position: absolute;
+      top: 20px;
+      right: 60px;
+      line-height: 1;
+    }
+
+    .reveal .badge {
+      display: inline-block;
+      background: rgba(45, 212, 191, 0.15);
+      color: var(--seekout-teal);
+      font-size: 0.5em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      margin-bottom: 0.5em;
+    }
+
+    .reveal .pain-stat {
+      display: inline-block;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 0.6em;
+      font-weight: 600;
+      margin: 4px;
+    }
+
+    .reveal .seekout-link {
+      font-family: 'Inter', monospace;
+      background: rgba(74, 144, 217, 0.1);
+      border: 1px solid rgba(74, 144, 217, 0.3);
+      border-radius: 6px;
+      padding: 4px 12px;
+      color: var(--seekout-blue);
+      font-size: 0.65em;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- TITLE SLIDE -->
+      <section class="title-slide" data-background-color="#0f172a">
+        <div class="badge">HACKATHON DEMO</div>
+        <h1>Job Application<br>Extension</h1>
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 0.5em;">Turning job applications into a prospect acquisition engine for Helix</p>
+        <div class="meta">
+          <p>SeekOut Leadership & Engineering &nbsp;|&nbsp; February 26, 2026 &nbsp;|&nbsp; ~5 min + live demo</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 1: The Moat Has Shifted -->
+      <section data-background-color="#0f172a">
+        <div class="section-number">01</div>
+        <h2>The Moat Has Shifted</h2>
+        <p class="key-message">Software moats are commoditizing. The moat is now users and networks.</p>
+        <ul>
+          <li>LLMs mean anyone can build features overnight — <span class="highlight">software alone is no longer defensible</span></li>
+          <li>The moat is now <em>users and networks</em> — who has the people, the data, the engagement loop</li>
+          <li>That's why LinkedIn is worth <span class="highlight-blue">$26B</span> to Microsoft — it's the network, not the software</li>
+          <li>That's the thesis behind <span class="highlight">Helix</span></li>
+        </ul>
+      </section>
+
+      <!-- SLIDE 2: Helix Needs Prospects -->
+      <section data-background-color="#0f172a">
+        <div class="section-number">02</div>
+        <h2>Helix Needs Prospects — What's the Hook?</h2>
+        <p class="key-message">The hardest side to bootstrap is always supply. We need a reason for job seekers to come to SeekOut.</p>
+        <ul>
+          <li>Helix is a <span class="highlight">3-sided marketplace</span>: prospects, recruiters, hiring managers</li>
+          <li>The hardest side to bootstrap is always the <em>supply side</em> — the prospects</li>
+          <li>You need a reason for job seekers to come to SeekOut and create a profile</li>
+          <li>What's a pain point so acute that <span class="highlight">millions of people</span> will install a tool for it?</li>
+        </ul>
+      </section>
+
+      <!-- SLIDE 3: The Pain -->
+      <section data-background-color="#0f172a">
+        <div class="section-number">03</div>
+        <h2>The Pain — Applying to Jobs Today</h2>
+        <p class="key-message">The real time sink is custom questions, not name/email fields.</p>
+        <div style="margin: 0.6em 0;">
+          <span class="pain-stat">15-30 min per application</span>
+          <span class="pain-stat">5-8 custom questions per form</span>
+        </div>
+        <ul>
+          <li>Browser autofill handles name & email but <span class="highlight" style="color: #fca5a5;">can't touch open-ended questions</span></li>
+          <li>Most candidates today copy questions into ChatGPT → get mediocre, generic answers → paste back</li>
+          <li>This is what <span class="highlight">millions of people</span> do <em>today</em></li>
+        </ul>
+      </section>
+
+      <!-- SLIDE 4: Validated Market -->
+      <section data-background-color="#0f172a">
+        <div class="section-number">04</div>
+        <h2>This Is a Validated Market</h2>
+        <p class="key-message">You don't need to guess whether people want this solved — they already do.</p>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Simplify</th>
+              <th>Jobright</th>
+              <th>Teal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Users</strong></td>
+              <td>1M+ job seekers, 400K Chrome installs</td>
+              <td>520K+ users</td>
+              <td>85K+ users</td>
+            </tr>
+            <tr>
+              <td><strong>Growth</strong></td>
+              <td>100M+ applications filled</td>
+              <td>30x YoY</td>
+              <td>Series A (Jan 2025)</td>
+            </tr>
+            <tr>
+              <td><strong>Funding</strong></td>
+              <td>$4.35M (YC W21)</td>
+              <td>$3.2M (Indeed-backed)</td>
+              <td>$19M total</td>
+            </tr>
+            <tr>
+              <td><strong>Revenue</strong></td>
+              <td>~$4.2M estimated</td>
+              <td>Profitable</td>
+              <td>Freemium, $9/wk</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="bottom-line">
+          Small teams, modest funding, already millions of users and real revenue. The demand is overwhelming.
+        </div>
+        <p class="market-footer">AI recruitment tools: $1.78B (2024) → $7.12B by 2033 (17.4% CAGR)</p>
+      </section>
+
+      <!-- SLIDE 5: Demo -->
+      <section data-background-color="#0f172a">
+        <div class="section-number">05</div>
+        <h2>Demo</h2>
+        <p class="key-message">Live demo on a real Greenhouse job application page.</p>
+        <ul class="demo-steps">
+          <li>Open a real Greenhouse application (e.g., Anthropic, Discord)</li>
+          <li>Extension detects the page → floating nudge with question count</li>
+          <li>Click <span class="highlight">"Auto-fill Application"</span></li>
+          <li>Side panel opens — real-time streaming progress</li>
+          <li>Standard fields (name, email, phone) fill instantly</li>
+          <li>Custom questions fill one-by-one with AI-generated, role-specific answers</li>
+          <li>Each field highlights as it fills — the <span class="highlight">"magic" moment</span></li>
+          <li>Done in <span class="highlight">~30 seconds</span></li>
+        </ul>
+        <div class="bottom-line" style="text-align: center;">Let the demo speak. Keep narration minimal.</div>
+      </section>
+
+      <!-- SLIDE 6: Why We Can Do This Better -->
+      <section data-background-color="#0f172a">
+        <div class="section-number">06</div>
+        <h2>Why We Can Do This Better</h2>
+        <p class="key-message">Two things competitors don't have.</p>
+        <div class="two-col">
+          <div class="col-section">
+            <h3>1. LLM-Grade Tailoring</h3>
+            <p style="font-size: 0.6em; color: #94a3b8; margin-bottom: 0.6em;">Not keyword matching — real AI understanding.</p>
+            <div class="comparison-grid" style="grid-template-columns: 1fr; gap: 10px;">
+              <div class="comparison-card bad" style="padding: 14px;">
+                <span class="card-label">Competitors</span>
+                <p>Generic template with company name swapped in</p>
+              </div>
+              <div class="comparison-card good" style="padding: 14px;">
+                <span class="card-label">Us</span>
+                <p>References specific JD details, connects to relevant experience, tailored to company mission</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-section">
+            <h3>2. Trackable Profile Link</h3>
+            <p style="font-size: 0.6em; color: #94a3b8; margin-bottom: 0.6em;">A tailored <span class="seekout-link">seekout.ai/username</span> embedded in every application.</p>
+            <ul>
+              <li>Was my application opened?</li>
+              <li>Who viewed it?</li>
+              <li>How long did they spend?</li>
+            </ul>
+            <div class="bottom-line" style="margin-top: 0.6em; font-size: 0.55em;">No competitor does this.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: The Flywheel -->
+      <section data-background-color="#0f172a">
+        <div class="section-number">07</div>
+        <h2>How This Feeds Helix</h2>
+        <p class="key-message">A prospect acquisition engine disguised as a productivity tool.</p>
+        <div class="flywheel">
+          <div class="flywheel-step">Install extension → Create <strong>SeekOut.ai profile</strong></div>
+          <div class="flywheel-arrow">↓</div>
+          <div class="flywheel-step">Apply to jobs (with <strong>trackable profile link</strong>)</div>
+          <div class="flywheel-arrow">↓</div>
+          <div class="flywheel-step">Candidate gets <strong>traction analytics</strong> (views, visitors)</div>
+          <div class="flywheel-arrow">↓</div>
+          <div class="flywheel-step">HMs/recruiters view beautiful profile → <strong>some sign up</strong></div>
+          <div class="flywheel-arrow">↓</div>
+          <div class="flywheel-step">More profiles = more value for recruiters = <strong>more jobs</strong></div>
+          <div class="flywheel-arrow">↓</div>
+          <div class="flywheel-step">More reasons to use the extension → <strong style="color: var(--seekout-teal);">FLYWHEEL</strong></div>
+        </div>
+        <div class="bottom-line" style="text-align: center; margin-top: 0.8em;">
+          Every application = a new node in the Helix network.
+        </div>
+      </section>
+
+      <!-- SLIDE 8: Vision -->
+      <section data-background-color="#0f172a">
+        <div class="section-number">08</div>
+        <h2>Vision</h2>
+        <p class="key-message">This is an experiment to test whether the flywheel works. If it does, it's our prospect onramp for Helix.</p>
+        <div style="display: flex; gap: 16px; margin-top: 1em;">
+          <div class="col-section" style="flex: 1; text-align: center;">
+            <h3 style="font-size: 0.65em;">Phase 1</h3>
+            <p style="font-size: 0.58em;">Chrome extension<br>Auto-fill applications<br>Profile creation</p>
+          </div>
+          <div style="display: flex; align-items: center; color: var(--seekout-teal); font-size: 1.2em;">→</div>
+          <div class="col-section" style="flex: 1; text-align: center;">
+            <h3 style="font-size: 0.65em;">Phase 2</h3>
+            <p style="font-size: 0.58em;">Trackable profile links<br>Traction analytics<br>Recruiter views</p>
+          </div>
+          <div style="display: flex; align-items: center; color: var(--seekout-teal); font-size: 1.2em;">→</div>
+          <div class="col-section" style="flex: 1; text-align: center;">
+            <h3 style="font-size: 0.65em;">Phase 3</h3>
+            <p style="font-size: 0.58em;">Full Helix integration<br>Recruiter marketplace<br>Network effects</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- APPENDIX: Competitor Deep Dive -->
+      <section data-background-color="#0f172a">
+        <h2 style="font-size: 1.2em;">Appendix: Competitor Deep Dive</h2>
+        <div class="appendix-grid">
+          <div class="appendix-card">
+            <h3>Simplify Copilot</h3>
+            <ul>
+              <li>400K+ Chrome users, 1M+ job seekers, 100M+ applications</li>
+              <li>$4.35M funding (YC W21, Craft Ventures)</li>
+              <li>~$4.2M revenue, $20M valuation</li>
+              <li>4.86 stars, ~2,800 reviews</li>
+            </ul>
+          </div>
+          <div class="appendix-card">
+            <h3>Jobright</h3>
+            <ul>
+              <li>520K+ users, 30x YoY growth</li>
+              <li>$3.2M funding (Indeed-backed)</li>
+              <li>Profitable</li>
+              <li>Claims 80% faster job search, 2x interview rates</li>
+            </ul>
+          </div>
+          <div class="appendix-card">
+            <h3>Teal</h3>
+            <ul>
+              <li>85K+ job seekers</li>
+              <li>$19M total funding (Series A, Jan 2025)</li>
+              <li>Freemium: $9/wk or $29/mo or $79/3mo</li>
+              <li>AI resume builder, job tracker, interview coach</li>
+            </ul>
+          </div>
+          <div class="appendix-card">
+            <h3>LazyApply & Sonara</h3>
+            <ul>
+              <li>LazyApply: ~50K downloads, 1.9-2.5 stars (poor)</li>
+              <li>Sonara: shut down Feb 2024, acquired by BOLD</li>
+              <li style="margin-top: 8px; color: var(--seekout-teal); font-weight: 500;">Market: $1.78B → $7.12B by 2033</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      width: 1280,
+      height: 720,
+      margin: 0.04,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      center: true,
+      controls: true,
+      progress: true,
+      history: true,
+    });
+  </script>
+</body>
+</html>
