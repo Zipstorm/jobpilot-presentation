@@ -13,7 +13,6 @@
 - LLMs mean anyone can build features overnight — software alone is no longer defensible
 - The moat is now *users and networks* — who has the people, the data, the engagement loop
 - That's why LinkedIn is worth $26B to Microsoft — it's the network, not the software
-- That's the thesis behind Helix
 
 ---
 
@@ -21,7 +20,7 @@
 
 **Key message**: The hardest side to bootstrap is always supply. We need a reason for job seekers to come to SeekOut.
 
-- Helix is a 3-sided marketplace: prospects, recruiters, hiring managers
+- Helix is a 3-sided network: prospects, recruiters, hiring managers
 - The hardest side to bootstrap is always the *supply side* — the prospects
 - You need a reason for job seekers to come to SeekOut and create a profile
 - What's a pain point so acute that millions of people will install a tool for it?
@@ -144,11 +143,10 @@ More reasons to use the extension
 
 ## Slide 8: Vision (TBD)
 
-*To be decided — options:*
-- Phase 1 / Phase 2 / Phase 3 roadmap
+- Phase 1 / Phase 2
+- Phase 1 - Integrate with Helix, Auto-create tailored profile website, Build auto-fill for other ATS job pages 
+- Phase 2 - Tailored Resumes
 - Simple closing statement
-- "What we'd build next" list
-- Leave out entirely
 
 ---
 
