@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helix Metrics — Light</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <style>
+    :root {
+      --seekout-blue: #4A90D9;
+      --seekout-teal: #2DD4BF;
+      --accent-purple: #A78BFA;
+      --accent-orange: #FB923C;
+      --bg-dark: #0f172a;
+      --bg-card: rgba(255, 255, 255, 0.05);
+      --text-muted: #94a3b8;
+    }
+
+    .reveal {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 32px;
+      color: #e2e8f0;
+    }
+
+    .reveal .slides { text-align: left; }
+    .reveal .slides section { padding: 40px 60px; }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: -0.02em;
+      color: #f1f5f9;
+    }
+
+    .reveal h1 { font-size: 2.4em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.6em; margin-bottom: 0.6em; line-height: 1.2; }
+    .reveal h3 { font-size: 1.1em; color: var(--seekout-teal); margin-bottom: 0.4em; }
+
+    .reveal p, .reveal li {
+      font-size: 0.72em;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    .reveal ul { list-style: none; padding-left: 0; }
+
+    .reveal ul li {
+      position: relative;
+      padding-left: 1.4em;
+      margin-bottom: 0.5em;
+    }
+
+    .reveal ul li::before {
+      content: '\2192';
+      position: absolute;
+      left: 0;
+      color: var(--seekout-teal);
+      font-weight: 600;
+    }
+
+    .reveal .highlight { color: var(--seekout-teal); font-weight: 600; }
+    .reveal .highlight-blue { color: var(--seekout-blue); font-weight: 600; }
+
+    .reveal .title-slide h1 {
+      font-size: 2.8em;
+      background: linear-gradient(135deg, #f1f5f9, var(--seekout-teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .reveal .title-slide .meta {
+      font-size: 0.55em;
+      color: var(--text-muted);
+      margin-top: 1.5em;
+    }
+
+    .reveal table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.55em;
+      margin-top: 0.8em;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .reveal table th {
+      background: rgba(74, 144, 217, 0.2);
+      color: var(--seekout-blue);
+      font-weight: 600;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .reveal table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+
+    .reveal table tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .reveal .key-message {
+      font-size: 0.8em;
+      color: var(--seekout-teal);
+      font-weight: 500;
+      font-style: italic;
+      margin-bottom: 1em;
+      padding-left: 1em;
+      border-left: 3px solid var(--seekout-teal);
+    }
+
+    .reveal .badge {
+      display: inline-block;
+      background: rgba(45, 212, 191, 0.15);
+      color: var(--seekout-teal);
+      font-size: 0.5em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      margin-bottom: 0.5em;
+    }
+
+    .reveal .act-break {
+      text-align: center;
+    }
+
+    .reveal .act-break h2 {
+      font-size: 2em;
+      background: linear-gradient(135deg, #f1f5f9, var(--seekout-teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .reveal .mermaid {
+      margin: 0.8em auto;
+    }
+
+    .reveal .mermaid svg {
+      max-height: 500px;
+    }
+
+    .reveal .network-img {
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-height: 340px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      display: block;
+      margin: 0.6em auto;
+    }
+
+    .reveal .formula-block {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px 24px;
+      margin: 0.8em 0;
+      text-align: center;
+      font-size: 0.9em;
+    }
+
+    .reveal .katex { color: #e2e8f0; }
+    .reveal .katex .mord.text { color: #cbd5e1; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- TITLE -->
+      <section class="title-slide" data-background-color="#0f172a">
+        <div class="badge">LIGHT VERSION &mdash; KEY FORMULAS</div>
+        <h1>Helix Metrics</h1>
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 0.5em;">How We Measure and Grow a Network</p>
+        <div class="meta">
+          <p><strong style="color: #e2e8f0;">Akshay Gupta</strong></p>
+        </div>
+      </section>
+
+      <!-- Helix is a network -->
+      <section data-background-color="#0f172a">
+        <h2>Helix is a network, not a feature</h2>
+        <p>Traditional recruiting tools are databases &mdash; you put candidates in, you search them, you pull them out.</p>
+        <p>Helix is different. Every user, every job, every expression of interest creates a <span class="highlight">connection</span>. The value isn't in any single record &mdash; it's in the <span class="highlight">structure</span> of connections between them.</p>
+        <p>The product question isn't "what features do we build?" It's <strong>"how do we grow and strengthen the network?"</strong></p>
+      </section>
+
+      <!-- Four building blocks -->
+      <section data-background-color="#0f172a">
+        <h2>The network has four building blocks</h2>
+        <img src="network-schema-graph.png" alt="Helix Network Schema Graph" class="network-img">
+        <p><strong>User</strong> &mdash; the actor. Can play any role depending on context.</p>
+        <p><strong>Job</strong> &mdash; the connecting node. Every interaction flows through a job.</p>
+        <p><strong>Expression of Interest (EOI)</strong> &mdash; the bridge between prospects and hiring teams.</p>
+        <p><strong>Custom Link</strong> &mdash; the prospect's viral unit. A shareable profile link used in external applications.</p>
+      </section>
+
+      <!-- Personas -->
+      <section data-background-color="#0f172a">
+        <h2>Personas live on edges, not on users</h2>
+        <p>A single user can be a <strong>hiring manager</strong> on one job and a <strong>prospect</strong> on another.</p>
+        <p>The persona isn't an attribute of the person &mdash; it's determined by <span class="highlight">which edge they're participating in</span>.</p>
+        <table>
+          <thead><tr><th>Persona</th><th>Determined by</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Hiring Manager</strong></td><td>Designated decision-maker on a job</td></tr>
+            <tr><td><strong>Team (Recruiter / Member)</strong></td><td>Collaborates on a job they didn't create as HM</td></tr>
+            <tr><td><strong>Prospect</strong></td><td>Expressed interest in a job via an EOI</td></tr>
+          </tbody>
+        </table>
+        <p>This means the same person can exist on both sides of the network simultaneously.</p>
+      </section>
+
+      <!-- Act 2 break -->
+      <section class="act-break" data-background-color="#0f172a">
+        <h2>Act 2: How Do We Measure It?</h2>
+      </section>
+
+      <!-- Helix Size -->
+      <section data-background-color="#0f172a">
+        <h2>Top-line metric: Helix Size</h2>
+        <p>Helix Size measures the total weight of the network &mdash; users weighted by their connections to jobs.</p>
+        <div class="formula-block" id="formula-helix-size"></div>
+        <table>
+          <thead><tr><th>Symbol</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><span id="sym-uh"></span></td><td>Hiring-side users (at least one team collaboration edge)</td></tr>
+            <tr><td><span id="sym-t"></span></td><td>Total team edges (collaborates_on connections)</td></tr>
+            <tr><td><span id="sym-up"></span></td><td>Prospect-side users</td></tr>
+            <tr><td><span id="sym-eoi"></span></td><td>Total expressions of interest</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Left term:</strong> hiring-side users weighted by team connections. <strong>Right term:</strong> prospects weighted by interest expressions.</p>
+      </section>
+
+      <!-- Network Health -->
+      <section data-background-color="#0f172a">
+        <h2>Network Health: three independent gauges</h2>
+        <p>No composite score. Three metrics, each measuring a different structural property:</p>
+        <h3>Hiring-Side Liquidity</h3>
+        <div class="formula-block" id="formula-liquidity"></div>
+        <p>Are jobs getting enough prospect interest? Too low and hiring managers churn.</p>
+        <h3>Prospect Activation</h3>
+        <div class="formula-block" id="formula-activation"></div>
+        <p>Are prospects using custom links? Each link seeds Loop 5 (Custom Link Virality).</p>
+        <h3>Bridging</h3>
+        <div class="formula-block" id="formula-bridging"></div>
+        <p>Fraction of users on both sides. <span id="sym-d"></span> = dual-persona users, <span id="sym-u"></span> = all users.</p>
+      </section>
+
+      <!-- Metric hierarchy -->
+      <section data-background-color="#0f172a">
+        <h2>The metric hierarchy</h2>
+        <div class="mermaid">
+graph TD
+    HS["Helix Size = Uh x T + Up x EOI"]
+    HS --> HL["Hiring-Side Liquidity: EOIs per Job"]
+    HS --> PA["Prospect Activation: CLs per Prospect"]
+    HS --> BR["Bridging: D / U"]
+    HL --> L1T["Loop 1: Job Sharing f x K"]
+    HL --> L2T["Loop 2: Team Invite f x K"]
+    PA --> L5T["Loop 5: Custom Link f x K"]
+    PA --> L3T["Loop 3: Prospect Referral f x K"]
+    BR --> L4T["Loop 4: Cross-Persona Bridge Rate"]
+    L1T --> L1F["Job Sharing Funnel"]
+    L2T --> L2F["Team Invite Funnel"]
+    L3T --> L3F["Prospect Referral Funnel"]
+    L4T --> L4F["Bridge Conversion Funnel"]
+    L5T --> L5F["Custom Link Funnel"]
+    L1F --> EV["Trackable Input Events"]
+    L2F --> EV
+    L3F --> EV
+    L4F --> EV
+    L5F --> EV
+        </div>
+        <p>Each layer decomposes into the one below. Every trackable event rolls up to Helix Size.</p>
+      </section>
+
+      <!-- Act 3 break -->
+      <section class="act-break" data-background-color="#0f172a">
+        <h2>Act 3: How Does It Grow?</h2>
+      </section>
+
+      <!-- Growth = viral loops -->
+      <section data-background-color="#0f172a">
+        <h2>Growth = completing viral loops</h2>
+        <p>The network grows through <span class="highlight">viral loops</span> &mdash; closed paths where each completion adds new nodes and edges.</p>
+        <p>Each loop has three key numbers:</p>
+        <div class="formula-block" id="formula-k"></div>
+        <table>
+          <thead><tr><th>Symbol</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><span id="sym-k"></span></td><td>K-factor: new users generated per trigger event</td></tr>
+            <tr><td><span id="sym-i"></span></td><td>Invitations: people reached per trigger event</td></tr>
+            <tr><td><span id="sym-c"></span></td><td>Conversion: fraction who complete the full funnel</td></tr>
+          </tbody>
+        </table>
+        <p>And the metric that actually matters for ranking:</p>
+        <div class="formula-block" id="formula-throughput"></div>
+        <p><span id="sym-f"></span> = trigger frequency (how often this behavior happens per eligible user per day).</p>
+      </section>
+
+      <!-- Loop 1 -->
+      <section data-background-color="#0f172a">
+        <h2>Loop 1: Job Sharing</h2>
+        <p>HM or recruiter shares a job externally, bringing new prospects into the network.</p>
+        <div class="mermaid">
+graph LR
+    Sharer["HM / Recruiter"] -->|"1. shares job link"| Job[Job]
+    Job -.->|"2. link reaches"| Anon["External person"]
+    Anon -->|"3. signs up"| NewUser["New Prospect"]
+    NewUser -->|"4. expresses interest"| EOI[EOI]
+    EOI -->|targets| Job
+        </div>
+        <p><strong>Funnel:</strong> Job shared &rarr; Link viewed &rarr; Viewer signs up &rarr; Expresses interest</p>
+        <div class="formula-block" id="formula-k-sharing"></div>
+        <p class="key-message">Highest <em>i</em> of any loop &mdash; each share reaches many people. Primary volume driver.</p>
+      </section>
+
+      <!-- Loop 2 -->
+      <section data-background-color="#0f172a">
+        <h2>Loop 2: Team Invite</h2>
+        <p>HM or recruiter invites colleagues to collaborate, expanding the hiring side.</p>
+        <div class="mermaid">
+graph LR
+    R["Recruiter"] -->|"1. creates job"| Job[Job]
+    R -->|"2. designates as HM"| NewHM["New HM"]
+    NewHM -->|"3. collaborates on"| Job
+    NewHM -->|"4. reviews prospects"| EOI[EOI]
+    NewHM -->|"5. creates own job"| Job2["New Job"]
+        </div>
+        <p><strong>Funnel:</strong> Invite sent &rarr; Invite viewed &rarr; Invitee signs up &rarr; Collaborates on job</p>
+        <div class="formula-block" id="formula-k-team"></div>
+        <p class="key-message">Variant B (recruiter pulls in new HM) is high-leverage &mdash; the HM arrives with a job already set up and lands directly in the review flow.</p>
+      </section>
+
+      <!-- Loop 3 -->
+      <section data-background-color="#0f172a">
+        <h2>Loop 3: Prospect Referral</h2>
+        <p>A prospect shares a job or profile with peers, bringing new prospects in.</p>
+        <div class="mermaid">
+graph LR
+    P1["Prospect"] -->|"1. shares job/profile"| Friend["Friend"]
+    Friend -->|"2. signs up"| NewP["New Prospect"]
+    NewP -->|"3. expresses interest"| EOI[EOI]
+    EOI -->|targets| Job[Job]
+        </div>
+        <p><strong>Funnel:</strong> Prospect shares &rarr; Friend views &rarr; Signs up &rarr; Expresses interest</p>
+        <div class="formula-block" id="formula-k-prospect"></div>
+        <p class="key-message">This is a designed behavior. We need to instrument <em>f</em> to learn if it happens naturally or requires product investment.</p>
+      </section>
+
+      <!-- Loop 4 -->
+      <section data-background-color="#0f172a">
+        <h2>Loop 4: Cross-Persona Bridge</h2>
+        <p>A prospect later posts their own job, crossing from prospect side to hiring side.</p>
+        <div class="mermaid">
+graph LR
+    P["User as Prospect"] -->|"was prospect on"| Job1["Job A"]
+    P -->|"later creates - now HM"| Job2["Job B"]
+    Job2 -.->|"attracts"| NewP["New Prospects"]
+        </div>
+        <p><strong>Not an <em>f &times; K</em> loop.</strong> Measured as a period conversion rate:</p>
+        <div class="formula-block" id="formula-bridge"></div>
+        <p class="key-message">Most valuable loop &mdash; each bridge creates a new job that feeds Loops 1, 2, and 3. But no frequency lever. Product lever is reducing friction, not increasing distribution.</p>
+      </section>
+
+      <!-- Loop 5 -->
+      <section data-background-color="#0f172a">
+        <h2>Loop 5: Custom Link Virality</h2>
+        <p>A prospect's custom link in external applications pulls hiring contacts to Helix.</p>
+        <div class="mermaid">
+graph LR
+    P["Prospect"] -->|"1. creates link"| CL["Custom Link"]
+    P -->|"2. applies externally"| ExtJob["External Job"]
+    ExtJob -.->|"3. hiring contact clicks"| CL
+    CL -.->|"4. views profile"| ExtHM["External HM"]
+    ExtHM -->|"5. signs up"| NewUser["New HM/Recruiter"]
+    NewUser -->|"6. creates job"| Job2["Job on Helix"]
+        </div>
+        <div class="formula-block" id="formula-k-custom"></div>
+        <p class="key-message">Directly fed by Prospect Activation health metric &mdash; more CLs per prospect means more Loop 5 triggers. Brings in hiring-side users who then trigger Loops 1 and 2.</p>
+      </section>
+
+      <!-- Why throughput -->
+      <section data-background-color="#0f172a">
+        <h2>Why throughput, not K</h2>
+        <p>K-factor alone cannot rank loops:</p>
+        <table>
+          <thead><tr><th>Loop</th><th>K</th><th>Trigger frequency (<em>f</em>)</th><th>Throughput (<em>f &times; K</em>)</th></tr></thead>
+          <tbody>
+            <tr><td>Loop A</td><td>0.5</td><td>10/user/day</td><td><strong>5.0</strong></td></tr>
+            <tr><td>Loop B</td><td>1.0</td><td>0.03/user/day</td><td><strong>0.03</strong></td></tr>
+          </tbody>
+        </table>
+        <p>Loop A produces <span class="highlight">150x more growth</span> despite half the K-factor.</p>
+        <p>The dominant variable is <strong>trigger frequency</strong> &mdash; how often the underlying human behavior naturally occurs. The product can raise or lower <em>f</em> at the margin, but the ceiling is set by the real-world activity.</p>
+      </section>
+
+      <!-- Fan-out -->
+      <section data-background-color="#0f172a">
+        <h2>Loops compound through fan-out</h2>
+        <p>A single node triggers multiple loop instances simultaneously:</p>
+        <div class="mermaid">
+graph TD
+    subgraph prospectFanout ["Prospect Fan-Out"]
+        P["Prospect"] -->|creates| CL1["Custom Link 1"]
+        P -->|creates| CL2["Custom Link 2"]
+        P -->|creates| CL3["Custom Link 3"]
+        CL1 -.->|viewed by| Ext1["HM at Company A"]
+        CL2 -.->|viewed by| Ext2["HM at Company B"]
+        CL3 -.->|viewed by| Ext3["Recruiter at Company C"]
+    end
+    subgraph jobFanout ["Job Fan-Out"]
+        P1["Prospect 1"] -->|EOI| EOI1["EOI 1"]
+        P2["Prospect 2"] -->|EOI| EOI2["EOI 2"]
+        P3["Prospect 3"] -->|EOI| EOI3["EOI 3"]
+        EOI1 -->|targets| Job["Job"]
+        EOI2 -->|targets| Job
+        EOI3 -->|targets| Job
+    end
+        </div>
+        <p>In <span id="sym-ki"></span>, the <em>i</em> <strong>is</strong> the fan-out.</p>
+        <p>Loops amplify each other: Custom Link Virality brings in hiring-side users who trigger Job Sharing and Team Invite.</p>
+      </section>
+
+      <!-- What to instrument -->
+      <section data-background-color="#0f172a">
+        <h2>What to instrument first</h2>
+        <p>Prioritized by expected throughput impact:</p>
+        <table>
+          <thead><tr><th>Priority</th><th>Loop</th><th>Primary metric to instrument</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><strong>Job Sharing</strong></td><td><span id="sym-fshare"></span> and <span id="sym-cshare"></span></td><td>Broadest distribution surface; highest <em>i</em></td></tr>
+            <tr><td>2</td><td><strong>Custom Link</strong></td><td><span id="sym-fcl"></span> and <span id="sym-ccl"></span></td><td>Prospect-side viral engine; fed by Prospect Activation</td></tr>
+            <tr><td>3</td><td><strong>Team Invite</strong></td><td><span id="sym-cinvite"></span></td><td>Frequency bounded by team size; conversion is the lever</td></tr>
+            <tr><td>4</td><td><strong>Prospect Referral</strong></td><td><span id="sym-fprospect"></span></td><td>Designed behavior; need to learn if it occurs naturally</td></tr>
+            <tr><td>5</td><td><strong>Cross-Persona Bridge</strong></td><td>Bridge rate, time-to-bridge</td><td>Each bridge creates a new job; friction is the lever</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Full picture -->
+      <section data-background-color="#0f172a">
+        <h2>The full picture</h2>
+        <div class="mermaid">
+graph TD
+    HS["HELIX SIZE: Uh x T + Up x EOI"]
+    HS --> Health["NETWORK HEALTH: Liquidity / Activation / Bridging"]
+    Health --> Loops["VIRAL LOOPS: Throughput = f x K per loop"]
+    Loops --> Funnels["FUNNELS: i and c decomposed into stages"]
+    Funnels --> Events["INPUT EVENTS: What we track in analytics"]
+        </div>
+        <p><strong>Helix Size</strong> tells us how big the network is.</p>
+        <p><strong>Health metrics</strong> tell us if the structure is sound.</p>
+        <p><strong>Loop throughput</strong> (<em>f &times; K</em>) tells us how fast it's growing &mdash; and which loops to invest in.</p>
+        <p><strong>Funnels</strong> decompose <em>K</em> into stages where users convert or drop off.</p>
+        <p><strong>Input events</strong> are what we instrument. Every event rolls up through this hierarchy to Helix Size.</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0f172a',
+        primaryColor: '#1e3a5f',
+        primaryTextColor: '#e2e8f0',
+        primaryBorderColor: '#4A90D9',
+        lineColor: '#4A90D9',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#0f172a',
+        nodeTextColor: '#e2e8f0',
+      },
+      flowchart: { curve: 'basis', useMaxWidth: true },
+    });
+
+    const formulas = {
+      'formula-helix-size': '\\text{Helix Size} = (U_h \\times T) + (U_p \\times EOI)',
+      'formula-liquidity': '\\text{EOIs per Job} = \\frac{EOI}{J}',
+      'formula-activation': '\\text{CLs per Prospect} = \\frac{CL}{U_p}',
+      'formula-bridging': '\\text{Bridging} = \\frac{D}{U}',
+      'formula-k': 'K = i \\times c',
+      'formula-throughput': '\\text{Throughput} = f \\times K',
+      'formula-k-sharing': 'K_{sharing} = i_{share} \\times c_{share}',
+      'formula-k-team': 'K_{team} = i_{invite} \\times c_{invite} = c_{invite}',
+      'formula-k-prospect': 'K_{prospect} = i_{prospect} \\times c_{prospect}',
+      'formula-bridge': '\\text{Bridge Rate} = \\frac{D_{new}}{U_{single}}',
+      'formula-k-custom': 'K_{custom} = i_{customlink} \\times c_{customlink}',
+    };
+
+    const inlineSymbols = {
+      'sym-uh': 'U_h', 'sym-t': 'T', 'sym-up': 'U_p', 'sym-eoi': 'EOI',
+      'sym-d': 'D', 'sym-u': 'U', 'sym-k': 'K', 'sym-i': 'i', 'sym-c': 'c', 'sym-f': 'f',
+      'sym-ki': 'K = i \\times c',
+      'sym-fshare': 'f_{share}', 'sym-cshare': 'c_{share}',
+      'sym-fcl': 'f_{customlink}', 'sym-ccl': 'c_{customlink}',
+      'sym-cinvite': 'c_{invite}', 'sym-fprospect': 'f_{prospect}',
+    };
+
+    Object.entries(formulas).forEach(([id, tex]) => {
+      const el = document.getElementById(id);
+      if (el) katex.render(tex, el, { displayMode: true, throwOnError: false });
+    });
+
+    Object.entries(inlineSymbols).forEach(([id, tex]) => {
+      const el = document.getElementById(id);
+      if (el) katex.render(tex, el, { displayMode: false, throwOnError: false });
+    });
+
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      width: 1280,
+      height: 720,
+      margin: 0.04,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      center: true,
+      controls: true,
+      progress: true,
+      history: true,
+    }).then(() => {
+      mermaid.run({ nodes: document.querySelectorAll('.mermaid') });
+    });
+  </script>
+</body>
+</html>
