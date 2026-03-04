@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480"
+     font-family="Inter, system-ui, -apple-system, sans-serif">
+  <defs>
+    <filter id="glow-teal" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feFlood flood-color="#2DD4BF" flood-opacity="0.3" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-purple" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feFlood flood-color="#A78BFA" flood-opacity="0.3" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-blue" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feFlood flood-color="#4A90D9" flood-opacity="0.3" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-orange" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feFlood flood-color="#FB923C" flood-opacity="0.3" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-gray" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#94a3b8" flood-opacity="0.2" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow-teal" viewBox="0 0 10 7" refX="9" refY="3.5"
+            markerWidth="9" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#2DD4BF"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 7" refX="9" refY="3.5"
+            markerWidth="9" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#A78BFA"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 7" refX="9" refY="3.5"
+            markerWidth="9" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#4A90D9"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 7" refX="9" refY="3.5"
+            markerWidth="9" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#FB923C"/>
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 7" refX="9" refY="3.5"
+            markerWidth="9" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#64748b"/>
+    </marker>
+    <linearGradient id="grad-teal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2DD4BF" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#2DD4BF" stop-opacity="0.07"/>
+    </linearGradient>
+    <linearGradient id="grad-purple" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A78BFA" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#A78BFA" stop-opacity="0.07"/>
+    </linearGradient>
+    <linearGradient id="grad-blue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.07"/>
+    </linearGradient>
+    <linearGradient id="grad-orange" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FB923C" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#FB923C" stop-opacity="0.07"/>
+    </linearGradient>
+    <linearGradient id="grad-gray" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="480" fill="#0f172a" rx="14"/>
+
+  <!-- === EDGES (before nodes) === -->
+
+  <!-- HS to health metrics -->
+  <path d="M 480,60 C 480,80 230,80 230,100" fill="none"
+        stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arrow-blue)" opacity="0.7"/>
+  <path d="M 600,60 L 600,100" fill="none"
+        stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arrow-blue)" opacity="0.7"/>
+  <path d="M 720,60 C 720,80 970,80 970,100" fill="none"
+        stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arrow-blue)" opacity="0.7"/>
+
+  <!-- HS VALUE REALISATION to L1, L2 -->
+  <path d="M 180,144 C 180,164 130,164 130,190" fill="none"
+        stroke="#2DD4BF" stroke-width="1.5" marker-end="url(#arrow-teal)" opacity="0.7"/>
+  <path d="M 290,144 C 290,164 330,164 330,190" fill="none"
+        stroke="#2DD4BF" stroke-width="1.5" marker-end="url(#arrow-teal)" opacity="0.7"/>
+
+  <!-- PS VALUE REALISATION to L5, L3 -->
+  <path d="M 540,144 C 540,164 530,164 530,190" fill="none"
+        stroke="#A78BFA" stroke-width="1.5" marker-end="url(#arrow-purple)" opacity="0.7"/>
+  <path d="M 670,144 C 670,164 710,164 710,190" fill="none"
+        stroke="#A78BFA" stroke-width="1.5" marker-end="url(#arrow-purple)" opacity="0.7"/>
+
+  <!-- BRIDGING to L4 -->
+  <path d="M 970,144 L 970,190" fill="none"
+        stroke="#FB923C" stroke-width="1.5" marker-end="url(#arrow-orange)" opacity="0.7"/>
+
+  <!-- Loops to funnels -->
+  <path d="M 130,242 L 130,280" fill="none"
+        stroke="#64748b" stroke-width="1.3" marker-end="url(#arrow-gray)" opacity="0.55"/>
+  <path d="M 330,242 L 330,280" fill="none"
+        stroke="#64748b" stroke-width="1.3" marker-end="url(#arrow-gray)" opacity="0.55"/>
+  <path d="M 530,242 L 530,280" fill="none"
+        stroke="#64748b" stroke-width="1.3" marker-end="url(#arrow-gray)" opacity="0.55"/>
+  <path d="M 710,242 L 710,280" fill="none"
+        stroke="#64748b" stroke-width="1.3" marker-end="url(#arrow-gray)" opacity="0.55"/>
+  <path d="M 970,242 L 970,280" fill="none"
+        stroke="#64748b" stroke-width="1.3" marker-end="url(#arrow-gray)" opacity="0.55"/>
+
+  <!-- Funnels to EV -->
+  <path d="M 130,318 C 130,345 483,345 483,380" fill="none"
+        stroke="#64748b" stroke-width="1.2" marker-end="url(#arrow-gray)" opacity="0.4"/>
+  <path d="M 330,318 C 330,345 542,345 542,380" fill="none"
+        stroke="#64748b" stroke-width="1.2" marker-end="url(#arrow-gray)" opacity="0.4"/>
+  <path d="M 530,318 C 530,350 570,350 600,380" fill="none"
+        stroke="#64748b" stroke-width="1.2" marker-end="url(#arrow-gray)" opacity="0.4"/>
+  <path d="M 710,318 C 710,345 660,345 658,380" fill="none"
+        stroke="#64748b" stroke-width="1.2" marker-end="url(#arrow-gray)" opacity="0.4"/>
+  <path d="M 970,318 C 970,345 717,345 717,380" fill="none"
+        stroke="#64748b" stroke-width="1.2" marker-end="url(#arrow-gray)" opacity="0.4"/>
+
+  <!-- === ZONE BACKGROUNDS === -->
+
+  <!-- HS Value Realisation zone -->
+  <rect x="20" y="94" width="420" height="240" rx="12"
+        fill="#2DD4BF" fill-opacity="0.02"
+        stroke="#2DD4BF" stroke-opacity="0.08" stroke-width="1" stroke-dasharray="7 4"/>
+
+  <!-- PS Value Realisation zone -->
+  <rect x="450" y="94" width="380" height="240" rx="12"
+        fill="#A78BFA" fill-opacity="0.02"
+        stroke="#A78BFA" stroke-opacity="0.08" stroke-width="1" stroke-dasharray="7 4"/>
+
+  <!-- Bridging zone -->
+  <rect x="845" y="94" width="250" height="240" rx="12"
+        fill="#FB923C" fill-opacity="0.02"
+        stroke="#FB923C" stroke-opacity="0.08" stroke-width="1" stroke-dasharray="7 4"/>
+
+  <!-- === NODES === -->
+
+  <!-- HELIX SIZE -->
+  <g filter="url(#glow-blue)">
+    <rect x="375" y="12" width="450" height="48" rx="10"
+          fill="url(#grad-blue)" stroke="#4A90D9" stroke-opacity="0.55" stroke-width="1.5"/>
+    <text x="600" y="37" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">HELIX SIZE</text>
+    <text x="600" y="53" text-anchor="middle" fill="#cbd5e1" font-size="10">(U_h x T) + (U_p x EOI)</text>
+  </g>
+
+  <!-- HS VALUE REALISATION -->
+  <g filter="url(#glow-teal)">
+    <rect x="70" y="100" width="320" height="44" rx="10"
+          fill="url(#grad-teal)" stroke="#2DD4BF" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="230" y="120" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">HS VALUE REALISATION</text>
+    <text x="230" y="136" text-anchor="middle" fill="#cbd5e1" font-size="10">EOI / J</text>
+  </g>
+
+  <!-- PS VALUE REALISATION -->
+  <g filter="url(#glow-purple)">
+    <rect x="450" y="100" width="320" height="44" rx="10"
+          fill="url(#grad-purple)" stroke="#A78BFA" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="610" y="120" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">PS VALUE REALISATION</text>
+    <text x="610" y="136" text-anchor="middle" fill="#cbd5e1" font-size="10">CL / U_p</text>
+  </g>
+
+  <!-- BRIDGING -->
+  <g filter="url(#glow-orange)">
+    <rect x="860" y="100" width="220" height="44" rx="10"
+          fill="url(#grad-orange)" stroke="#FB923C" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="970" y="120" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">BRIDGING</text>
+    <text x="970" y="136" text-anchor="middle" fill="#cbd5e1" font-size="10">D / U</text>
+  </g>
+
+  <!-- Loop 1 -->
+  <g filter="url(#glow-teal)">
+    <rect x="30" y="190" width="200" height="52" rx="10"
+          fill="url(#grad-teal)" stroke="#2DD4BF" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="130" y="213" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700">Loop 1: Job Sharing</text>
+    <text x="130" y="231" text-anchor="middle" fill="#cbd5e1" font-size="9">f_share x K_sharing</text>
+  </g>
+
+  <!-- Loop 2 -->
+  <g filter="url(#glow-teal)">
+    <rect x="240" y="190" width="190" height="52" rx="10"
+          fill="url(#grad-teal)" stroke="#2DD4BF" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="335" y="213" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700">Loop 2: Team Invite</text>
+    <text x="335" y="231" text-anchor="middle" fill="#cbd5e1" font-size="9">f_invite x K_team</text>
+  </g>
+
+  <!-- Loop 5 -->
+  <g filter="url(#glow-purple)">
+    <rect x="445" y="190" width="190" height="52" rx="10"
+          fill="url(#grad-purple)" stroke="#A78BFA" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="540" y="213" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700">Loop 5: Custom Link</text>
+    <text x="540" y="231" text-anchor="middle" fill="#cbd5e1" font-size="9">f_cl x K_custom</text>
+  </g>
+
+  <!-- Loop 3 -->
+  <g filter="url(#glow-purple)">
+    <rect x="645" y="190" width="190" height="52" rx="10"
+          fill="url(#grad-purple)" stroke="#A78BFA" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="740" y="213" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700">Loop 3: Prospect Ref.</text>
+    <text x="740" y="231" text-anchor="middle" fill="#cbd5e1" font-size="9">f_prospect x K_prospect</text>
+  </g>
+
+  <!-- Loop 4 -->
+  <g filter="url(#glow-orange)">
+    <rect x="870" y="190" width="200" height="52" rx="10"
+          fill="url(#grad-orange)" stroke="#FB923C" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="970" y="213" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700">Loop 4: Bridge</text>
+    <text x="970" y="231" text-anchor="middle" fill="#cbd5e1" font-size="9">D_new / U_single</text>
+  </g>
+
+  <!-- Funnel L1 -->
+  <g filter="url(#glow-gray)">
+    <rect x="30" y="280" width="200" height="38" rx="8"
+          fill="url(#grad-gray)" stroke="#94a3b8" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="130" y="304" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="500">share -&gt; view -&gt; signup -&gt; EOI</text>
+  </g>
+
+  <!-- Funnel L2 -->
+  <g filter="url(#glow-gray)">
+    <rect x="240" y="280" width="190" height="38" rx="8"
+          fill="url(#grad-gray)" stroke="#94a3b8" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="335" y="304" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="500">invite -&gt; open -&gt; accept -&gt; collab</text>
+  </g>
+
+  <!-- Funnel L5 -->
+  <g filter="url(#glow-gray)">
+    <rect x="445" y="280" width="190" height="38" rx="8"
+          fill="url(#grad-gray)" stroke="#94a3b8" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="540" y="304" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="500">link -&gt; view -&gt; signup -&gt; job</text>
+  </g>
+
+  <!-- Funnel L3 -->
+  <g filter="url(#glow-gray)">
+    <rect x="645" y="280" width="190" height="38" rx="8"
+          fill="url(#grad-gray)" stroke="#94a3b8" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="740" y="304" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="500">share -&gt; view -&gt; signup -&gt; EOI</text>
+  </g>
+
+  <!-- Funnel L4 -->
+  <g filter="url(#glow-gray)">
+    <rect x="870" y="280" width="200" height="38" rx="8"
+          fill="url(#grad-gray)" stroke="#94a3b8" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="970" y="304" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="500">single-surface -&gt; second surface</text>
+  </g>
+
+  <!-- Trackable Input Events -->
+  <g filter="url(#glow-blue)">
+    <rect x="400" y="380" width="400" height="48" rx="10"
+          fill="url(#grad-blue)" stroke="#4A90D9" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="600" y="409" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">Trackable Input Events</text>
+  </g>
+
+  <!-- Bottom annotation -->
+  <text x="600" y="455" text-anchor="middle"
+        fill="#64748b" font-size="10" font-style="italic">Every trackable event rolls up through funnels, through loop throughput, through health metrics, to Helix Size.</text>
+
+</svg>
