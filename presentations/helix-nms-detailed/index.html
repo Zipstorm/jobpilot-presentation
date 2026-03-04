@@ -284,32 +284,6 @@
         <p>Fraction of users on both sides. Cross-persona conversion &mdash; circumstantial, not a product-design lever.</p>
       </section>
 
-      <!-- Metric hierarchy -->
-      <section data-background-color="#0f172a">
-        <h2>The metric hierarchy</h2>
-        <div class="mermaid">
-graph TD
-    HS["Helix Size = Uh x T + Up x EOI"]
-    HS --> HL["Hiring-Side Liquidity: EOI / J"]
-    HS --> PA["Prospect Activation: CL / Up"]
-    HS --> BR["Bridging: D / U"]
-    HL --> L1T["Loop 1: Job Sharing f x K"]
-    HL --> L2T["Loop 2: Team Invite f x K"]
-    PA --> L5T["Loop 5: Custom Link f x K"]
-    PA --> L3T["Loop 3: Prospect Referral f x K"]
-    BR --> L4T["Loop 4: Cross-Persona Bridge Rate"]
-    L1T --> L1F["Shares - Views - Signups - EOIs"]
-    L2T --> L2F["Invites - Opens - Accepts - Collaborates"]
-    L3T --> L3F["Shares - Views - Signups - EOIs"]
-    L4T --> L4F["Single-surface - Second surface activated"]
-    L5T --> L5F["Links - Views - Signups - Jobs"]
-    L1F --> EV["Trackable Input Events"]
-    L2F --> EV
-    L3F --> EV
-    L4F --> EV
-    L5F --> EV
-        </div>
-      </section>
 
       <!-- Act 3 break -->
       <section class="act-break" data-background-color="#0f172a">
@@ -381,6 +355,36 @@ graph LR
         </table>
       </section>
 
+      <!-- Loop 1: Metric Impact -->
+      <section data-background-color="#0f172a">
+        <h2>Loop 1: Job Sharing &mdash; metric impact</h2>
+        <div class="mermaid">
+graph TD
+    subgraph impact ["Top Metric Impact"]
+        SIZE["Helix Size: UP"]
+        LIQ["Hiring-Side Value Realisation: UP"]
+        ACT["Prospect-Side Value Realisation: DOWN"]
+        BRG["Bridging: DOWN"]
+    end
+    L1["L1: Job Sharing"]
+    SIZE --- L1
+    LIQ --- L1
+    ACT --- L1
+    BRG --- L1
+    L1 --> f1["f_share"]
+    L1 --> K1["K_share = i x c"]
+    K1 --> i1["i_share"]
+    K1 --> c1["c_share"]
+    f1 --> bf1a["Job Shared events"]
+    f1 --> bf1b["U_h count"]
+    i1 --> bi1a["Unique link views"]
+    i1 --> bi1b["Job Shared events"]
+    c1 --> bc1a["Signups from job links"]
+    c1 --> bc1b["Link views"]
+    c1 --> bc1c["EOIs from signups"]
+        </div>
+      </section>
+
       <!-- Loop 2: Team Invite -->
       <section data-background-color="#0f172a">
         <h2>Loop 2: Team Invite</h2>
@@ -425,6 +429,30 @@ graph LR
         <p><strong>Variant B:</strong> Track recruiter-created jobs where designated HM is new to Helix. Measure designation-to-signup rate and time-to-first-review separately.</p>
       </section>
 
+      <!-- Loop 2: Metric Impact -->
+      <section data-background-color="#0f172a">
+        <h2>Loop 2: Team Invite &mdash; metric impact</h2>
+        <div class="mermaid">
+graph TD
+    subgraph impact ["Top Metric Impact"]
+        SIZE["Helix Size: UP"]
+        LIQ["Hiring-Side Value Realisation: --"]
+        ACT["Prospect-Side Value Realisation: --"]
+        BRG["Bridging: DOWN"]
+    end
+    L2["L2: Team Invite"]
+    SIZE --- L2
+    BRG --- L2
+    L2 --> f2["f_invite"]
+    L2 --> c2["c_invite (i=1)"]
+    f2 --> bf2a["Invite events"]
+    f2 --> bf2b["U_h count"]
+    c2 --> bc2a["Invites opened"]
+    c2 --> bc2b["Invites sent"]
+    c2 --> bc2c["Invites accepted"]
+        </div>
+      </section>
+
       <!-- Loop 3: Prospect Referral -->
       <section data-background-color="#0f172a">
         <h2>Loop 3: Prospect Referral</h2>
@@ -467,6 +495,36 @@ graph LR
         </table>
       </section>
 
+      <!-- Loop 3: Metric Impact -->
+      <section data-background-color="#0f172a">
+        <h2>Loop 3: Prospect Referral &mdash; metric impact</h2>
+        <div class="mermaid">
+graph TD
+    subgraph impact ["Top Metric Impact"]
+        SIZE["Helix Size: UP"]
+        LIQ["Hiring-Side Value Realisation: UP"]
+        ACT["Prospect-Side Value Realisation: DOWN"]
+        BRG["Bridging: DOWN"]
+    end
+    L3["L3: Prospect Referral"]
+    SIZE --- L3
+    LIQ --- L3
+    ACT --- L3
+    BRG --- L3
+    L3 --> f3["f_prospect"]
+    L3 --> K3["K_prospect = i x c"]
+    K3 --> i3["i_prospect"]
+    K3 --> c3["c_prospect"]
+    f3 --> bf3a["Prospect share events"]
+    f3 --> bf3b["U_p count"]
+    i3 --> bi3a["Unique views from shares"]
+    i3 --> bi3b["Prospect share events"]
+    c3 --> bc3a["Signups from shares"]
+    c3 --> bc3b["Views from shares"]
+    c3 --> bc3c["EOIs from signups"]
+        </div>
+      </section>
+
       <!-- Loop 4: Cross-Persona Bridge -->
       <section data-background-color="#0f172a">
         <h2>Loop 4: Cross-Persona Bridge</h2>
@@ -506,6 +564,35 @@ graph LR
           </tbody>
         </table>
         <p><strong>Not an <span class="sym" data-tex="f \times K"></span> loop.</strong> No trigger frequency lever. Measured as a period conversion rate. The product lever is reducing friction, not increasing distribution.</p>
+      </section>
+
+      <!-- Loop 4: Metric Impact -->
+      <section data-background-color="#0f172a">
+        <h2>Loop 4: Cross-Persona Bridge &mdash; metric impact</h2>
+        <div class="mermaid">
+graph TD
+    subgraph impact ["Top Metric Impact"]
+        SIZE["Helix Size: UP"]
+        LIQ["Hiring-Side Value Realisation: mixed"]
+        ACT["Prospect-Side Value Realisation: mixed"]
+        BRG["Bridging: UP (only loop)"]
+    end
+    L4["L4: Cross-Persona Bridge"]
+    SIZE --- L4
+    LIQ --- L4
+    ACT --- L4
+    BRG --- L4
+    L4 --> BR["Bridge Rate = D_new / U_single"]
+    L4 --> TtB["Time to Bridge"]
+    BR --> b1["Surface Activated events"]
+    BR --> b2["Total users U"]
+    BR --> b3["Dual-persona users D"]
+    TtB --> t1["Account creation timestamp"]
+    TtB --> t2["Second surface activation timestamp"]
+    L4 --> dir["Two directions"]
+    dir --> PtoH["P-to-H: Prospect creates job"]
+    dir --> HtoP["H-to-P: Hiring user creates CL or EOI"]
+        </div>
       </section>
 
       <!-- Loop 5: Custom Link Virality -->
@@ -550,7 +637,35 @@ graph LR
             <tr><td>Cycle time</td><td>Time</td><td>Median CL view to viewer signup</td></tr>
           </tbody>
         </table>
-        <p>Directly fed by Prospect Activation (<span class="sym" data-tex="CL / U_p"></span>) health metric.</p>
+        <p>Directly fed by Prospect-Side Value Realisation (<span class="sym" data-tex="CL / U_p"></span>) health metric.</p>
+      </section>
+
+      <!-- Loop 5: Metric Impact -->
+      <section data-background-color="#0f172a">
+        <h2>Loop 5: Custom Link Virality &mdash; metric impact</h2>
+        <div class="mermaid">
+graph TD
+    subgraph impact ["Top Metric Impact"]
+        SIZE["Helix Size: UP"]
+        LIQ["Hiring-Side Value Realisation: DOWN if +J"]
+        ACT["Prospect-Side Value Realisation: --"]
+        BRG["Bridging: DOWN"]
+    end
+    L5["L5: Custom Link Virality"]
+    SIZE --- L5
+    LIQ --- L5
+    BRG --- L5
+    L5 --> f5["f_customlink"]
+    L5 --> K5["K_CL = i x c"]
+    K5 --> i5["i_customlink"]
+    K5 --> c5["c_customlink"]
+    f5 --> bf5a["CL Shared events"]
+    f5 --> bf5b["U_p count"]
+    i5 --> bi5a["Profile Link Viewed events"]
+    i5 --> bi5b["CL Shared events"]
+    c5 --> bc5a["Signups from CL views"]
+    c5 --> bc5b["Profile Link Viewed events"]
+        </div>
       </section>
 
       <!-- Why throughput -->
@@ -568,31 +683,6 @@ graph LR
         <p>Cycle time is secondary: it determines compounding speed (how quickly new users trigger their own loops), not first-generation throughput.</p>
       </section>
 
-      <!-- Fan-out -->
-      <section data-background-color="#0f172a">
-        <h2>Loops compound through fan-out</h2>
-        <div class="mermaid">
-graph TD
-    subgraph prospectFanout ["Prospect Fan-Out"]
-        P["Prospect"] -->|creates| CL1["Custom Link 1"]
-        P -->|creates| CL2["Custom Link 2"]
-        P -->|creates| CL3["Custom Link 3"]
-        CL1 -.->|viewed by| Ext1["HM at Company A"]
-        CL2 -.->|viewed by| Ext2["HM at Company B"]
-        CL3 -.->|viewed by| Ext3["Recruiter at Company C"]
-    end
-    subgraph jobFanout ["Job Fan-Out"]
-        P1["Prospect 1"] -->|EOI| EOI1["EOI 1"]
-        P2["Prospect 2"] -->|EOI| EOI2["EOI 2"]
-        P3["Prospect 3"] -->|EOI| EOI3["EOI 3"]
-        EOI1 -->|targets| Job["Job"]
-        EOI2 -->|targets| Job
-        EOI3 -->|targets| Job
-    end
-        </div>
-        <p>In <span class="sym" data-tex="K = i \times c"></span>, the <em>i</em> <strong>is</strong> the fan-out. A prospect who creates multiple custom links triggers multiple Loop 5 instances.</p>
-        <p>Loops amplify each other: Loop 5 brings in hiring-side users who trigger Loops 1 and 2. Loop 4 creates new Jobs that feed Loops 1, 2, and 3. Each loop operates independently but compounds through shared nodes.</p>
-      </section>
 
       <!-- Loop summary -->
       <section data-background-color="#0f172a">
@@ -604,61 +694,128 @@ graph TD
             <tr><td>Team Invite</td><td>HM &rarr; invite &rarr; accept &rarr; collaborate</td><td>+1 User, +1 Job (Var B)</td><td><span class="sym" data-tex="c_{invite}"></span></td><td>Conversion rate (i is always 1)</td></tr>
             <tr><td>Prospect Referral</td><td>Prospect &rarr; share &rarr; signup &rarr; EOI</td><td>+1 User, +1 EOI</td><td><span class="sym" data-tex="i_{prospect} \times c_{prospect}"></span></td><td>Trigger frequency</td></tr>
             <tr><td>Cross-Persona Bridge</td><td>Prospect &rarr; creates own Job</td><td>+1 Job</td><td>N/A (bridge rate)</td><td>Friction reduction</td></tr>
-            <tr><td>Custom Link</td><td>Prospect &rarr; apply &rarr; HM views &rarr; signup</td><td>+1 User</td><td><span class="sym" data-tex="i_{cl} \times c_{cl}"></span></td><td>Prospect Activation feeds <em>f</em></td></tr>
+            <tr><td>Custom Link</td><td>Prospect &rarr; apply &rarr; HM views &rarr; signup</td><td>+1 User</td><td><span class="sym" data-tex="i_{cl} \times c_{cl}"></span></td><td>Prospect-Side Value Realisation feeds <em>f</em></td></tr>
           </tbody>
         </table>
       </section>
 
-      <!-- What to instrument -->
+      <!-- Act 4 break -->
+      <section class="act-break" data-background-color="#0f172a">
+        <h2>Act 4: Connecting Metrics to Loops</h2>
+      </section>
+
+      <!-- Each metric fed by multiple loops -->
       <section data-background-color="#0f172a">
-        <h2>What to instrument first</h2>
+        <h2>Each metric is fed by multiple loops</h2>
+        <p>For each top-level metric, which loops feed it &mdash; and in which direction?</p>
         <table>
-          <thead><tr><th>Priority</th><th>Loop</th><th>Primary metrics</th><th>Why first</th></tr></thead>
+          <thead><tr><th>Loop</th><th>Helix Size</th><th>Hiring-Side Value Realisation (EOI/J)</th><th>Prospect-Side Value Realisation (CL/U<sub>p</sub>)</th><th>Bridging (D/U)</th></tr></thead>
           <tbody>
-            <tr><td>1</td><td><strong>Job Sharing</strong></td><td><span class="sym" data-tex="f_{share}"></span>, <span class="sym" data-tex="c_{share}"></span>, <span class="sym" data-tex="i_{share}"></span></td><td>Broadest distribution; highest <em>i</em>; measure reach and landing conversion</td></tr>
-            <tr><td>2</td><td><strong>Custom Link</strong></td><td><span class="sym" data-tex="f_{customlink}"></span>, <span class="sym" data-tex="c_{customlink}"></span></td><td>Prospect-side engine; fed by Prospect Activation; brings hiring-side users</td></tr>
-            <tr><td>3</td><td><strong>Team Invite</strong></td><td><span class="sym" data-tex="c_{invite}"></span></td><td><span class="sym" data-tex="f"></span> bounded by team size; conversion is the only lever</td></tr>
-            <tr><td>4</td><td><strong>Prospect Referral</strong></td><td><span class="sym" data-tex="f_{prospect}"></span></td><td>Designed behavior; instrument to learn if natural or needs product investment</td></tr>
-            <tr><td>5</td><td><strong>Cross-Persona Bridge</strong></td><td>Bridge rate, time-to-bridge</td><td>Each bridge creates new Job; measure rate and friction</td></tr>
+            <tr><td>L1: Job Sharing</td><td>UP</td><td>UP (+EOI)</td><td>DOWN (+U<sub>p</sub>)</td><td>DOWN (+U)</td></tr>
+            <tr><td>L2: Team Invite</td><td>UP</td><td>&mdash;</td><td>&mdash;</td><td>DOWN (+U)</td></tr>
+            <tr><td>L3: Prospect Referral</td><td>UP</td><td>UP (+EOI)</td><td>DOWN (+U<sub>p</sub>)</td><td>DOWN (+U)</td></tr>
+            <tr><td>L4: Bridge</td><td>UP</td><td>mixed</td><td>mixed</td><td>UP (+D)</td></tr>
+            <tr><td>L5: Custom Link</td><td>UP</td><td>DOWN (+J)</td><td>&mdash;</td><td>DOWN (+U)</td></tr>
           </tbody>
         </table>
+        <p>Every loop increases Helix Size. But health metrics have competing pressures &mdash; some loops push them up, others push them down.</p>
       </section>
+
+      <!-- Helix Size decomposition -->
+      <section data-background-color="#0f172a">
+        <h2>Helix Size &mdash; full decomposition</h2>
+        <div class="mermaid">
+graph TD
+    subgraph tier1 ["Tier 1: Top Metric"]
+        HS["Helix Size = (U_h x T) + (U_p x EOI)"]
+    end
+    subgraph tier2 ["Tier 2: Viral Loops"]
+        L1["L1: Job Sharing"]
+        L2["L2: Team Invite"]
+        L3["L3: Prospect Referral"]
+        L4["L4: Bridge"]
+        L5["L5: Custom Link"]
+    end
+    HS -->|"UP"| L1
+    HS -->|"UP"| L2
+    HS -->|"UP"| L3
+    HS -->|"UP"| L4
+    HS -->|"UP"| L5
+        </div>
+      </section>
+
+      <!-- Hiring-Side Value Realisation decomposition -->
+      <section data-background-color="#0f172a">
+        <h2>Hiring-Side Value Realisation &mdash; full decomposition</h2>
+        <div class="mermaid">
+graph TD
+    subgraph tier1 ["Tier 1: Top Metric"]
+        LIQ["Hiring-Side Value Realisation = EOI / J"]
+    end
+    subgraph tier2 ["Tier 2: Viral Loops"]
+        L1["L1: Job Sharing (UP)"]
+        L3["L3: Prospect Referral (UP)"]
+        L4a["L4a: Bridge P-to-H (DOWN)"]
+        L5["L5: Custom Link (DOWN)"]
+    end
+    LIQ --> L1
+    LIQ --> L3
+    LIQ --> L4a
+    LIQ --> L5
+        </div>
+      </section>
+
+      <!-- Prospect-Side Value Realisation decomposition -->
+      <section data-background-color="#0f172a">
+        <h2>Prospect-Side Value Realisation &mdash; full decomposition</h2>
+        <div class="mermaid">
+graph TD
+    subgraph tier1 ["Tier 1: Top Metric"]
+        ACT["Prospect-Side Value Realisation = CL / U_p"]
+    end
+    subgraph tier2 ["Tier 2: Viral Loops"]
+        L1["L1: Job Sharing (DOWN)"]
+        L3["L3: Prospect Referral (DOWN)"]
+        L4b["L4b: Bridge H-to-P (UP)"]
+    end
+    ACT --> L1
+    ACT --> L3
+    ACT --> L4b
+        </div>
+      </section>
+
+      <!-- Bridging decomposition -->
+      <section data-background-color="#0f172a">
+        <h2>Bridging &mdash; full decomposition</h2>
+        <div class="mermaid">
+graph TD
+    subgraph tier1 ["Tier 1: Top Metric"]
+        BRG["Bridging = D / U"]
+    end
+    subgraph tier2 ["Tier 2: Viral Loops"]
+        L4["L4: Bridge (UP)"]
+        L1["L1: Job Sharing (DOWN)"]
+        L2["L2: Team Invite (DOWN)"]
+        L3["L3: Prospect Referral (DOWN)"]
+        L5["L5: Custom Link (DOWN)"]
+    end
+    BRG -->|"UP"| L4
+    BRG -->|"DOWN"| L1
+    BRG -->|"DOWN"| L2
+    BRG -->|"DOWN"| L3
+    BRG -->|"DOWN"| L5
+        </div>
+      </section>
+
 
       <!-- Open questions -->
       <section data-background-color="#0f172a">
         <h2>Open framework questions</h2>
         <p><strong>Retention not yet modeled.</strong> Effective throughput is <span class="sym" data-tex="f \times K \times \text{retention rate}"></span>. A loop generating users who churn immediately doesn't grow the network. Eligible user base also decays (filled jobs stop generating shares, placed prospects stop applying).</p>
         <p><strong><span class="sym" data-tex="f"></span> and <span class="sym" data-tex="c"></span> treated as independent.</strong> In practice, as trigger frequency increases, per-impression conversion may decrease due to recipient fatigue. If observed in data, throughput ceilings will need to account for the <span class="sym" data-tex="f"></span>-<span class="sym" data-tex="c"></span> relationship.</p>
-        <p><strong>Sub-stage alignment needed.</strong> Dashboards decompose <span class="sym" data-tex="c"></span> into 5 sub-stages. This framework uses a simpler 2-stage model. Reconcile when instrumenting funnels.</p>
+        <p><strong>Sub-stage alignment needed.</strong> Dashboards decompose <span class="sym" data-tex="c"></span> into 5 sub-stages (<span class="sym" data-tex="c_{view} \times c_{click} \times c_{form} \times c_{complete} \times c_{activate}"></span>). This framework uses a simpler 2-stage model. Reconcile when instrumenting funnels.</p>
       </section>
 
-      <!-- Full picture -->
-      <section data-background-color="#0f172a">
-        <h2>The full picture</h2>
-        <div class="mermaid">
-graph TD
-    HS["HELIX SIZE: Uh x T + Up x EOI"]
-    HS --> HL["LIQUIDITY: EOI / J"]
-    HS --> PA["ACTIVATION: CL / Up"]
-    HS --> BR["BRIDGING: D / U"]
-    HL --> L1T["Loop 1: f_share x K_sharing"]
-    HL --> L2T["Loop 2: f_invite x K_team"]
-    PA --> L5T["Loop 5: f_cl x K_custom"]
-    PA --> L3T["Loop 3: f_prospect x K_prospect"]
-    BR --> L4T["Loop 4: D_new / U_single"]
-    L1T --> L1F["share - view - signup - EOI"]
-    L2T --> L2F["invite - open - accept - collaborate"]
-    L3T --> L3F["share - view - signup - EOI"]
-    L4T --> L4F["single-surface - second surface"]
-    L5T --> L5F["link - view - signup - job"]
-    L1F --> EV["Trackable Input Events"]
-    L2F --> EV
-    L3F --> EV
-    L4F --> EV
-    L5F --> EV
-        </div>
-        <p>Every trackable event rolls up through funnels, through loop throughput, through health metrics, to Helix Size &mdash; the measure of the network the loops are building.</p>
-      </section>
 
     </div>
   </div>

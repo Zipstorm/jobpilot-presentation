@@ -1,150 +1,3 @@
----
-theme: default
-title: "Helix Metrics: Viral Loops That Build a Network"
-info: |
-  Helix analytics framework — full detail version.
-  Includes all variables, funnel stages, rate metrics, throughput formulas, and cycle time per loop.
-  Best used as a leave-behind or deep-dive appendix.
----
-
-# Helix Metrics
-
-## Viral Loops That Build a Network
-
-*Full detail version — all variables, funnels, and metrics*
-
-<!-- Speaker note: This version includes every variable, funnel stage, and metric from the source docs. Best as a leave-behind or appendix for analytics/product teams. -->
-
----
-
-# Helix is viral loops, not a feature
-
-Traditional recruiting tools are databases — you put candidates in, you search them, you pull them out.
-
-Helix is different. It's a group of **viral loops** designed to build a network. Every user, every job, every expression of interest creates a connection — and each connection can **trigger the next**.
-
-The product question isn't "what features do we build?" It's **"how do we activate and accelerate the loops?"**
-
----
-
-# Four building blocks of the network
-
-![Helix Network Schema Graph](../../context/products/helix/network-schema-graph.png)
-
-**User** — the actor. Can play any role depending on context.
-
-**Job** — the connecting node. Every interaction flows through a job.
-
-**Expression of Interest (EOI)** — the bridge between prospects and hiring teams.
-
-**Custom Link** — the prospect's viral unit. A shareable profile link used in external applications.
-
----
-
-# Personas live on edges, not on users
-
-A single user can be a **hiring manager** on one job and a **prospect** on another.
-
-| Persona | Determined by | Edge types |
-|---------|---------------|------------|
-| Hiring Manager | Designated decision-maker on a job | creates, invites, collaborates_on, reviews, shares |
-| Team (Recruiter / Member) | Collaborates on a job they didn't create as HM | collaborates_on, reviews, shares, invites |
-| Prospect | Expressed interest in a job via an EOI | expresses_interest, creates_link, shares |
-
-The `activated_surfaces` field tracks which sides a user has participated in. The `signup_context` field records the entry edge.
-
----
-
-# Full edge catalog
-
-| Edge | Direction | Persona | Network Effect |
-|------|-----------|---------|----------------|
-| `creates` | User -> Job | HM / Team | +1 Job, +1 edge |
-| `invites` | User -> User (via Job) | HM / Team | +1 edge, potentially +1 User |
-| `collaborates_on` | User -> Job | HM / Team | +1 edge (or +1 User if new) |
-| `expresses_interest` | User -> Job (via EOI) | Prospect | +1 EOI, +1 edge (or +1 User + 1 EOI if new) |
-| `reviews` | User -> EOI | HM / Team | +1 edge |
-| `shares` | User -> external | Any | +0 nodes/edges; triggers inbound paths |
-| `creates_link` | User -> CustomLink | Prospect | +1 CustomLink |
-| `viewed_by` | CustomLink/Job -> external | Passive | +0 nodes/edges; triggers inbound paths |
-| `signs_up_as` | External -> User | Conversion | +1 User, +1 edge |
-
----
-
-# Act 2: How Do We Measure It?
-
----
-
-# Top-line metric: Helix Size
-
-$$\text{Helix Size} = (U_h \times T) + (U_p \times EOI)$$
-
-### All variables
-
-| Symbol | Definition | Source |
-|--------|-----------|--------|
-| $U$ | Total users | User table count |
-| $J$ | Total jobs | Job table count |
-| $EOI$ | Total expressions of interest | EOI table count |
-| $CL$ | Total custom links | CustomLink table count |
-| $T$ | Total team edges (collaborates_on) | JobTeamMember table count |
-| $U_h$ | Hiring-side users (at least one collaborates_on edge) | Distinct user_id from JobTeamMember |
-| $U_p$ | Prospect-side users (prospect surface enabled) | Users where activated_surfaces includes prospect |
-| $D$ | Dual-persona users (edges on BOTH sides) | $U_h \cap U_p$ |
-
-**Excluded:** Review edges (activity, not structure). CustomLinks (external reach, captured in Loop 5 metrics).
-
----
-
-# Network Health: three independent gauges
-
-### Hiring-Side Value Realisation
-
-$$\text{EOIs per Job} = \frac{EOI}{J}$$
-
-Are jobs getting enough prospect interest? Below threshold, HMs churn because the platform doesn't deliver candidates. This is a hiring-side value realisation metric — hiring-side value depends on prospect engagement.
-
-### Prospect-Side Value Realisation
-
-$$\text{CLs per Prospect} = \frac{CL}{U_p}$$
-
-Are prospects using the tools that make Helix valuable? Each custom link seeds Loop 5. This is a prospect-side value realisation metric (self-serve tool adoption), not a hiring-side metric.
-
-### Bridging
-
-$$\text{Bridging} = \frac{D}{U}$$
-
-Fraction of users on both sides. Cross-persona conversion — circumstantial (requires having an open role), not a product-design lever.
-
----
-
-# The metric hierarchy
-
-```mermaid
-graph TD
-    HS["Helix Size = (Uh x T) + (Up x EOI)"]
-    HS --> HL["Hiring-Side Value Realisation: EOI / J"]
-    HS --> PA["Prospect-Side Value Realisation: CL / Up"]
-    HS --> BR["Bridging: D / U"]
-    HL --> L1T["Loop 1: Job Sharing (f x K)"]
-    HL --> L2T["Loop 2: Team Invite (f x K)"]
-    PA --> L5T["Loop 5: Custom Link (f x K)"]
-    PA --> L3T["Loop 3: Prospect Referral (f x K)"]
-    BR --> L4T["Loop 4: Cross-Persona Bridge Rate"]
-    L1T --> L1F["Shares -> Views -> Signups -> EOIs"]
-    L2T --> L2F["Invites -> Opens -> Accepts -> Collaborates"]
-    L3T --> L3F["Shares -> Views -> Signups -> EOIs"]
-    L4T --> L4F["Single-surface -> Second surface activated"]
-    L5T --> L5F["Links -> Views -> Signups -> Jobs"]
-    L1F --> EV["Trackable Input Events"]
-    L2F --> EV
-    L3F --> EV
-    L4F --> EV
-    L5F --> EV
-```
-
----
-
 # Act 3: How Does It Grow?
 
 ---
@@ -214,6 +67,42 @@ graph LR
 
 ---
 
+# Loop 1: Job Sharing — metric impact
+
+```mermaid
+graph TD
+    subgraph impact ["Top Metric Impact"]
+        SIZE["Helix Size: UP"]
+        LIQ["Hiring-Side Value Realisation: UP"]
+        ACT["Prospect-Side Value Realisation: DOWN"]
+        BRG["Bridging: DOWN"]
+    end
+
+    L1["L1: Job Sharing<br/>Throughput = f_share × K_share"]
+
+    SIZE --- L1
+    LIQ --- L1
+    ACT --- L1
+    BRG --- L1
+
+    L1 --> f1["f_share<br/>Trigger frequency"]
+    L1 --> K1["K_share = i × c"]
+    K1 --> i1["i_share<br/>Reach per share"]
+    K1 --> c1["c_share<br/>Conversion"]
+
+    f1 --> bf1a["Job Shared events"]
+    f1 --> bf1b["U_h count"]
+
+    i1 --> bi1a["Unique link views"]
+    i1 --> bi1b["Job Shared events"]
+
+    c1 --> bc1a["Signups from job links"]
+    c1 --> bc1b["Link views"]
+    c1 --> bc1c["EOIs from signups"]
+```
+
+---
+
 # Loop 2: Team Invite
 
 HM or recruiter invites colleagues to collaborate on a job.
@@ -262,6 +151,35 @@ graph LR
 
 ---
 
+# Loop 2: Team Invite — metric impact
+
+```mermaid
+graph TD
+    subgraph impact ["Top Metric Impact"]
+        SIZE["Helix Size: UP"]
+        LIQ["Hiring-Side Value Realisation: --"]
+        ACT["Prospect-Side Value Realisation: --"]
+        BRG["Bridging: DOWN"]
+    end
+
+    L2["L2: Team Invite<br/>Throughput = f_invite × c_invite (i=1)"]
+
+    SIZE --- L2
+    BRG --- L2
+
+    L2 --> f2["f_invite<br/>Trigger frequency"]
+    L2 --> c2["c_invite<br/>Conversion (i=1)"]
+
+    f2 --> bf2a["Invite events"]
+    f2 --> bf2b["U_h count"]
+
+    c2 --> bc2a["Invites opened"]
+    c2 --> bc2b["Invites sent"]
+    c2 --> bc2c["Invites accepted"]
+```
+
+---
+
 # Loop 3: Prospect Referral
 
 A prospect shares a job or profile with peers, bringing new prospects in.
@@ -306,6 +224,42 @@ graph LR
 
 ---
 
+# Loop 3: Prospect Referral — metric impact
+
+```mermaid
+graph TD
+    subgraph impact ["Top Metric Impact"]
+        SIZE["Helix Size: UP"]
+        LIQ["Hiring-Side Value Realisation: UP"]
+        ACT["Prospect-Side Value Realisation: DOWN"]
+        BRG["Bridging: DOWN"]
+    end
+
+    L3["L3: Prospect Referral<br/>Throughput = f_prospect × K_prospect"]
+
+    SIZE --- L3
+    LIQ --- L3
+    ACT --- L3
+    BRG --- L3
+
+    L3 --> f3["f_prospect<br/>Trigger frequency"]
+    L3 --> K3["K_prospect = i × c"]
+    K3 --> i3["i_prospect<br/>Reach per share"]
+    K3 --> c3["c_prospect<br/>Conversion"]
+
+    f3 --> bf3a["Prospect share events"]
+    f3 --> bf3b["U_p count"]
+
+    i3 --> bi3a["Unique views from shares"]
+    i3 --> bi3b["Prospect share events"]
+
+    c3 --> bc3a["Signups from shares"]
+    c3 --> bc3b["Views from shares"]
+    c3 --> bc3c["EOIs from signups"]
+```
+
+---
+
 # Loop 4: Cross-Persona Bridge
 
 A single-surface user activates their second surface, crossing from one side to the other.
@@ -345,6 +299,41 @@ graph LR
 | Trigger | -- | Implicit (product prompts, organic discovery, life circumstance) |
 
 **Not an $f \times K$ loop.** No trigger frequency lever. Measured as a period conversion rate. The product lever is reducing friction, not increasing distribution.
+
+---
+
+# Loop 4: Cross-Persona Bridge — metric impact
+
+```mermaid
+graph TD
+    subgraph impact ["Top Metric Impact"]
+        SIZE["Helix Size: UP"]
+        LIQ["Hiring-Side Value Realisation: mixed"]
+        ACT["Prospect-Side Value Realisation: mixed"]
+        BRG["Bridging: UP (only loop)"]
+    end
+
+    L4["L4: Cross-Persona Bridge<br/>No i/c/f — conversion rate only"]
+
+    SIZE --- L4
+    LIQ --- L4
+    ACT --- L4
+    BRG --- L4
+
+    L4 --> BR["Bridge Rate = D_new / U_single"]
+    L4 --> TtB["Time to Bridge"]
+
+    BR --> b1["Surface Activated events"]
+    BR --> b2["Total users U"]
+    BR --> b3["Dual-persona users D"]
+
+    TtB --> t1["Account creation timestamp"]
+    TtB --> t2["Second surface activation timestamp"]
+
+    L4 --> dir["Two directions"]
+    dir --> PtoH["P-to-H: Prospect creates job"]
+    dir --> HtoP["H-to-P: Hiring user creates CL or EOI"]
+```
 
 ---
 
@@ -393,6 +382,40 @@ graph LR
 | Cycle time | Time | Median time from CL view to viewer signup |
 
 Directly fed by Prospect-Side Value Realisation ($CL / U_p$) health metric.
+
+---
+
+# Loop 5: Custom Link Virality — metric impact
+
+```mermaid
+graph TD
+    subgraph impact ["Top Metric Impact"]
+        SIZE["Helix Size: UP"]
+        LIQ["Hiring-Side Value Realisation: DOWN if +J"]
+        ACT["Prospect-Side Value Realisation: --"]
+        BRG["Bridging: DOWN"]
+    end
+
+    L5["L5: Custom Link Virality<br/>Throughput = f_CL × K_CL"]
+
+    SIZE --- L5
+    LIQ --- L5
+    BRG --- L5
+
+    L5 --> f5["f_customlink<br/>Trigger frequency"]
+    L5 --> K5["K_CL = i × c"]
+    K5 --> i5["i_customlink<br/>Views per share"]
+    K5 --> c5["c_customlink<br/>Conversion"]
+
+    f5 --> bf5a["CL Shared events"]
+    f5 --> bf5b["U_p count"]
+
+    i5 --> bi5a["Profile Link Viewed events"]
+    i5 --> bi5b["CL Shared events"]
+
+    c5 --> bc5a["Signups from CL views"]
+    c5 --> bc5b["Profile Link Viewed events"]
+```
 
 ---
 
@@ -452,6 +475,344 @@ Loops amplify each other: Loop 5 brings in hiring-side users who trigger Loops 1
 
 ---
 
+# Act 4: Connecting Metrics to Loops
+
+---
+
+# Each metric is fed by multiple loops
+
+We've seen each loop individually. Now we flip the perspective: for each top-level metric, which loops feed it — and in which direction?
+
+| Loop | Helix Size | Hiring-Side Value Realisation (EOI/J) | Prospect-Side Value Realisation (CL/U_p) | Bridging (D/U) |
+|------|-----------|-------------------|---------------------|----------------|
+| L1: Job Sharing | UP | UP (+EOI) | DOWN (+U_p) | DOWN (+U) |
+| L2: Team Invite | UP | — | — | DOWN (+U) |
+| L3: Prospect Referral | UP | UP (+EOI) | DOWN (+U_p) | DOWN (+U) |
+| L4: Bridge | UP | mixed | mixed | UP (+D) |
+| L5: Custom Link | UP | DOWN (+J) | — | DOWN (+U) |
+
+Every loop increases Helix Size. But health metrics have competing pressures — some loops push them up, others push them down. The following four diagrams decompose each metric into its full dependency tree.
+
+---
+
+# Helix Size — full decomposition
+
+```mermaid
+graph TD
+    subgraph tier1 ["Tier 1: Top Metric"]
+        HS["Helix Size = (U_h × T) + (U_p × EOI)"]
+    end
+
+    subgraph tier2 ["Tier 2: Viral Loops"]
+        L1["L1: Job Sharing"]
+        L2["L2: Team Invite"]
+        L3["L3: Prospect Referral"]
+        L4["L4: Bridge"]
+        L5["L5: Custom Link"]
+    end
+
+    subgraph tier3 ["Tier 3: Loop Levers"]
+        f1["f_share"]
+        i1["i_share"]
+        c1["c_share"]
+        f2["f_invite"]
+        c2["c_invite (i=1)"]
+        f3["f_prospect"]
+        i3["i_prospect"]
+        c3["c_prospect"]
+        BR["Bridge Rate"]
+        f5["f_customlink"]
+        i5["i_customlink"]
+        c5["c_customlink"]
+    end
+
+    subgraph tier4 ["Tier 4: Base Input Metrics"]
+        bf1a["Job Shared events"]
+        bf1b["U_h"]
+        bi1a["Unique link views"]
+        bc1a["Signups from job links"]
+        bc1c["EOIs from signups"]
+        bf2a["Invite events"]
+        bc2a["Invites opened"]
+        bc2b["Invites sent"]
+        bc2c["Invites accepted"]
+        bf3a["Prospect share events"]
+        bf3b["U_p"]
+        bi3a["Views from shares"]
+        bc3a["Signups from shares"]
+        bc3c["EOIs from signups (prospect)"]
+        bBR1["Surface Activated events"]
+        bBR2["Total users U"]
+        bBR3["Dual-persona users D"]
+        bf5a["CL Shared events"]
+        bi5a["Profile Link Viewed"]
+        bc5a["Signups from CL views"]
+    end
+
+    HS -->|"UP"| L1
+    HS -->|"UP"| L2
+    HS -->|"UP"| L3
+    HS -->|"UP"| L4
+    HS -->|"UP"| L5
+
+    L1 --> f1
+    L1 --> i1
+    L1 --> c1
+    L2 --> f2
+    L2 --> c2
+    L3 --> f3
+    L3 --> i3
+    L3 --> c3
+    L4 --> BR
+    L5 --> f5
+    L5 --> i5
+    L5 --> c5
+
+    f1 --> bf1a
+    f1 --> bf1b
+    i1 --> bi1a
+    i1 --> bf1a
+    c1 --> bc1a
+    c1 --> bi1a
+    c1 --> bc1c
+
+    f2 --> bf2a
+    f2 --> bf1b
+    c2 --> bc2a
+    c2 --> bc2b
+    c2 --> bc2c
+
+    f3 --> bf3a
+    f3 --> bf3b
+    i3 --> bi3a
+    i3 --> bf3a
+    c3 --> bc3a
+    c3 --> bi3a
+    c3 --> bc3c
+
+    BR --> bBR1
+    BR --> bBR2
+    BR --> bBR3
+
+    f5 --> bf5a
+    f5 --> bf3b
+    i5 --> bi5a
+    i5 --> bf5a
+    c5 --> bc5a
+    c5 --> bi5a
+```
+
+---
+
+# Hiring-Side Value Realisation — full decomposition
+
+```mermaid
+graph TD
+    subgraph tier1 ["Tier 1: Top Metric"]
+        LIQ["Hiring-Side Value Realisation = EOI / J"]
+    end
+
+    subgraph tier2 ["Tier 2: Viral Loops"]
+        L1["L1: Job Sharing (UP)"]
+        L3["L3: Prospect Referral (UP)"]
+        L4a["L4a: Bridge P-to-H (DOWN)"]
+        L5["L5: Custom Link (DOWN)"]
+    end
+
+    subgraph tier3 ["Tier 3: Loop Levers"]
+        f1["f_share"]
+        i1["i_share"]
+        c1["c_share"]
+        f3["f_prospect"]
+        i3["i_prospect"]
+        c3["c_prospect"]
+        BR["Bridge Rate"]
+        f5["f_customlink"]
+        i5["i_customlink"]
+        c5["c_customlink"]
+    end
+
+    subgraph tier4 ["Tier 4: Base Input Metrics"]
+        bf1a["Job Shared events"]
+        bf1b["U_h"]
+        bi1a["Unique link views"]
+        bc1a["Signups from job links"]
+        bc1c["EOIs from signups"]
+        bf3a["Prospect share events"]
+        bf3b["U_p"]
+        bi3a["Views from shares"]
+        bc3a["Signups from shares"]
+        bc3c["EOIs from signups (prospect)"]
+        bBR1["Surface Activated events"]
+        bBR2["Total users U"]
+        bBR3["Dual-persona users D"]
+        bf5a["CL Shared events"]
+        bi5a["Profile Link Viewed"]
+        bc5a["Signups from CL views"]
+    end
+
+    LIQ --> L1
+    LIQ --> L3
+    LIQ --> L4a
+    LIQ --> L5
+
+    L1 --> f1
+    L1 --> i1
+    L1 --> c1
+    L3 --> f3
+    L3 --> i3
+    L3 --> c3
+    L4a --> BR
+    L5 --> f5
+    L5 --> i5
+    L5 --> c5
+
+    f1 --> bf1a
+    f1 --> bf1b
+    i1 --> bi1a
+    i1 --> bf1a
+    c1 --> bc1a
+    c1 --> bi1a
+    c1 --> bc1c
+
+    f3 --> bf3a
+    f3 --> bf3b
+    i3 --> bi3a
+    i3 --> bf3a
+    c3 --> bc3a
+    c3 --> bi3a
+    c3 --> bc3c
+
+    BR --> bBR1
+    BR --> bBR2
+    BR --> bBR3
+
+    f5 --> bf5a
+    f5 --> bf3b
+    i5 --> bi5a
+    i5 --> bf5a
+    c5 --> bc5a
+    c5 --> bi5a
+```
+
+---
+
+# Prospect-Side Value Realisation — full decomposition
+
+```mermaid
+graph TD
+    subgraph tier1 ["Tier 1: Top Metric"]
+        ACT["Prospect-Side Value Realisation = CL / U_p"]
+    end
+
+    subgraph tier2 ["Tier 2: Viral Loops"]
+        L1["L1: Job Sharing (DOWN)"]
+        L3["L3: Prospect Referral (DOWN)"]
+        L4b["L4b: Bridge H-to-P (UP)"]
+    end
+
+    subgraph tier3 ["Tier 3: Loop Levers"]
+        f1["f_share"]
+        i1["i_share"]
+        c1["c_share"]
+        f3["f_prospect"]
+        i3["i_prospect"]
+        c3["c_prospect"]
+        BR["Bridge Rate"]
+    end
+
+    subgraph tier4 ["Tier 4: Base Input Metrics"]
+        bf1a["Job Shared events"]
+        bf1b["U_h"]
+        bi1a["Unique link views"]
+        bc1a["Signups from job links"]
+        bc1c["EOIs from signups"]
+        bf3a["Prospect share events"]
+        bf3b["U_p"]
+        bi3a["Views from shares"]
+        bc3a["Signups from shares"]
+        bc3c["EOIs from signups (prospect)"]
+        bBR1["Surface Activated events"]
+        bBR2["Total users U"]
+        bBR3["Dual-persona users D"]
+    end
+
+    ACT --> L1
+    ACT --> L3
+    ACT --> L4b
+
+    L1 --> f1
+    L1 --> i1
+    L1 --> c1
+    L3 --> f3
+    L3 --> i3
+    L3 --> c3
+    L4b --> BR
+
+    f1 --> bf1a
+    f1 --> bf1b
+    i1 --> bi1a
+    i1 --> bf1a
+    c1 --> bc1a
+    c1 --> bi1a
+    c1 --> bc1c
+
+    f3 --> bf3a
+    f3 --> bf3b
+    i3 --> bi3a
+    i3 --> bf3a
+    c3 --> bc3a
+    c3 --> bi3a
+    c3 --> bc3c
+
+    BR --> bBR1
+    BR --> bBR2
+    BR --> bBR3
+```
+
+---
+
+# Bridging — full decomposition
+
+```mermaid
+graph TD
+    subgraph tier1 ["Tier 1: Top Metric"]
+        BRG["Bridging = D / U"]
+    end
+
+    subgraph tier2 ["Tier 2: Viral Loops"]
+        L4["L4: Bridge (UP)"]
+        L1["L1: Job Sharing (DOWN)"]
+        L2["L2: Team Invite (DOWN)"]
+        L3["L3: Prospect Referral (DOWN)"]
+        L5["L5: Custom Link (DOWN)"]
+    end
+
+    subgraph tier3 ["Tier 3: Loop Levers"]
+        BR["Bridge Rate"]
+    end
+
+    subgraph tier4 ["Tier 4: Base Input Metrics"]
+        b1["Surface Activated events"]
+        b2["Total users U"]
+        b3["Dual-persona users D"]
+    end
+
+    BRG -->|"UP"| L4
+    BRG -->|"DOWN"| L1
+    BRG -->|"DOWN"| L2
+    BRG -->|"DOWN"| L3
+    BRG -->|"DOWN"| L5
+
+    L4 --> BR
+
+    BR --> b1
+    BR --> b2
+    BR --> b3
+```
+
+---
+
 # What to instrument first
 
 | Priority | Loop | Primary metrics | Why first |
@@ -499,4 +860,4 @@ graph TD
     L5F --> EV
 ```
 
-Every trackable event rolls up through funnels, through loop throughput, through health metrics, to Helix Size — the measure of the network the loops are building.
+Every trackable event rolls up through funnels, through loop throughput, through health metrics, to Helix Size.
