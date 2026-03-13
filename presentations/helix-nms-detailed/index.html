@@ -267,7 +267,7 @@
             <tr><td><span class="sym" data-tex="D"></span></td><td>Dual-persona users (edges on BOTH sides)</td><td><span class="sym" data-tex="U_h \cap U_p"></span></td></tr>
           </tbody>
         </table>
-        <p><strong>Excluded:</strong> Review edges (activity, not structure). CustomLinks (external reach, captured in Loop 5 metrics).</p>
+        <p><strong>Excluded:</strong> Review edges (activity, not structure). CustomLinks (external reach, captured in Loop 4 metrics).</p>
       </section>
 
       <!-- Network Health -->
@@ -278,7 +278,7 @@
         <p>Are jobs getting enough prospect interest? Below threshold, HMs churn because the platform doesn't deliver candidates.</p>
         <h3>Prospect-Side Value Realisation</h3>
         <div class="formula-block" id="formula-activation"></div>
-        <p>(CL = Custom Links) Are prospects using the tools that make Helix valuable? Each custom link seeds Loop 5. </p>
+        <p>(CL = Custom Links) Are prospects using the tools that make Helix valuable? Each custom link seeds Loop 4. </p>
         <h3>Bridging</h3>
         <div class="formula-block" id="formula-bridging"></div>
         <p>Fraction of users on both sides. Cross-persona conversion &mdash; circumstantial, not a product-design lever.</p>
@@ -411,57 +411,9 @@ graph LR
         <img src="loop2-metric-impact.svg" alt="Loop 2 Team Invite metric impact" class="network-img" style="max-height: 440px;">
       </section>
 
-      <!-- Loop 3: Prospect Referral -->
+      <!-- Loop 3: Cross-Persona Bridge -->
       <section data-background-color="#0f172a">
-        <h2>Loop 3: Prospect Referral</h2>
-        <p>A prospect shares a job or profile with peers, bringing new prospects in.</p>
-        <div class="mermaid">
-graph LR
-    P1["Prospect"] -->|"1. shares job/profile"| Friend["Friend"]
-    Friend -->|"2. signs up"| NewP["New Prospect"]
-    NewP -->|"3. expresses interest"| EOI[EOI]
-    EOI -->|targets| Job[Job]
-        </div>
-        <p><strong>Funnel:</strong> Prospect shares &rarr; Friend views &rarr; Signs up &rarr; Expresses interest</p>
-        <p><strong>Growth per completion:</strong> +1 User, +1 EOI</p>
-      </section>
-
-      <!-- Loop 3: Metrics -->
-      <section data-background-color="#0f172a">
-        <h2>Loop 3: Prospect Referral &mdash; metrics</h2>
-        <h3>Variables</h3>
-        <table>
-          <thead><tr><th>Symbol</th><th>Definition</th><th>Source</th></tr></thead>
-          <tbody>
-            <tr><td><span class="sym" data-tex="i_{prospect}"></span></td><td>People reached per prospect share</td><td>Unique views / prospect share events</td></tr>
-            <tr><td><span class="sym" data-tex="c_{prospect}"></span></td><td>Overall conversion: view &rarr; signup &rarr; EOI</td><td>Analytics</td></tr>
-            <tr><td><span class="sym" data-tex="f_{prospect}"></span></td><td>Prospect shares per prospect per day</td><td>Prospect share count / <span class="sym" data-tex="U_p"></span> / days</td></tr>
-          </tbody>
-        </table>
-        <h3>All metrics</h3>
-        <table>
-          <thead><tr><th>Metric</th><th>Type</th><th>Definition</th></tr></thead>
-          <tbody>
-            <tr><td>Shares per prospect</td><td>Volume</td><td>Prospect share events / <span class="sym" data-tex="U_p"></span></td></tr>
-            <tr><td>Reach per share</td><td>Volume</td><td>Unique views / prospect share events</td></tr>
-            <tr><td>View-to-signup rate</td><td>Rate</td><td>Signups / unique views</td></tr>
-            <tr><td>Signup-to-EOI rate</td><td>Rate</td><td>EOIs / signups from prospect shares</td></tr>
-            <tr><td><strong><span class="sym" data-tex="K_{prospect}"></span></strong></td><td><strong>K-factor</strong></td><td><strong><span class="sym" data-tex="i_{prospect} \times c_{prospect}"></span></strong></td></tr>
-            <tr><td><strong>Throughput</strong></td><td><strong>Throughput</strong></td><td><strong><span class="sym" data-tex="f_{prospect} \times K_{prospect}"></span></strong></td></tr>
-            <tr><td>Cycle time</td><td>Time</td><td>Median share to friend's EOI creation</td></tr>
-          </tbody>
-        </table>
-      </section>
-
-      <!-- Loop 3: Metric Impact -->
-      <section data-background-color="#0f172a">
-        <h2>Loop 3: Prospect Referral &mdash; metric impact</h2>
-        <img src="loop3-metric-impact.svg" alt="Loop 3 Prospect Referral metric impact" class="network-img" style="max-height: 440px;">
-      </section>
-
-      <!-- Loop 4: Cross-Persona Bridge -->
-      <section data-background-color="#0f172a">
-        <h2>Loop 4: Cross-Persona Bridge</h2>
+        <h2>Loop 3: Cross-Persona Bridge</h2>
         <p>A single-surface user activates their second surface, crossing from one side to the other.</p>
         <div class="mermaid">
 graph LR
@@ -471,15 +423,15 @@ graph LR
         </div>
         <p><strong>Two directions:</strong></p>
         <ul>
-          <li><strong>Prospect &rarr; Hiring (primary):</strong> creates or joins first job. Creates a new Job that feeds Loops 1, 2, 3.</li>
+          <li><strong>Prospect &rarr; Hiring (primary):</strong> creates or joins first job. Creates a new Job that feeds Loops 1 and 2.</li>
           <li><strong>Hiring &rarr; Prospect:</strong> expresses interest or creates custom link.</li>
         </ul>
         <p><strong>Growth per completion:</strong> +1 Job (prospect&rarr;hiring direction), new edges from the job's sharing and team loops</p>
       </section>
 
-      <!-- Loop 4: Metrics -->
+      <!-- Loop 3: Metrics -->
       <section data-background-color="#0f172a">
-        <h2>Loop 4: Cross-Persona Bridge &mdash; metrics</h2>
+        <h2>Loop 3: Cross-Persona Bridge &mdash; metrics</h2>
         <h3>Variables</h3>
         <table>
           <thead><tr><th>Symbol</th><th>Definition</th><th>Source</th></tr></thead>
@@ -500,15 +452,15 @@ graph LR
         <p><strong>Not an <span class="sym" data-tex="f \times K"></span> loop.</strong> No trigger frequency lever. Measured as a period conversion rate. The product lever is reducing friction, not increasing distribution.</p>
       </section>
 
-      <!-- Loop 4: Metric Impact -->
+      <!-- Loop 3: Metric Impact -->
       <section data-background-color="#0f172a">
-        <h2>Loop 4: Cross-Persona Bridge &mdash; metric impact</h2>
-        <img src="loop4-metric-impact.svg" alt="Loop 4 Cross-Persona Bridge metric impact" class="network-img" style="max-height: 440px;">
+        <h2>Loop 3: Cross-Persona Bridge &mdash; metric impact</h2>
+        <img src="loop3-metric-impact.svg" alt="Loop 3 Cross-Persona Bridge metric impact" class="network-img" style="max-height: 440px;">
       </section>
 
-      <!-- Loop 5: Custom Link Virality -->
+      <!-- Loop 4: Custom Link Virality -->
       <section data-background-color="#0f172a">
-        <h2>Loop 5: Custom Link Virality</h2>
+        <h2>Loop 4: Custom Link Virality</h2>
         <p>A prospect's custom link in external applications pulls hiring contacts to Helix.</p>
         <div class="mermaid">
 graph LR
@@ -523,9 +475,9 @@ graph LR
         <p><strong>Growth per completion:</strong> +1 User (external HM/Recruiter), potentially +1 Job</p>
       </section>
 
-      <!-- Loop 5: Metrics -->
+      <!-- Loop 4: Metrics -->
       <section data-background-color="#0f172a">
-        <h2>Loop 5: Custom Link Virality &mdash; metrics</h2>
+        <h2>Loop 4: Custom Link Virality &mdash; metrics</h2>
         <h3>Variables</h3>
         <table>
           <thead><tr><th>Symbol</th><th>Definition</th><th>Source</th></tr></thead>
@@ -551,10 +503,10 @@ graph LR
         <p>Directly fed by Prospect-Side Value Realisation (<span class="sym" data-tex="CL / U_p"></span>) health metric.</p>
       </section>
 
-      <!-- Loop 5: Metric Impact -->
+      <!-- Loop 4: Metric Impact (Custom Link) -->
       <section data-background-color="#0f172a">
-        <h2>Loop 5: Custom Link Virality &mdash; metric impact</h2>
-        <img src="loop5-metric-impact.svg" alt="Loop 5 Custom Link Virality metric impact" class="network-img" style="max-height: 440px;">
+        <h2>Loop 4: Custom Link Virality &mdash; metric impact</h2>
+        <img src="loop4-metric-impact.svg" alt="Loop 4 Custom Link Virality metric impact" class="network-img" style="max-height: 440px;">
       </section>
 
       <!-- Why throughput -->
@@ -581,7 +533,6 @@ graph LR
           <tbody>
             <tr><td>Job Sharing</td><td>HM &rarr; share &rarr; signup &rarr; EOI</td><td>+1 User, +1 EOI</td><td><span class="sym" data-tex="i_{share} \times c_{share}"></span></td><td>Reach and landing conversion</td></tr>
             <tr><td>Team Invite</td><td>HM &rarr; invite &rarr; accept &rarr; collaborate</td><td>+1 User, +1 Job (Var B)</td><td><span class="sym" data-tex="c_{invite}"></span></td><td>Conversion rate (i is always 1)</td></tr>
-            <tr><td>Prospect Referral</td><td>Prospect &rarr; share &rarr; signup &rarr; EOI</td><td>+1 User, +1 EOI</td><td><span class="sym" data-tex="i_{prospect} \times c_{prospect}"></span></td><td>Trigger frequency</td></tr>
             <tr><td>Cross-Persona Bridge</td><td>Prospect &rarr; creates own Job</td><td>+1 Job</td><td>N/A (bridge rate)</td><td>Friction reduction</td></tr>
             <tr><td>Custom Link</td><td>Prospect &rarr; apply &rarr; HM views &rarr; signup</td><td>+1 User</td><td><span class="sym" data-tex="i_{cl} \times c_{cl}"></span></td><td>Prospect-Side Value Realisation feeds <em>f</em></td></tr>
           </tbody>
@@ -602,9 +553,8 @@ graph LR
           <tbody>
             <tr><td>L1: Job Sharing</td><td>UP</td><td>UP (+EOI)</td><td>DOWN (+U<sub>p</sub>)</td><td>DOWN (+U)</td></tr>
             <tr><td>L2: Team Invite</td><td>UP</td><td>&mdash;</td><td>&mdash;</td><td>DOWN (+U)</td></tr>
-            <tr><td>L3: Prospect Referral</td><td>UP</td><td>UP (+EOI)</td><td>DOWN (+U<sub>p</sub>)</td><td>DOWN (+U)</td></tr>
-            <tr><td>L4: Bridge</td><td>UP</td><td>mixed</td><td>mixed</td><td>UP (+D)</td></tr>
-            <tr><td>L5: Custom Link</td><td>UP</td><td>DOWN (+J)</td><td>&mdash;</td><td>DOWN (+U)</td></tr>
+            <tr><td>L3: Bridge</td><td>UP</td><td>mixed</td><td>mixed</td><td>UP (+D)</td></tr>
+            <tr><td>L4: Custom Link</td><td>UP</td><td>DOWN (+J)</td><td>&mdash;</td><td>DOWN (+U)</td></tr>
           </tbody>
         </table>
         <p>Every loop increases Helix Size. But health metrics have competing pressures &mdash; some loops push them up, others push them down.</p>
@@ -621,15 +571,13 @@ graph TD
     subgraph tier2 ["Tier 2: Viral Loops"]
         L1["L1: Job Sharing"]
         L2["L2: Team Invite"]
-        L3["L3: Prospect Referral"]
-        L4["L4: Bridge"]
-        L5["L5: Custom Link"]
+        L3["L3: Bridge"]
+        L4["L4: Custom Link"]
     end
     HS -->|"UP"| L1
     HS -->|"UP"| L2
     HS -->|"UP"| L3
     HS -->|"UP"| L4
-    HS -->|"UP"| L5
         </div>
       </section>
 
@@ -643,14 +591,12 @@ graph TD
     end
     subgraph tier2 ["Tier 2: Viral Loops"]
         L1["L1: Job Sharing (UP)"]
-        L3["L3: Prospect Referral (UP)"]
-        L4a["L4a: Bridge P-to-H (DOWN)"]
-        L5["L5: Custom Link (DOWN)"]
+        L3a["L3a: Bridge P-to-H (DOWN)"]
+        L4["L4: Custom Link (DOWN)"]
     end
     LIQ --> L1
-    LIQ --> L3
-    LIQ --> L4a
-    LIQ --> L5
+    LIQ --> L3a
+    LIQ --> L4
         </div>
       </section>
 
@@ -664,12 +610,10 @@ graph TD
     end
     subgraph tier2 ["Tier 2: Viral Loops"]
         L1["L1: Job Sharing (DOWN)"]
-        L3["L3: Prospect Referral (DOWN)"]
-        L4b["L4b: Bridge H-to-P (UP)"]
+        L3b["L3b: Bridge H-to-P (UP)"]
     end
     ACT --> L1
-    ACT --> L3
-    ACT --> L4b
+    ACT --> L3b
         </div>
       </section>
 
@@ -682,17 +626,15 @@ graph TD
         BRG["Bridging = D / U"]
     end
     subgraph tier2 ["Tier 2: Viral Loops"]
-        L4["L4: Bridge (UP)"]
+        L3["L3: Bridge (UP)"]
         L1["L1: Job Sharing (DOWN)"]
         L2["L2: Team Invite (DOWN)"]
-        L3["L3: Prospect Referral (DOWN)"]
-        L5["L5: Custom Link (DOWN)"]
+        L4["L4: Custom Link (DOWN)"]
     end
-    BRG -->|"UP"| L4
+    BRG -->|"UP"| L3
     BRG -->|"DOWN"| L1
     BRG -->|"DOWN"| L2
-    BRG -->|"DOWN"| L3
-    BRG -->|"DOWN"| L5
+    BRG -->|"DOWN"| L4
         </div>
       </section>
 

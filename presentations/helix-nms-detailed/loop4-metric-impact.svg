@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 490"
      font-family="Inter, system-ui, -apple-system, sans-serif">
   <defs>
     <filter id="glow-teal" x="-30%" y="-30%" width="160%" height="160%">
@@ -23,12 +23,6 @@
     <filter id="glow-gray" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="3" result="blur"/>
       <feFlood flood-color="#94a3b8" flood-opacity="0.2" result="color"/>
-      <feComposite in="color" in2="blur" operator="in" result="glow"/>
-      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="glow-purple" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feFlood flood-color="#A78BFA" flood-opacity="0.3" result="color"/>
       <feComposite in="color" in2="blur" operator="in" result="glow"/>
       <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
@@ -56,14 +50,10 @@
       <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.14"/>
       <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.05"/>
     </linearGradient>
-    <linearGradient id="grad-purple" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#A78BFA" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="#A78BFA" stop-opacity="0.07"/>
-    </linearGradient>
   </defs>
 
   <!-- Background -->
-  <rect width="1200" height="440" fill="#0f172a" rx="14"/>
+  <rect width="1200" height="490" fill="#0f172a" rx="14"/>
 
   <!-- ZONE: Top Metric Impact -->
   <rect x="40" y="8" width="1120" height="76" rx="12"
@@ -75,37 +65,38 @@
 
   <!-- === EDGES === -->
 
-  <!-- SIZE to L4 -->
-  <path d="M 180,72 C 180,100 446,100 446,130" fill="none"
+  <!-- SIZE to L5 -->
+  <path d="M 180,72 C 180,96 465,96 465,120" fill="none"
         stroke="#2DD4BF" stroke-width="1.5" opacity="0.55"/>
-  <!-- LIQ to L4 -->
-  <path d="M 415,72 C 415,100 522,100 522,130" fill="none"
-        stroke="#4A90D9" stroke-width="1.5" opacity="0.55"/>
-  <!-- ACT to L4 -->
-  <path d="M 660,72 C 660,100 598,100 598,130" fill="none"
-        stroke="#4A90D9" stroke-width="1.5" opacity="0.55"/>
-  <!-- BRG to L4 -->
-  <path d="M 920,72 C 920,100 674,100 674,130" fill="none"
-        stroke="#2DD4BF" stroke-width="1.5" opacity="0.55"/>
+  <!-- LIQ to L5 -->
+  <path d="M 415,72 C 415,96 560,96 560,120" fill="none"
+        stroke="#FB923C" stroke-width="1.5" opacity="0.55"/>
+  <!-- BRG to L5 -->
+  <path d="M 920,72 C 920,96 655,96 655,120" fill="none"
+        stroke="#FB923C" stroke-width="1.5" opacity="0.55"/>
 
-  <!-- L4 to Bridge Rate -->
-  <path d="M 465,182 C 465,208 230,208 230,234" fill="none"
+  <!-- L5 to f_customlink -->
+  <path d="M 497,172 C 497,194 295,194 295,216" fill="none"
         stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arrow-blue)" opacity="0.8"/>
-  <!-- L4 to Time to Bridge -->
-  <path d="M 560,182 L 560,234" fill="none"
-        stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arrow-blue)" opacity="0.8"/>
-  <!-- L4 to Two directions -->
-  <path d="M 655,182 C 655,208 920,208 920,234" fill="none"
+  <!-- L5 to K_CL -->
+  <path d="M 623,172 C 623,194 790,194 790,216" fill="none"
         stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arrow-blue)" opacity="0.8"/>
 
-  <!-- Bridge Rate to base -->
-  <path d="M 230,282 L 230,340" fill="none"
+  <!-- K to i_customlink -->
+  <path d="M 753,264 C 753,285 700,285 700,306" fill="none"
+        stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arrow-blue)" opacity="0.8"/>
+  <!-- K to c_customlink -->
+  <path d="M 827,264 C 827,285 925,285 925,306" fill="none"
+        stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arrow-blue)" opacity="0.8"/>
+
+  <!-- f to base_f -->
+  <path d="M 295,264 L 295,396" fill="none"
         stroke="#64748b" stroke-width="1.3" marker-end="url(#arrow-gray)" opacity="0.55"/>
-  <!-- Time to Bridge to base -->
-  <path d="M 560,282 L 560,340" fill="none"
+  <!-- i to base_i -->
+  <path d="M 700,354 C 700,375 675,375 675,396" fill="none"
         stroke="#64748b" stroke-width="1.3" marker-end="url(#arrow-gray)" opacity="0.55"/>
-  <!-- Two directions to base -->
-  <path d="M 920,282 L 920,340" fill="none"
+  <!-- c to base_c -->
+  <path d="M 925,354 C 925,375 945,375 945,396" fill="none"
         stroke="#64748b" stroke-width="1.3" marker-end="url(#arrow-gray)" opacity="0.55"/>
 
   <!-- === NODES === -->
@@ -117,89 +108,95 @@
     <text x="180" y="57" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Helix Size: <tspan fill="#2DD4BF" font-weight="700">UP</tspan></text>
   </g>
 
-  <!-- HS Value Realisation: mixed -->
-  <g filter="url(#glow-blue)">
+  <!-- HS Value Realisation: DOWN if +J -->
+  <g filter="url(#glow-orange)">
     <rect x="300" y="32" width="230" height="40" rx="10"
-          fill="url(#grad-blue)" stroke="#4A90D9" stroke-opacity="0.45" stroke-width="1.5"/>
-    <text x="415" y="57" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">HS Value Realisation: <tspan fill="#4A90D9" font-weight="700">mixed</tspan></text>
+          fill="url(#grad-orange)" stroke="#FB923C" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="415" y="57" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">HS Value Realisation: <tspan fill="#FB923C" font-weight="700">DOWN</tspan></text>
   </g>
 
-  <!-- PS Value Realisation: mixed -->
-  <g filter="url(#glow-blue)">
+  <!-- PS Value Realisation: neutral (not connected, gray) -->
+  <g filter="url(#glow-gray)">
     <rect x="540" y="32" width="250" height="40" rx="10"
-          fill="url(#grad-blue)" stroke="#4A90D9" stroke-opacity="0.45" stroke-width="1.5"/>
-    <text x="665" y="57" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">PS Value Realisation: <tspan fill="#4A90D9" font-weight="700">mixed</tspan></text>
+          fill="url(#grad-gray)" stroke="#94a3b8" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="665" y="57" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="600">PS Value Realisation: --</text>
   </g>
 
-  <!-- Bridging: UP (only loop) -->
-  <g filter="url(#glow-teal)">
-    <rect x="800" y="32" width="240" height="40" rx="10"
-          fill="url(#grad-teal)" stroke="#2DD4BF" stroke-opacity="0.45" stroke-width="1.5"/>
-    <text x="920" y="57" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Bridging: <tspan fill="#2DD4BF" font-weight="700">UP (only loop)</tspan></text>
+  <!-- Bridging: DOWN -->
+  <g filter="url(#glow-orange)">
+    <rect x="820" y="32" width="200" height="40" rx="10"
+          fill="url(#grad-orange)" stroke="#FB923C" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="920" y="57" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Bridging: <tspan fill="#FB923C" font-weight="700">DOWN</tspan></text>
   </g>
 
-  <!-- L4: Cross-Persona Bridge -->
+  <!-- L5: Custom Link Virality -->
   <g filter="url(#glow-blue)">
-    <rect x="370" y="130" width="380" height="52" rx="10"
+    <rect x="370" y="120" width="380" height="52" rx="10"
           fill="url(#grad-blue)" stroke="#4A90D9" stroke-opacity="0.55" stroke-width="1.5"/>
-    <text x="560" y="155" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">L4: Cross-Persona Bridge</text>
-    <text x="560" y="173" text-anchor="middle" fill="#cbd5e1" font-size="10">No i/c/f -- conversion rate only</text>
+    <text x="560" y="145" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">L5: Custom Link Virality</text>
+    <text x="560" y="163" text-anchor="middle" fill="#cbd5e1" font-size="10">Throughput = f_CL x K_CL</text>
   </g>
 
-  <!-- Bridge Rate -->
+  <!-- f_customlink -->
   <g filter="url(#glow-teal)">
-    <rect x="100" y="234" width="260" height="48" rx="10"
+    <rect x="180" y="216" width="230" height="48" rx="10"
           fill="url(#grad-teal)" stroke="#2DD4BF" stroke-opacity="0.45" stroke-width="1.5"/>
-    <text x="230" y="256" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">Bridge Rate</text>
-    <text x="230" y="272" text-anchor="middle" fill="#cbd5e1" font-size="10">D_new / U_single</text>
+    <text x="295" y="238" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">f_customlink</text>
+    <text x="295" y="254" text-anchor="middle" fill="#cbd5e1" font-size="10">Trigger frequency</text>
   </g>
 
-  <!-- Time to Bridge -->
+  <!-- K_CL = i x c -->
   <g filter="url(#glow-teal)">
-    <rect x="430" y="234" width="260" height="48" rx="10"
+    <rect x="680" y="216" width="220" height="48" rx="10"
           fill="url(#grad-teal)" stroke="#2DD4BF" stroke-opacity="0.45" stroke-width="1.5"/>
-    <text x="560" y="256" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">Time to Bridge</text>
-    <text x="560" y="272" text-anchor="middle" fill="#cbd5e1" font-size="10">Median latency</text>
+    <text x="790" y="238" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">K_CL = i x c</text>
+    <text x="790" y="254" text-anchor="middle" fill="#cbd5e1" font-size="10">K-factor</text>
   </g>
 
-  <!-- Two directions -->
-  <g filter="url(#glow-purple)">
-    <rect x="770" y="234" width="300" height="48" rx="10"
-          fill="url(#grad-purple)" stroke="#A78BFA" stroke-opacity="0.45" stroke-width="1.5"/>
-    <text x="920" y="256" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">Two directions</text>
-    <text x="920" y="272" text-anchor="middle" fill="#cbd5e1" font-size="10">P-to-H and H-to-P</text>
+  <!-- i_customlink -->
+  <g filter="url(#glow-teal)">
+    <rect x="595" y="306" width="210" height="48" rx="10"
+          fill="url(#grad-teal)" stroke="#2DD4BF" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="700" y="328" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">i_customlink</text>
+    <text x="700" y="344" text-anchor="middle" fill="#cbd5e1" font-size="10">Views per share</text>
   </g>
 
-  <!-- Base: under Bridge Rate -->
+  <!-- c_customlink -->
+  <g filter="url(#glow-teal)">
+    <rect x="840" y="306" width="170" height="48" rx="10"
+          fill="url(#grad-teal)" stroke="#2DD4BF" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="925" y="328" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">c_customlink</text>
+    <text x="925" y="344" text-anchor="middle" fill="#cbd5e1" font-size="10">Conversion</text>
+  </g>
+
+  <!-- Base: under f_customlink -->
   <g filter="url(#glow-gray)">
-    <rect x="85" y="340" width="290" height="68" rx="10"
+    <rect x="170" y="396" width="250" height="52" rx="10"
           fill="url(#grad-gray)" stroke="#94a3b8" stroke-opacity="0.3" stroke-width="1"/>
-    <circle cx="115" cy="358" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
-    <text x="127" y="362" fill="#cbd5e1" font-size="10" font-weight="500">Surface Activated events</text>
-    <circle cx="115" cy="378" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
-    <text x="127" y="382" fill="#94a3b8" font-size="10">Total users U</text>
-    <circle cx="115" cy="398" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
-    <text x="127" y="402" fill="#94a3b8" font-size="10">Dual-persona users D</text>
+    <circle cx="200" cy="416" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
+    <text x="212" y="420" fill="#cbd5e1" font-size="10" font-weight="500">CL Shared events</text>
+    <circle cx="200" cy="436" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
+    <text x="212" y="440" fill="#94a3b8" font-size="10">U_p count</text>
   </g>
 
-  <!-- Base: under Time to Bridge -->
+  <!-- Base: under i_customlink -->
   <g filter="url(#glow-gray)">
-    <rect x="415" y="340" width="290" height="52" rx="10"
+    <rect x="545" y="396" width="260" height="52" rx="10"
           fill="url(#grad-gray)" stroke="#94a3b8" stroke-opacity="0.3" stroke-width="1"/>
-    <circle cx="445" cy="360" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
-    <text x="457" y="364" fill="#cbd5e1" font-size="10" font-weight="500">Account creation timestamp</text>
-    <circle cx="445" cy="380" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
-    <text x="457" y="384" fill="#94a3b8" font-size="10">Second surface activation timestamp</text>
+    <circle cx="575" cy="416" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
+    <text x="587" y="420" fill="#cbd5e1" font-size="10" font-weight="500">Profile Link Viewed events</text>
+    <circle cx="575" cy="436" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
+    <text x="587" y="440" fill="#94a3b8" font-size="10">CL Shared events</text>
   </g>
 
-  <!-- Base: under Two directions -->
+  <!-- Base: under c_customlink -->
   <g filter="url(#glow-gray)">
-    <rect x="750" y="340" width="340" height="52" rx="10"
+    <rect x="825" y="396" width="250" height="52" rx="10"
           fill="url(#grad-gray)" stroke="#94a3b8" stroke-opacity="0.3" stroke-width="1"/>
-    <circle cx="780" cy="360" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
-    <text x="792" y="364" fill="#cbd5e1" font-size="10" font-weight="500">P-to-H: Prospect creates job</text>
-    <circle cx="780" cy="380" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
-    <text x="792" y="384" fill="#94a3b8" font-size="10">H-to-P: Hiring user creates CL or EOI</text>
+    <circle cx="855" cy="416" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
+    <text x="867" y="420" fill="#cbd5e1" font-size="10" font-weight="500">Signups from CL views</text>
+    <circle cx="855" cy="436" r="2.5" fill="#94a3b8" fill-opacity="0.6"/>
+    <text x="867" y="440" fill="#94a3b8" font-size="10">Profile Link Viewed events</text>
   </g>
 
 </svg>

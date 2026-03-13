@@ -180,87 +180,7 @@ graph TD
 
 ---
 
-# Loop 3: Prospect Referral
-
-A prospect shares a job or profile with peers, bringing new prospects in.
-
-```mermaid
-graph LR
-    P1["Prospect"] -->|"1. shares job/profile"| Friend["Friend"]
-    Friend -->|"2. signs up"| NewP["New Prospect"]
-    NewP -->|"3. expresses interest"| EOI[EOI]
-    EOI -->|targets| Job[Job]
-```
-
-**Funnel:** Prospect shares -> Friend views -> Signs up -> Expresses interest
-
-**Growth per completion:** +1 User, +1 EOI
-
----
-
-# Loop 3: Prospect Referral — metrics
-
-### Variables
-
-| Symbol | Definition | Source |
-|--------|-----------|--------|
-| $i_{prospect}$ | People reached per prospect share | Unique views / prospect share events |
-| $c_{prospect}$ | Overall conversion: view -> signup -> EOI | Analytics |
-| $f_{prospect}$ | Prospect shares per prospect per day | Prospect share count / $U_p$ / days |
-
-### All metrics
-
-| Metric | Type | Definition |
-|--------|------|-----------|
-| Shares per prospect | Volume | Prospect share events / $U_p$ |
-| Reach per share ($i_{prospect}$) | Volume | Unique views / prospect share events |
-| View-to-signup rate | Rate | Signups from prospect shares / unique views |
-| Signup-to-EOI rate | Rate | EOIs created / signups from prospect shares |
-| $c_{prospect}$ | Rate | View-to-signup × signup-to-EOI |
-| **$K_{prospect}$** | **K-factor** | **$i_{prospect} \times c_{prospect}$** |
-| Trigger frequency ($f_{prospect}$) | Frequency | Prospect share events per prospect per day |
-| **$\text{Throughput}_{prospect}$** | **Throughput** | **$f_{prospect} \times K_{prospect}$** |
-| Cycle time | Time | Median time from prospect share to friend's EOI creation |
-
----
-
-# Loop 3: Prospect Referral — metric impact
-
-```mermaid
-graph TD
-    subgraph impact ["Top Metric Impact"]
-        SIZE["Helix Size: UP"]
-        LIQ["Hiring-Side Value Realisation: UP"]
-        ACT["Prospect-Side Value Realisation: DOWN"]
-        BRG["Bridging: DOWN"]
-    end
-
-    L3["L3: Prospect Referral<br/>Throughput = f_prospect × K_prospect"]
-
-    SIZE --- L3
-    LIQ --- L3
-    ACT --- L3
-    BRG --- L3
-
-    L3 --> f3["f_prospect<br/>Trigger frequency"]
-    L3 --> K3["K_prospect = i × c"]
-    K3 --> i3["i_prospect<br/>Reach per share"]
-    K3 --> c3["c_prospect<br/>Conversion"]
-
-    f3 --> bf3a["Prospect share events"]
-    f3 --> bf3b["U_p count"]
-
-    i3 --> bi3a["Unique views from shares"]
-    i3 --> bi3b["Prospect share events"]
-
-    c3 --> bc3a["Signups from shares"]
-    c3 --> bc3b["Views from shares"]
-    c3 --> bc3c["EOIs from signups"]
-```
-
----
-
-# Loop 4: Cross-Persona Bridge
+# Loop 3: Cross-Persona Bridge
 
 A single-surface user activates their second surface, crossing from one side to the other.
 
@@ -274,14 +194,14 @@ graph LR
 **Funnel:** Single-surface user exists -> Activates second surface -> Becomes dual-persona
 
 **Two directions:**
-- Prospect -> Hiring (primary): creates or joins first job. Creates a new Job that feeds Loops 1, 2, 3.
+- Prospect -> Hiring (primary): creates or joins first job. Creates a new Job that feeds Loops 1 and 2.
 - Hiring -> Prospect: expresses interest or creates custom link.
 
 **Growth per completion:** +1 Job (prospect->hiring direction), new edges from the job's sharing and team loops
 
 ---
 
-# Loop 4: Cross-Persona Bridge — metrics
+# Loop 3: Cross-Persona Bridge — metrics
 
 ### Variables
 
@@ -302,7 +222,7 @@ graph LR
 
 ---
 
-# Loop 4: Cross-Persona Bridge — metric impact
+# Loop 3: Cross-Persona Bridge — metric impact
 
 ```mermaid
 graph TD
@@ -313,15 +233,15 @@ graph TD
         BRG["Bridging: UP (only loop)"]
     end
 
-    L4["L4: Cross-Persona Bridge<br/>No i/c/f — conversion rate only"]
+    L3["L3: Cross-Persona Bridge<br/>No i/c/f — conversion rate only"]
 
-    SIZE --- L4
-    LIQ --- L4
-    ACT --- L4
-    BRG --- L4
+    SIZE --- L3
+    LIQ --- L3
+    ACT --- L3
+    BRG --- L3
 
-    L4 --> BR["Bridge Rate = D_new / U_single"]
-    L4 --> TtB["Time to Bridge"]
+    L3 --> BR["Bridge Rate = D_new / U_single"]
+    L3 --> TtB["Time to Bridge"]
 
     BR --> b1["Surface Activated events"]
     BR --> b2["Total users U"]
@@ -330,14 +250,14 @@ graph TD
     TtB --> t1["Account creation timestamp"]
     TtB --> t2["Second surface activation timestamp"]
 
-    L4 --> dir["Two directions"]
+    L3 --> dir["Two directions"]
     dir --> PtoH["P-to-H: Prospect creates job"]
     dir --> HtoP["H-to-P: Hiring user creates CL or EOI"]
 ```
 
 ---
 
-# Loop 5: Custom Link Virality
+# Loop 4: Custom Link Virality
 
 A prospect's custom link in external applications pulls hiring contacts to Helix.
 
@@ -357,7 +277,7 @@ graph LR
 
 ---
 
-# Loop 5: Custom Link Virality — metrics
+# Loop 4: Custom Link Virality — metrics
 
 ### Variables
 
@@ -385,7 +305,7 @@ Directly fed by Prospect-Side Value Realisation ($CL / U_p$) health metric.
 
 ---
 
-# Loop 5: Custom Link Virality — metric impact
+# Loop 4: Custom Link Virality — metric impact
 
 ```mermaid
 graph TD
@@ -396,25 +316,25 @@ graph TD
         BRG["Bridging: DOWN"]
     end
 
-    L5["L5: Custom Link Virality<br/>Throughput = f_CL × K_CL"]
+    L4["L4: Custom Link Virality<br/>Throughput = f_CL × K_CL"]
 
-    SIZE --- L5
-    LIQ --- L5
-    BRG --- L5
+    SIZE --- L4
+    LIQ --- L4
+    BRG --- L4
 
-    L5 --> f5["f_customlink<br/>Trigger frequency"]
-    L5 --> K5["K_CL = i × c"]
-    K5 --> i5["i_customlink<br/>Views per share"]
-    K5 --> c5["c_customlink<br/>Conversion"]
+    L4 --> f4["f_customlink<br/>Trigger frequency"]
+    L4 --> K4["K_CL = i × c"]
+    K4 --> i4["i_customlink<br/>Views per share"]
+    K4 --> c4["c_customlink<br/>Conversion"]
 
-    f5 --> bf5a["CL Shared events"]
-    f5 --> bf5b["U_p count"]
+    f4 --> bf4a["CL Shared events"]
+    f4 --> bf4b["U_p count"]
 
-    i5 --> bi5a["Profile Link Viewed events"]
-    i5 --> bi5b["CL Shared events"]
+    i4 --> bi4a["Profile Link Viewed events"]
+    i4 --> bi4b["CL Shared events"]
 
-    c5 --> bc5a["Signups from CL views"]
-    c5 --> bc5b["Profile Link Viewed events"]
+    c4 --> bc4a["Signups from CL views"]
+    c4 --> bc4b["Profile Link Viewed events"]
 ```
 
 ---
@@ -457,9 +377,9 @@ graph TD
     end
 ```
 
-In $K = i \times c$, the $i$ **is** the fan-out. A prospect who creates multiple custom links triggers multiple Loop 5 instances.
+In $K = i \times c$, the $i$ **is** the fan-out. A prospect who creates multiple custom links triggers multiple Loop 4 instances.
 
-Loops amplify each other: Loop 5 brings in hiring-side users who trigger Loops 1 and 2. Loop 4 creates new Jobs that feed Loops 1, 2, and 3. Each loop operates independently but compounds through shared nodes.
+Loops amplify each other: Loop 4 brings in hiring-side users who trigger Loops 1 and 2. Loop 3 creates new Jobs that feed Loops 1 and 2. Each loop operates independently but compounds through shared nodes.
 
 ---
 
@@ -469,7 +389,6 @@ Loops amplify each other: Loop 5 brings in hiring-side users who trigger Loops 1
 |------|------|-----------|----------|-----------|
 | Job Sharing | HM/Recruiter -> share -> signup -> EOI | +1 User, +1 EOI | $i_{share} \times c_{share}$ | Reach ($i$) and landing conversion ($c$) |
 | Team Invite | HM/Recruiter -> invite -> accept -> collaborate | +1 User, +1 Job (Var B) | $c_{invite}$ | Conversion rate (i is always 1) |
-| Prospect Referral | Prospect -> share -> friend signs up -> EOI | +1 User, +1 EOI | $i_{prospect} \times c_{prospect}$ | Trigger frequency ($f$) |
 | Cross-Persona Bridge | Prospect -> creates own Job | +1 Job | N/A (bridge rate) | Friction reduction |
 | Custom Link | Prospect -> apply externally -> HM views -> signs up | +1 User | $i_{cl} \times c_{cl}$ | Prospect-Side Value Realisation feeds $f$ |
 
@@ -487,9 +406,8 @@ We've seen each loop individually. Now we flip the perspective: for each top-lev
 |------|-----------|-------------------|---------------------|----------------|
 | L1: Job Sharing | UP | UP (+EOI) | DOWN (+U_p) | DOWN (+U) |
 | L2: Team Invite | UP | — | — | DOWN (+U) |
-| L3: Prospect Referral | UP | UP (+EOI) | DOWN (+U_p) | DOWN (+U) |
-| L4: Bridge | UP | mixed | mixed | UP (+D) |
-| L5: Custom Link | UP | DOWN (+J) | — | DOWN (+U) |
+| L3: Bridge | UP | mixed | mixed | UP (+D) |
+| L4: Custom Link | UP | DOWN (+J) | — | DOWN (+U) |
 
 Every loop increases Helix Size. But health metrics have competing pressures — some loops push them up, others push them down. The following four diagrams decompose each metric into its full dependency tree.
 
@@ -506,9 +424,8 @@ graph TD
     subgraph tier2 ["Tier 2: Viral Loops"]
         L1["L1: Job Sharing"]
         L2["L2: Team Invite"]
-        L3["L3: Prospect Referral"]
-        L4["L4: Bridge"]
-        L5["L5: Custom Link"]
+        L3["L3: Bridge"]
+        L4["L4: Custom Link"]
     end
 
     subgraph tier3 ["Tier 3: Loop Levers"]
@@ -517,13 +434,10 @@ graph TD
         c1["c_share"]
         f2["f_invite"]
         c2["c_invite (i=1)"]
-        f3["f_prospect"]
-        i3["i_prospect"]
-        c3["c_prospect"]
         BR["Bridge Rate"]
-        f5["f_customlink"]
-        i5["i_customlink"]
-        c5["c_customlink"]
+        f4["f_customlink"]
+        i4["i_customlink"]
+        c4["c_customlink"]
     end
 
     subgraph tier4 ["Tier 4: Base Input Metrics"]
@@ -536,37 +450,29 @@ graph TD
         bc2a["Invites opened"]
         bc2b["Invites sent"]
         bc2c["Invites accepted"]
-        bf3a["Prospect share events"]
-        bf3b["U_p"]
-        bi3a["Views from shares"]
-        bc3a["Signups from shares"]
-        bc3c["EOIs from signups (prospect)"]
         bBR1["Surface Activated events"]
         bBR2["Total users U"]
         bBR3["Dual-persona users D"]
-        bf5a["CL Shared events"]
-        bi5a["Profile Link Viewed"]
-        bc5a["Signups from CL views"]
+        bf4a["CL Shared events"]
+        bf4b["U_p"]
+        bi4a["Profile Link Viewed"]
+        bc4a["Signups from CL views"]
     end
 
     HS -->|"UP"| L1
     HS -->|"UP"| L2
     HS -->|"UP"| L3
     HS -->|"UP"| L4
-    HS -->|"UP"| L5
 
     L1 --> f1
     L1 --> i1
     L1 --> c1
     L2 --> f2
     L2 --> c2
-    L3 --> f3
-    L3 --> i3
-    L3 --> c3
-    L4 --> BR
-    L5 --> f5
-    L5 --> i5
-    L5 --> c5
+    L3 --> BR
+    L4 --> f4
+    L4 --> i4
+    L4 --> c4
 
     f1 --> bf1a
     f1 --> bf1b
@@ -582,24 +488,16 @@ graph TD
     c2 --> bc2b
     c2 --> bc2c
 
-    f3 --> bf3a
-    f3 --> bf3b
-    i3 --> bi3a
-    i3 --> bf3a
-    c3 --> bc3a
-    c3 --> bi3a
-    c3 --> bc3c
-
     BR --> bBR1
     BR --> bBR2
     BR --> bBR3
 
-    f5 --> bf5a
-    f5 --> bf3b
-    i5 --> bi5a
-    i5 --> bf5a
-    c5 --> bc5a
-    c5 --> bi5a
+    f4 --> bf4a
+    f4 --> bf4b
+    i4 --> bi4a
+    i4 --> bf4a
+    c4 --> bc4a
+    c4 --> bi4a
 ```
 
 ---
@@ -614,22 +512,18 @@ graph TD
 
     subgraph tier2 ["Tier 2: Viral Loops"]
         L1["L1: Job Sharing (UP)"]
-        L3["L3: Prospect Referral (UP)"]
-        L4a["L4a: Bridge P-to-H (DOWN)"]
-        L5["L5: Custom Link (DOWN)"]
+        L3a["L3a: Bridge P-to-H (DOWN)"]
+        L4["L4: Custom Link (DOWN)"]
     end
 
     subgraph tier3 ["Tier 3: Loop Levers"]
         f1["f_share"]
         i1["i_share"]
         c1["c_share"]
-        f3["f_prospect"]
-        i3["i_prospect"]
-        c3["c_prospect"]
         BR["Bridge Rate"]
-        f5["f_customlink"]
-        i5["i_customlink"]
-        c5["c_customlink"]
+        f4["f_customlink"]
+        i4["i_customlink"]
+        c4["c_customlink"]
     end
 
     subgraph tier4 ["Tier 4: Base Input Metrics"]
@@ -638,34 +532,26 @@ graph TD
         bi1a["Unique link views"]
         bc1a["Signups from job links"]
         bc1c["EOIs from signups"]
-        bf3a["Prospect share events"]
-        bf3b["U_p"]
-        bi3a["Views from shares"]
-        bc3a["Signups from shares"]
-        bc3c["EOIs from signups (prospect)"]
         bBR1["Surface Activated events"]
         bBR2["Total users U"]
         bBR3["Dual-persona users D"]
-        bf5a["CL Shared events"]
-        bi5a["Profile Link Viewed"]
-        bc5a["Signups from CL views"]
+        bf4a["CL Shared events"]
+        bf4b["U_p"]
+        bi4a["Profile Link Viewed"]
+        bc4a["Signups from CL views"]
     end
 
     LIQ --> L1
-    LIQ --> L3
-    LIQ --> L4a
-    LIQ --> L5
+    LIQ --> L3a
+    LIQ --> L4
 
     L1 --> f1
     L1 --> i1
     L1 --> c1
-    L3 --> f3
-    L3 --> i3
-    L3 --> c3
-    L4a --> BR
-    L5 --> f5
-    L5 --> i5
-    L5 --> c5
+    L3a --> BR
+    L4 --> f4
+    L4 --> i4
+    L4 --> c4
 
     f1 --> bf1a
     f1 --> bf1b
@@ -675,24 +561,16 @@ graph TD
     c1 --> bi1a
     c1 --> bc1c
 
-    f3 --> bf3a
-    f3 --> bf3b
-    i3 --> bi3a
-    i3 --> bf3a
-    c3 --> bc3a
-    c3 --> bi3a
-    c3 --> bc3c
-
     BR --> bBR1
     BR --> bBR2
     BR --> bBR3
 
-    f5 --> bf5a
-    f5 --> bf3b
-    i5 --> bi5a
-    i5 --> bf5a
-    c5 --> bc5a
-    c5 --> bi5a
+    f4 --> bf4a
+    f4 --> bf4b
+    i4 --> bi4a
+    i4 --> bf4a
+    c4 --> bc4a
+    c4 --> bi4a
 ```
 
 ---
@@ -707,17 +585,13 @@ graph TD
 
     subgraph tier2 ["Tier 2: Viral Loops"]
         L1["L1: Job Sharing (DOWN)"]
-        L3["L3: Prospect Referral (DOWN)"]
-        L4b["L4b: Bridge H-to-P (UP)"]
+        L3b["L3b: Bridge H-to-P (UP)"]
     end
 
     subgraph tier3 ["Tier 3: Loop Levers"]
         f1["f_share"]
         i1["i_share"]
         c1["c_share"]
-        f3["f_prospect"]
-        i3["i_prospect"]
-        c3["c_prospect"]
         BR["Bridge Rate"]
     end
 
@@ -727,27 +601,18 @@ graph TD
         bi1a["Unique link views"]
         bc1a["Signups from job links"]
         bc1c["EOIs from signups"]
-        bf3a["Prospect share events"]
-        bf3b["U_p"]
-        bi3a["Views from shares"]
-        bc3a["Signups from shares"]
-        bc3c["EOIs from signups (prospect)"]
         bBR1["Surface Activated events"]
         bBR2["Total users U"]
         bBR3["Dual-persona users D"]
     end
 
     ACT --> L1
-    ACT --> L3
-    ACT --> L4b
+    ACT --> L3b
 
     L1 --> f1
     L1 --> i1
     L1 --> c1
-    L3 --> f3
-    L3 --> i3
-    L3 --> c3
-    L4b --> BR
+    L3b --> BR
 
     f1 --> bf1a
     f1 --> bf1b
@@ -756,14 +621,6 @@ graph TD
     c1 --> bc1a
     c1 --> bi1a
     c1 --> bc1c
-
-    f3 --> bf3a
-    f3 --> bf3b
-    i3 --> bi3a
-    i3 --> bf3a
-    c3 --> bc3a
-    c3 --> bi3a
-    c3 --> bc3c
 
     BR --> bBR1
     BR --> bBR2
@@ -781,11 +638,10 @@ graph TD
     end
 
     subgraph tier2 ["Tier 2: Viral Loops"]
-        L4["L4: Bridge (UP)"]
+        L3["L3: Bridge (UP)"]
         L1["L1: Job Sharing (DOWN)"]
         L2["L2: Team Invite (DOWN)"]
-        L3["L3: Prospect Referral (DOWN)"]
-        L5["L5: Custom Link (DOWN)"]
+        L4["L4: Custom Link (DOWN)"]
     end
 
     subgraph tier3 ["Tier 3: Loop Levers"]
@@ -798,13 +654,12 @@ graph TD
         b3["Dual-persona users D"]
     end
 
-    BRG -->|"UP"| L4
+    BRG -->|"UP"| L3
     BRG -->|"DOWN"| L1
     BRG -->|"DOWN"| L2
-    BRG -->|"DOWN"| L3
-    BRG -->|"DOWN"| L5
+    BRG -->|"DOWN"| L4
 
-    L4 --> BR
+    L3 --> BR
 
     BR --> b1
     BR --> b2
@@ -820,8 +675,7 @@ graph TD
 | 1 | **Job Sharing** | $f_{share}$, $c_{share}$, $i_{share}$ | Broadest distribution; highest $i$; measure reach and landing conversion |
 | 2 | **Custom Link** | $f_{customlink}$, $c_{customlink}$ | Prospect-side engine; fed by Prospect-Side Value Realisation; brings hiring-side users |
 | 3 | **Team Invite** | $c_{invite}$ | $f$ bounded by team size; conversion is the only lever |
-| 4 | **Prospect Referral** | $f_{prospect}$ | Designed behavior; instrument to learn if natural or needs product investment |
-| 5 | **Cross-Persona Bridge** | Bridge rate, time-to-bridge | Each bridge creates new Job; measure rate and friction |
+| 4 | **Cross-Persona Bridge** | Bridge rate, time-to-bridge | Each bridge creates new Job; measure rate and friction |
 
 ---
 
@@ -845,19 +699,16 @@ graph TD
     HS --> BR["BRIDGING: D / U"]
     HL --> L1T["Loop 1: f_share x K_sharing"]
     HL --> L2T["Loop 2: f_invite x K_team"]
-    PA --> L5T["Loop 5: f_cl x K_custom"]
-    PA --> L3T["Loop 3: f_prospect x K_prospect"]
-    BR --> L4T["Loop 4: D_new / U_single"]
+    PA --> L4T["Loop 4: f_cl x K_custom"]
+    BR --> L3T["Loop 3: D_new / U_single"]
     L1T --> L1F["share -> view -> signup -> EOI"]
     L2T --> L2F["invite -> open -> accept -> collaborate"]
-    L3T --> L3F["share -> view -> signup -> EOI"]
-    L4T --> L4F["single-surface -> second surface"]
-    L5T --> L5F["link -> view -> signup -> job"]
+    L3T --> L3F["single-surface -> second surface"]
+    L4T --> L4F["link -> view -> signup -> job"]
     L1F --> EV["Trackable Input Events"]
     L2F --> EV
     L3F --> EV
     L4F --> EV
-    L5F --> EV
 ```
 
 Every trackable event rolls up through funnels, through loop throughput, through health metrics, to Helix Size.

@@ -92,7 +92,7 @@ $$\text{Helix Size} = (U_h \times T) + (U_p \times EOI)$$
 | $U_p$ | Prospect-side users (prospect surface enabled) | Users where activated_surfaces includes prospect |
 | $D$ | Dual-persona users (edges on BOTH sides) | $U_h \cap U_p$ |
 
-**Excluded:** Review edges (activity, not structure). CustomLinks (external reach, captured in Loop 5 metrics).
+**Excluded:** Review edges (activity, not structure). CustomLinks (external reach, captured in Loop 4 metrics).
 
 ---
 
@@ -108,7 +108,7 @@ Are jobs getting enough prospect interest? Below threshold, HMs churn because th
 
 $$\text{CLs per Prospect} = \frac{CL}{U_p}$$
 
-Are prospects using the tools that make Helix valuable? Each custom link seeds Loop 5. This is a prospect-side value realisation metric (self-serve tool adoption), not a hiring-side metric.
+Are prospects using the tools that make Helix valuable? Each custom link seeds Loop 4. This is a prospect-side value realisation metric (self-serve tool adoption), not a hiring-side metric.
 
 ### Bridging
 
@@ -128,19 +128,16 @@ graph TD
     HS --> BR["Bridging: D / U"]
     HL --> L1T["Loop 1: Job Sharing (f x K)"]
     HL --> L2T["Loop 2: Team Invite (f x K)"]
-    PA --> L5T["Loop 5: Custom Link (f x K)"]
-    PA --> L3T["Loop 3: Prospect Referral (f x K)"]
-    BR --> L4T["Loop 4: Cross-Persona Bridge Rate"]
+    PA --> L4T["Loop 4: Custom Link (f x K)"]
+    BR --> L3T["Loop 3: Cross-Persona Bridge Rate"]
     L1T --> L1F["Shares -> Views -> Signups -> EOIs"]
     L2T --> L2F["Invites -> Opens -> Accepts -> Collaborates"]
-    L3T --> L3F["Shares -> Views -> Signups -> EOIs"]
-    L4T --> L4F["Single-surface -> Second surface activated"]
-    L5T --> L5F["Links -> Views -> Signups -> Jobs"]
+    L3T --> L3F["Single-surface -> Second surface activated"]
+    L4T --> L4F["Links -> Views -> Signups -> Jobs"]
     L1F --> EV["Trackable Input Events"]
     L2F --> EV
     L3F --> EV
     L4F --> EV
-    L5F --> EV
 ```
 
 ---
@@ -262,51 +259,7 @@ graph LR
 
 ---
 
-# Loop 3: Prospect Referral
-
-A prospect shares a job or profile with peers, bringing new prospects in.
-
-```mermaid
-graph LR
-    P1["Prospect"] -->|"1. shares job/profile"| Friend["Friend"]
-    Friend -->|"2. signs up"| NewP["New Prospect"]
-    NewP -->|"3. expresses interest"| EOI[EOI]
-    EOI -->|targets| Job[Job]
-```
-
-**Funnel:** Prospect shares -> Friend views -> Signs up -> Expresses interest
-
-**Growth per completion:** +1 User, +1 EOI
-
----
-
-# Loop 3: Prospect Referral — metrics
-
-### Variables
-
-| Symbol | Definition | Source |
-|--------|-----------|--------|
-| $i_{prospect}$ | People reached per prospect share | Unique views / prospect share events |
-| $c_{prospect}$ | Overall conversion: view -> signup -> EOI | Analytics |
-| $f_{prospect}$ | Prospect shares per prospect per day | Prospect share count / $U_p$ / days |
-
-### All metrics
-
-| Metric | Type | Definition |
-|--------|------|-----------|
-| Shares per prospect | Volume | Prospect share events / $U_p$ |
-| Reach per share ($i_{prospect}$) | Volume | Unique views / prospect share events |
-| View-to-signup rate | Rate | Signups from prospect shares / unique views |
-| Signup-to-EOI rate | Rate | EOIs created / signups from prospect shares |
-| $c_{prospect}$ | Rate | View-to-signup × signup-to-EOI |
-| **$K_{prospect}$** | **K-factor** | **$i_{prospect} \times c_{prospect}$** |
-| Trigger frequency ($f_{prospect}$) | Frequency | Prospect share events per prospect per day |
-| **$\text{Throughput}_{prospect}$** | **Throughput** | **$f_{prospect} \times K_{prospect}$** |
-| Cycle time | Time | Median time from prospect share to friend's EOI creation |
-
----
-
-# Loop 4: Cross-Persona Bridge
+# Loop 3: Cross-Persona Bridge
 
 A single-surface user activates their second surface, crossing from one side to the other.
 
@@ -320,14 +273,14 @@ graph LR
 **Funnel:** Single-surface user exists -> Activates second surface -> Becomes dual-persona
 
 **Two directions:**
-- Prospect -> Hiring (primary): creates or joins first job. Creates a new Job that feeds Loops 1, 2, 3.
+- Prospect -> Hiring (primary): creates or joins first job. Creates a new Job that feeds Loops 1 and 2.
 - Hiring -> Prospect: expresses interest or creates custom link.
 
 **Growth per completion:** +1 Job (prospect->hiring direction), new edges from the job's sharing and team loops
 
 ---
 
-# Loop 4: Cross-Persona Bridge — metrics
+# Loop 3: Cross-Persona Bridge — metrics
 
 ### Variables
 
@@ -348,7 +301,7 @@ graph LR
 
 ---
 
-# Loop 5: Custom Link Virality
+# Loop 4: Custom Link Virality
 
 A prospect's custom link in external applications pulls hiring contacts to Helix.
 
@@ -368,7 +321,7 @@ graph LR
 
 ---
 
-# Loop 5: Custom Link Virality — metrics
+# Loop 4: Custom Link Virality — metrics
 
 ### Variables
 
@@ -434,9 +387,9 @@ graph TD
     end
 ```
 
-In $K = i \times c$, the $i$ **is** the fan-out. A prospect who creates multiple custom links triggers multiple Loop 5 instances.
+In $K = i \times c$, the $i$ **is** the fan-out. A prospect who creates multiple custom links triggers multiple Loop 4 instances.
 
-Loops amplify each other: Loop 5 brings in hiring-side users who trigger Loops 1 and 2. Loop 4 creates new Jobs that feed Loops 1, 2, and 3. Each loop operates independently but compounds through shared nodes.
+Loops amplify each other: Loop 4 brings in hiring-side users who trigger Loops 1 and 2. Loop 3 creates new Jobs that feed Loops 1 and 2. Each loop operates independently but compounds through shared nodes.
 
 ---
 
@@ -446,7 +399,6 @@ Loops amplify each other: Loop 5 brings in hiring-side users who trigger Loops 1
 |------|------|-----------|----------|-----------|
 | Job Sharing | HM/Recruiter -> share -> signup -> EOI | +1 User, +1 EOI | $i_{share} \times c_{share}$ | Reach ($i$) and landing conversion ($c$) |
 | Team Invite | HM/Recruiter -> invite -> accept -> collaborate | +1 User, +1 Job (Var B) | $c_{invite}$ | Conversion rate (i is always 1) |
-| Prospect Referral | Prospect -> share -> friend signs up -> EOI | +1 User, +1 EOI | $i_{prospect} \times c_{prospect}$ | Trigger frequency ($f$) |
 | Cross-Persona Bridge | Prospect -> creates own Job | +1 Job | N/A (bridge rate) | Friction reduction |
 | Custom Link | Prospect -> apply externally -> HM views -> signs up | +1 User | $i_{cl} \times c_{cl}$ | Prospect-Side Value Realisation feeds $f$ |
 
@@ -459,8 +411,7 @@ Loops amplify each other: Loop 5 brings in hiring-side users who trigger Loops 1
 | 1 | **Job Sharing** | $f_{share}$, $c_{share}$, $i_{share}$ | Broadest distribution; highest $i$; measure reach and landing conversion |
 | 2 | **Custom Link** | $f_{customlink}$, $c_{customlink}$ | Prospect-side engine; fed by Prospect-Side Value Realisation; brings hiring-side users |
 | 3 | **Team Invite** | $c_{invite}$ | $f$ bounded by team size; conversion is the only lever |
-| 4 | **Prospect Referral** | $f_{prospect}$ | Designed behavior; instrument to learn if natural or needs product investment |
-| 5 | **Cross-Persona Bridge** | Bridge rate, time-to-bridge | Each bridge creates new Job; measure rate and friction |
+| 4 | **Cross-Persona Bridge** | Bridge rate, time-to-bridge | Each bridge creates new Job; measure rate and friction |
 
 ---
 
@@ -484,19 +435,16 @@ graph TD
     HS --> BR["BRIDGING: D / U"]
     HL --> L1T["Loop 1: f_share x K_sharing"]
     HL --> L2T["Loop 2: f_invite x K_team"]
-    PA --> L5T["Loop 5: f_cl x K_custom"]
-    PA --> L3T["Loop 3: f_prospect x K_prospect"]
-    BR --> L4T["Loop 4: D_new / U_single"]
+    PA --> L4T["Loop 4: f_cl x K_custom"]
+    BR --> L3T["Loop 3: D_new / U_single"]
     L1T --> L1F["share -> view -> signup -> EOI"]
     L2T --> L2F["invite -> open -> accept -> collaborate"]
-    L3T --> L3F["share -> view -> signup -> EOI"]
-    L4T --> L4F["single-surface -> second surface"]
-    L5T --> L5F["link -> view -> signup -> job"]
+    L3T --> L3F["single-surface -> second surface"]
+    L4T --> L4F["link -> view -> signup -> job"]
     L1F --> EV["Trackable Input Events"]
     L2F --> EV
     L3F --> EV
     L4F --> EV
-    L5F --> EV
 ```
 
 Every trackable event rolls up through funnels, through loop throughput, through health metrics, to Helix Size — the measure of the network the loops are building.

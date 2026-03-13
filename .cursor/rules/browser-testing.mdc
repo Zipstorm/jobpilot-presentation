@@ -1,0 +1,27 @@
+---
+description: Require visual verification of changes in the Cursor browser tab before marking tasks complete
+alwaysApply: true
+---
+
+# Browser Testing Before Completion
+
+Before marking any task as complete (including updating todo status to `completed`), you **must** visually verify the changes in the Cursor built-in browser tab.
+
+## Required Steps
+
+1. **Open the affected page** in the Cursor browser using `browser_navigate` to the local file or dev server URL.
+2. **Take a snapshot** with `browser_snapshot` to confirm the page renders correctly.
+3. **Verify the change** — confirm the expected visual or functional change is present. If the change is interactive, click/hover/scroll as needed to exercise it.
+4. **Fix any issues** found during verification before marking complete.
+
+## When This Applies
+
+- Any HTML, CSS, or JS change that affects presentation output
+- Layout, styling, animation, or content changes
+- Adding or reordering slides in a Reveal.js deck
+- Any change the user would judge by looking at the result
+
+## When You May Skip
+
+- Changes to non-visual files only (e.g. README, `.gitignore`, rule files, markdown-only notes)
+- Dependency or config changes with no visual impact

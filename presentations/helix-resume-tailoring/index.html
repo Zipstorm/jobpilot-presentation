@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helix — Portfolio Tailoring Wireframes (Redesigned)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #6C5CE7;
+    --purple-dark: #5A4BD1;
+    --purple-light: #A29BFE;
+    --purple-bg: #F0EEFF;
+    --green: #00B894;
+    --green-light: #E6F9F3;
+    --amber: #FDCB6E;
+    --amber-dark: #E17055;
+    --amber-bg: #FFF8E7;
+    --red: #D63031;
+    --red-bg: #FFEAEA;
+    --blue: #0984E3;
+    --blue-light: #E8F4FD;
+    --gray-50: #FAFAFA;
+    --gray-100: #F5F5F5;
+    --gray-200: #EEEEEE;
+    --gray-300: #E0E0E0;
+    --gray-400: #BDBDBD;
+    --gray-500: #9E9E9E;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+    --sidebar-bg: #1A1A2E;
+    --sidebar-text: #C4C4D4;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: #F2F0F7; color: var(--gray-900); min-height: 100vh; }
+
+  /* ─── Control Bar ─── */
+  .control-bar { position: sticky; top: 0; z-index: 100; background: white; border-bottom: 1px solid var(--gray-200); padding: 10px 20px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+  .control-bar h1 { font-size: 15px; font-weight: 700; white-space: nowrap; }
+  .screen-tabs { display: flex; gap: 3px; margin-left: auto; background: var(--gray-100); border-radius: 7px; padding: 2px; }
+  .screen-tab { padding: 5px 10px; border-radius: 5px; font-size: 11px; font-weight: 500; cursor: pointer; border: none; background: transparent; color: var(--gray-600); transition: all 0.15s; white-space: nowrap; }
+  .screen-tab:hover { color: var(--gray-800); }
+  .screen-tab.active { background: white; color: var(--purple); box-shadow: var(--shadow-sm); }
+  .tab-sep { width: 1px; background: var(--gray-300); margin: 4px 2px; }
+
+  /* ─── State Bar ─── */
+  .state-bar { background: white; border-bottom: 1px solid var(--gray-200); padding: 7px 20px; display: flex; align-items: center; gap: 6px; overflow-x: auto; }
+  .state-bar .label { font-size: 11px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; margin-right: 4px; }
+  .state-btn { padding: 4px 10px; border-radius: 5px; font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid var(--gray-300); background: white; color: var(--gray-700); transition: all 0.15s; white-space: nowrap; }
+  .state-btn:hover { border-color: var(--purple-light); color: var(--purple); }
+  .state-btn.active { background: var(--purple); color: white; border-color: var(--purple); }
+
+  .canvas { display: flex; justify-content: center; padding: 28px 20px 48px; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+  .hidden { display: none !important; }
+
+  /* ═══ Wizard Modal ═══ */
+  .wizard-modal { width: 720px; background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); overflow: hidden; position: relative; }
+  .wizard-header { padding: 24px 32px 0; }
+  .wizard-header h2 { font-size: 20px; font-weight: 700; }
+  .wizard-close { position: absolute; right: 28px; top: 24px; width: 28px; height: 28px; border-radius: 50%; border: none; background: var(--gray-100); color: var(--gray-500); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .wizard-steps { display: flex; align-items: center; padding: 18px 32px 14px; }
+  .wizard-step { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-400); font-weight: 500; }
+  .wizard-step.active { color: var(--purple); }
+  .wizard-step.completed { color: var(--green); }
+  .wizard-step .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gray-300); }
+  .wizard-step.active .dot { background: var(--purple); }
+  .wizard-step.completed .dot { background: var(--green); }
+  .wizard-step-line { width: 40px; height: 1px; background: var(--gray-300); margin: 0 8px; }
+  .wizard-body { padding: 0 32px 24px; }
+  .wizard-footer { border-top: 1px solid var(--gray-200); padding: 14px 32px; display: flex; justify-content: flex-end; gap: 8px; }
+
+  .hero-card { background: var(--purple-bg); border-radius: var(--radius); padding: 18px; text-align: center; margin-bottom: 20px; }
+  .hero-card .icon { font-size: 26px; margin-bottom: 6px; }
+  .hero-card p { font-size: 13px; color: var(--gray-700); line-height: 1.5; }
+  .hero-card p strong { color: var(--gray-900); }
+
+  .field-label { font-size: 12px; font-weight: 600; color: var(--gray-800); margin-bottom: 6px; }
+  .upload-zone { border: 2px dashed var(--gray-300); border-radius: var(--radius); padding: 28px; text-align: center; color: var(--gray-500); cursor: pointer; margin-bottom: 18px; }
+  .upload-zone:hover { border-color: var(--purple-light); }
+  .upload-zone .icon { font-size: 28px; margin-bottom: 6px; }
+  .upload-zone p { font-size: 13px; }
+  .upload-zone .hint { font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+
+  .file-chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; background: var(--green-light); border-radius: 6px; font-size: 12px; font-weight: 500; color: var(--gray-800); margin-bottom: 14px; }
+  .file-chip .check { color: var(--green); font-weight: 700; }
+
+  .analysis-card { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 18px; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+  .analysis-card .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .analysis-card .card-header .left { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
+  .analysis-card .card-header .badge { font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 4px; background: var(--purple-bg); color: var(--purple); }
+  .analysis-steps { list-style: none; }
+  .analysis-steps li { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 12px; color: var(--gray-700); }
+  .analysis-steps .done { color: var(--green); }
+  .analysis-steps .pending { color: var(--gray-400); }
+  .analysis-steps .active-step { color: var(--purple); animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .diagnosis-list { list-style: none; margin-bottom: 14px; }
+  .diagnosis-list li { display: flex; align-items: flex-start; gap: 6px; padding: 4px 0; font-size: 12px; color: var(--gray-700); line-height: 1.4; }
+  .diagnosis-list .icon-warn { color: var(--amber-dark); }
+  .diagnosis-list .icon-tip { color: var(--purple); }
+
+  .template-prompt { font-size: 12px; color: var(--gray-600); margin-bottom: 12px; line-height: 1.4; }
+  .template-grid { display: flex; gap: 10px; margin-bottom: 14px; }
+  .template-card { flex: 1; border: 2px solid var(--gray-200); border-radius: var(--radius); padding: 10px; text-align: center; cursor: pointer; transition: all 0.15s; }
+  .template-card:hover { border-color: var(--purple-light); }
+  .template-card.selected { border-color: var(--purple); background: var(--purple-bg); }
+  .template-card .thumb { width: 100%; height: 70px; background: var(--gray-100); border-radius: 4px; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; }
+  .template-card.selected .thumb { background: white; }
+  .template-card .thumb-lines { width: 60%; display: flex; flex-direction: column; gap: 4px; }
+  .template-card .thumb-line { height: 3px; background: var(--gray-300); border-radius: 2px; }
+  .template-card.selected .thumb-line { background: var(--purple-light); }
+  .template-card .thumb-line.short { width: 60%; }
+  .template-card .thumb-line.med { width: 80%; }
+  .template-card .tname { font-size: 11px; font-weight: 600; color: var(--gray-700); display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .template-card.selected .tname { color: var(--purple); }
+  .template-card .radio { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--gray-400); display: inline-block; }
+  .template-card.selected .radio { border-color: var(--purple); background: var(--purple); box-shadow: inset 0 0 0 2.5px white; }
+
+  .info-note { display: flex; align-items: flex-start; gap: 6px; padding: 8px 10px; background: var(--gray-50); border-radius: 6px; font-size: 11px; color: var(--gray-600); line-height: 1.4; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  .input-field { width: 100%; padding: 9px 12px; border: 1px solid var(--gray-300); border-radius: 6px; font-size: 12px; color: var(--gray-800); background: white; }
+  .input-field::placeholder { color: var(--gray-400); }
+  .input-field.filled { background: var(--gray-50); }
+
+  .btn-primary { padding: 9px 22px; background: var(--purple); color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn-primary:hover { background: var(--purple-dark); }
+  .btn-secondary { padding: 9px 22px; background: white; color: var(--gray-600); border: 1px solid var(--gray-300); border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; }
+  .btn-ghost { padding: 9px 22px; background: transparent; color: var(--gray-500); border: none; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: underline; }
+
+  /* ═══ Profile Shell (post-onboarding screens) ═══ */
+  .profile-shell { width: 1020px; background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); overflow: hidden; display: flex; flex-direction: column; }
+  .profile-topbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; border-bottom: 1px solid var(--gray-200); }
+  .profile-topbar .logo { font-size: 14px; font-weight: 700; color: var(--purple); }
+  .profile-topbar .logo span { color: var(--gray-400); font-weight: 400; }
+  .profile-topbar .user-info { text-align: center; flex: 1; }
+  .profile-topbar .user-info .name { font-size: 14px; font-weight: 700; }
+  .profile-topbar .user-info .title { font-size: 11px; color: var(--gray-500); }
+  .profile-topbar .actions { display: flex; gap: 6px; }
+  .profile-topbar .actions button { padding: 5px 10px; border-radius: 5px; font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid var(--gray-300); background: white; color: var(--gray-700); }
+  .profile-body { display: flex; min-height: 540px; }
+
+  /* ─── Sidebar ─── */
+  .sidebar { width: 180px; background: var(--sidebar-bg); padding: 18px 14px; display: flex; flex-direction: column; color: var(--sidebar-text); flex-shrink: 0; }
+  .sidebar .section-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-500); margin-bottom: 10px; }
+  .sidebar-nav { list-style: none; margin-bottom: 20px; }
+  .sidebar-nav li { padding: 7px 9px; border-radius: 5px; font-size: 12px; cursor: pointer; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
+  .sidebar-nav li.active { background: rgba(255,255,255,0.1); color: white; font-weight: 600; }
+  .sidebar-nav li.sub-item { padding-left: 28px; font-size: 11px; color: var(--gray-500); margin-bottom: 1px; }
+  .sidebar-nav li.sub-item:hover { color: var(--sidebar-text); }
+  .sidebar-nav li.sub-item.active { color: white; background: rgba(255,255,255,0.08); }
+  .sidebar-user { display: flex; align-items: center; gap: 7px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; }
+  .sidebar-user .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--purple); display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 600; }
+  .sidebar-user .uname { font-size: 11px; color: white; }
+
+  .content-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .content-tabs { display: flex; padding: 0 18px; border-bottom: 2px solid var(--gray-200); background: white; }
+  .content-tab { padding: 10px 14px; font-size: 12px; font-weight: 500; color: var(--gray-500); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
+  .content-tab:hover { color: var(--gray-700); }
+  .content-tab.active { color: var(--purple); border-bottom-color: var(--purple); font-weight: 600; }
+  .content-main { flex: 1; padding: 18px; overflow-y: auto; background: var(--gray-50); }
+
+  /* ─── Resume Preview ─── */
+  .resume-preview { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 32px 36px; box-shadow: var(--shadow-sm); max-width: 520px; margin: 0 auto; }
+  .resume-preview.compact { padding: 16px 20px; max-width: none; }
+  .resume-preview .rp-name { font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 3px; }
+  .resume-preview .rp-title { font-size: 12px; color: var(--gray-600); text-align: center; margin-bottom: 2px; }
+  .resume-preview .rp-contact { font-size: 10px; color: var(--gray-500); text-align: center; margin-bottom: 18px; }
+  .resume-preview .rp-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--gray-800); border-bottom: 1.5px solid var(--gray-800); padding-bottom: 3px; margin-bottom: 10px; margin-top: 14px; }
+  .resume-preview .rp-job { margin-bottom: 10px; }
+  .resume-preview .rp-job-header { display: flex; justify-content: space-between; align-items: baseline; }
+  .resume-preview .rp-job-role { font-size: 12px; font-weight: 600; }
+  .resume-preview .rp-job-dates { font-size: 11px; color: var(--gray-500); }
+  .resume-preview .rp-job-company { font-size: 11px; color: var(--gray-600); margin-bottom: 3px; }
+  .resume-preview .rp-bullets { list-style: none; }
+  .resume-preview .rp-bullets li { font-size: 11px; color: var(--gray-700); line-height: 1.5; padding-left: 10px; position: relative; margin-bottom: 2px; }
+  .resume-preview .rp-bullets li::before { content: '\2022'; position: absolute; left: 0; color: var(--gray-500); }
+  .resume-preview .rp-skills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+  .resume-preview .rp-skill-tag { padding: 2px 8px; background: var(--gray-100); border-radius: 3px; font-size: 10px; color: var(--gray-700); }
+  .resume-preview .rp-edu { margin-bottom: 4px; }
+  .resume-preview .rp-edu-header { display: flex; justify-content: space-between; }
+  .resume-preview .rp-edu-degree { font-size: 11px; font-weight: 600; color: var(--gray-800); }
+  .resume-preview .rp-edu-school { font-size: 11px; color: var(--gray-600); }
+  .rp-summary-updated { border: 2px solid var(--green); border-radius: 6px; padding: 7px 10px; margin-bottom: 10px; background: var(--green-light); position: relative; }
+  .rp-summary-updated::before { content: 'UPDATED'; position: absolute; top: -8px; left: 8px; background: var(--green); color: white; font-size: 8px; font-weight: 700; letter-spacing: 0.5px; padding: 1px 5px; border-radius: 3px; }
+  .rp-summary-updated p { font-size: 11px; color: var(--gray-700); line-height: 1.5; }
+  .rp-tailored-highlight { border-left: 3px solid var(--blue); padding-left: 8px; background: var(--blue-light); border-radius: 0 4px 4px 0; padding: 4px 8px; margin-bottom: 3px; }
+  .page-indicator { text-align: center; font-size: 10px; color: var(--gray-400); margin-top: 14px; }
+
+  /* ─── Action Bar ─── */
+  .resume-action-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .right-actions { display: flex; gap: 6px; }
+  .btn-edit { display: flex; align-items: center; gap: 5px; padding: 7px 14px; background: var(--purple); color: white; border: none; border-radius: 5px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .btn-download { display: flex; align-items: center; gap: 5px; padding: 7px 14px; background: white; color: var(--gray-700); border: 1px solid var(--gray-300); border-radius: 5px; font-size: 12px; font-weight: 500; cursor: pointer; }
+  .btn-create-portfolio { display: flex; align-items: center; gap: 5px; padding: 7px 14px; background: var(--green); color: white; border: none; border-radius: 5px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .tailored-label { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; background: var(--blue-light); border: 1px solid var(--blue); border-radius: 5px; font-size: 11px; font-weight: 500; color: var(--blue); margin-bottom: 12px; }
+
+  /* ─── Loading ─── */
+  .loading-card { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 36px; text-align: center; max-width: 400px; margin: 50px auto; box-shadow: var(--shadow-sm); }
+  .loading-card .spinner { width: 32px; height: 32px; border: 3px solid var(--gray-200); border-top-color: var(--purple); border-radius: 50%; margin: 0 auto 14px; animation: spin 1s linear infinite; }
+  .loading-card.blue .spinner { border-top-color: var(--blue); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 14px; color: var(--gray-800); }
+  .loading-card .load-steps { list-style: none; text-align: left; display: inline-block; }
+  .loading-card .load-steps li { font-size: 12px; color: var(--gray-600); padding: 3px 0; display: flex; align-items: center; gap: 7px; }
+  .loading-card .load-hint { font-size: 11px; color: var(--gray-400); margin-top: 14px; }
+
+  /* ─── Chat Panel ─── */
+  .content-with-chat { display: flex; height: 100%; }
+  .content-with-chat .resume-side { flex: 1; padding: 18px; overflow-y: auto; background: var(--gray-50); }
+  .chat-panel { width: 270px; border-left: 1px solid var(--gray-200); display: flex; flex-direction: column; background: white; flex-shrink: 0; }
+  .chat-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--gray-200); }
+  .chat-header .chat-title { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+  .chat-header .close-btn { width: 22px; height: 22px; border-radius: 4px; border: none; background: transparent; color: var(--gray-400); cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .chat-msg { padding: 9px 10px; border-radius: 7px; font-size: 11px; line-height: 1.5; max-width: 92%; }
+  .chat-msg.ai { background: var(--gray-100); color: var(--gray-800); align-self: flex-start; }
+  .chat-msg.user { background: var(--purple); color: white; align-self: flex-end; }
+  .chat-msg.ai-success { background: var(--green-light); border: 1px solid var(--green); color: var(--gray-800); align-self: flex-start; }
+  .chat-msg.ai-warn { background: var(--amber-bg); border: 1px solid var(--amber); color: var(--gray-800); align-self: flex-start; }
+  .chat-msg.ai-error { background: var(--red-bg); border: 1px solid var(--red); color: var(--gray-800); align-self: flex-start; }
+  .chat-msg.ai-info { background: var(--blue-light); border: 1px solid var(--blue); color: var(--gray-800); align-self: flex-start; }
+  .chat-msg strong { font-weight: 600; }
+  .chat-msg ul { margin: 3px 0 0 14px; padding: 0; }
+  .chat-msg ul li { margin-bottom: 2px; }
+  .chat-suggestion { font-size: 11px; color: var(--gray-500); padding: 0 14px; margin-bottom: 6px; font-style: italic; }
+  .suggestion-chips { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 14px 6px; }
+  .suggestion-chip { padding: 4px 8px; border: 1px solid var(--purple-light); border-radius: 14px; font-size: 10px; color: var(--purple); background: var(--purple-bg); cursor: pointer; }
+  .chat-input { border-top: 1px solid var(--gray-200); padding: 10px 14px; display: flex; gap: 6px; align-items: center; }
+  .chat-input input { flex: 1; padding: 7px 10px; border: 1px solid var(--gray-300); border-radius: 5px; font-size: 11px; outline: none; }
+  .chat-input input:focus { border-color: var(--purple-light); }
+  .chat-input .send-btn { width: 28px; height: 28px; border-radius: 5px; border: none; background: var(--purple); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+
+  /* ─── Overview Tab ─── */
+  .overview-grid { display: grid; grid-template-columns: 220px 1fr; gap: 20px; }
+  .overview-left { text-align: center; }
+  .overview-avatar { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--purple-light), var(--purple)); margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: 700; }
+  .overview-name { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+  .overview-title-text { font-size: 12px; color: var(--gray-600); margin-bottom: 10px; }
+  .overview-summary { font-size: 11px; color: var(--gray-600); line-height: 1.5; text-align: left; padding: 10px; background: var(--gray-50); border-radius: 6px; }
+  .overview-right h3 { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--gray-800); }
+  .overview-skills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 20px; }
+  .overview-skill-tag { padding: 3px 10px; background: var(--purple-bg); color: var(--purple); border-radius: 4px; font-size: 11px; font-weight: 500; }
+  .journey-timeline { display: flex; gap: 7px; margin-bottom: 20px; overflow-x: auto; }
+  .journey-card { padding: 8px 12px; background: white; border: 1px solid var(--gray-200); border-radius: 6px; min-width: 110px; box-shadow: var(--shadow-sm); }
+  .journey-card .jc-year { font-size: 10px; font-weight: 700; color: var(--purple); margin-bottom: 3px; }
+  .journey-card .jc-role { font-size: 11px; font-weight: 600; color: var(--gray-800); margin-bottom: 2px; }
+  .journey-card .jc-company { font-size: 10px; color: var(--gray-500); }
+  .overview-exp-block { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; box-shadow: var(--shadow-sm); }
+  .overview-exp-block .exp-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .overview-exp-block .exp-logo { width: 28px; height: 28px; border-radius: 5px; background: var(--gray-200); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--gray-600); }
+  .overview-exp-block .exp-meta .exp-company-name { font-size: 12px; font-weight: 600; }
+  .overview-exp-block .exp-meta .exp-dates-loc { font-size: 10px; color: var(--gray-500); }
+  .overview-exp-block .exp-desc { font-size: 11px; color: var(--gray-700); line-height: 1.5; margin-bottom: 6px; }
+  .overview-exp-block .exp-desc ul { margin: 3px 0 0 14px; padding: 0; }
+  .overview-exp-block .exp-desc ul li { margin-bottom: 2px; }
+  .overview-exp-block .exp-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .overview-exp-block .exp-tag { padding: 2px 7px; background: var(--gray-100); border-radius: 3px; font-size: 9px; color: var(--gray-600); }
+
+  /* ─── NEW: List Rows (Resumes & Portfolios) ─── */
+  .list-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); margin-bottom: 8px; cursor: pointer; transition: all 0.15s; }
+  .list-row:hover { border-color: var(--purple-light); box-shadow: var(--shadow-sm); }
+  .list-row .lr-icon { font-size: 18px; flex-shrink: 0; }
+  .list-row .lr-main { flex: 1; min-width: 0; }
+  .list-row .lr-name { font-size: 13px; font-weight: 600; color: var(--gray-800); }
+  .list-row .lr-sub { font-size: 11px; color: var(--gray-500); margin-top: 1px; }
+  .list-row .lr-meta { display: flex; gap: 12px; font-size: 11px; color: var(--gray-500); align-items: center; flex-shrink: 0; }
+  .list-row .lr-badge { padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+  .list-row .lr-badge.stale { background: var(--amber-bg); color: var(--amber-dark); }
+  .list-row .lr-badge.shared { background: var(--green-light); color: var(--green); }
+  .list-row .lr-badge.draft { background: var(--gray-100); color: var(--gray-600); }
+  .list-row.pinned { border-color: var(--purple-light); background: #FAFAFF; }
+
+  /* ─── NEW: Section Header ─── */
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .section-header h2 { font-size: 18px; font-weight: 700; }
+
+  /* ─── NEW: Dashboard Cards ─── */
+  .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .dash-card { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow-sm); }
+  .dash-card .dc-icon { font-size: 28px; margin-bottom: 8px; }
+  .dash-card .dc-title { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .dash-card .dc-desc { font-size: 11px; color: var(--gray-600); line-height: 1.4; margin-bottom: 12px; }
+  .dash-card .dc-stat { display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px; }
+  .dash-card .dc-stat .num { font-size: 24px; font-weight: 700; color: var(--gray-900); }
+  .dash-card .dc-stat .label { font-size: 11px; color: var(--gray-500); }
+  .dash-card .dc-action { display: inline-flex; align-items: center; gap: 4px; padding: 6px 14px; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer; border: none; }
+  .dash-card .dc-action.primary { background: var(--purple); color: white; }
+  .dash-card .dc-action.secondary { background: var(--gray-100); color: var(--gray-700); }
+  .dash-card .dc-action.green { background: var(--green); color: white; }
+  .dash-card .dc-recent { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gray-200); }
+  .dash-card .dc-recent-row { display: flex; align-items: center; gap: 6px; font-size: 11px; padding: 4px 0; color: var(--gray-700); }
+  .dash-card .dc-recent-row .icon { font-size: 13px; }
+  .dash-card .dc-recent-row .date { margin-left: auto; color: var(--gray-400); font-size: 10px; }
+
+  /* ─── NEW: Snapshot Label & Stale Banner ─── */
+  .snapshot-label { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background: var(--gray-50); border: 1px solid var(--gray-300); border-radius: 5px; font-size: 11px; color: var(--gray-600); margin-bottom: 12px; }
+  .stale-banner { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--amber-bg); border: 1px solid var(--amber); border-radius: var(--radius); margin-bottom: 14px; font-size: 12px; color: var(--gray-700); }
+  .stale-banner .sb-action { padding: 5px 12px; background: var(--purple); color: white; border: none; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; margin-left: auto; }
+  .stale-banner .sb-dismiss { padding: 5px 8px; border: 1px solid var(--gray-300); background: white; border-radius: 5px; font-size: 11px; cursor: pointer; color: var(--gray-600); white-space: nowrap; }
+
+  /* ─── NEW: Read-only indicator ─── */
+  .read-only-bar { display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: var(--gray-100); border-radius: 5px; font-size: 11px; color: var(--gray-500); margin-bottom: 12px; }
+
+  /* ─── NEW: First-visit tooltip ─── */
+  .tooltip-callout { position: absolute; left: 185px; top: 85px; background: var(--purple); color: white; padding: 10px 14px; border-radius: 8px; font-size: 11px; line-height: 1.5; max-width: 220px; z-index: 10; box-shadow: var(--shadow-md); }
+  .tooltip-callout::before { content: ''; position: absolute; left: -6px; top: 14px; width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-right: 6px solid var(--purple); }
+  .tooltip-callout .tooltip-dismiss { display: block; margin-top: 6px; font-size: 10px; opacity: 0.8; cursor: pointer; text-decoration: underline; }
+
+  /* ─── NEW: Wizard Inline Editor ─── */
+  .wizard-editor { display: flex; gap: 12px; margin-top: 14px; min-height: 260px; }
+  .wizard-editor .we-preview { flex: 1; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 14px; overflow-y: auto; }
+  .wizard-editor .we-chat { width: 230px; border: 1px solid var(--gray-200); border-radius: var(--radius); background: white; display: flex; flex-direction: column; overflow: hidden; }
+  .wizard-editor .we-chat .chat-messages { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .wizard-editor .we-chat .chat-input { border-top: 1px solid var(--gray-200); padding: 8px 10px; }
+
+  /* ─── NEW: Joblink Banner ─── */
+  .joblink-banner { background: linear-gradient(135deg, var(--blue-light), #D6EAF8); border: 1px solid var(--blue); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .joblink-banner .jb-icon { font-size: 24px; }
+  .joblink-banner .jb-text { flex: 1; }
+  .joblink-banner .jb-title { font-size: 12px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
+  .joblink-banner .jb-sub { font-size: 11px; color: var(--gray-600); }
+
+  /* ─── JD Input ─── */
+  .jd-input-methods { display: flex; gap: 8px; margin-bottom: 16px; }
+  .jd-method { flex: 1; border: 1px solid var(--gray-300); border-radius: var(--radius); padding: 16px; text-align: center; cursor: pointer; transition: all 0.15s; }
+  .jd-method:hover { border-color: var(--purple-light); }
+  .jd-method.active { border-color: var(--purple); background: var(--purple-bg); }
+  .jd-method .jd-icon { font-size: 24px; margin-bottom: 6px; }
+  .jd-method .jd-label { font-size: 12px; font-weight: 600; color: var(--gray-700); }
+  .jd-method .jd-desc { font-size: 10px; color: var(--gray-500); margin-top: 2px; }
+
+  /* ─── Fit Score ─── */
+  .fit-score { display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--green-light); border: 1px solid var(--green); border-radius: var(--radius); margin-bottom: 14px; }
+  .fit-score .score-num { font-size: 28px; font-weight: 700; color: var(--green); }
+  .fit-score .score-text { font-size: 12px; color: var(--gray-700); line-height: 1.4; }
+
+  /* ─── Portfolios created from resume ─── */
+  .portfolio-from-resume { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--gray-200); }
+  .portfolio-from-resume h4 { font-size: 12px; font-weight: 600; color: var(--gray-600); margin-bottom: 8px; }
+  .pfr-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; font-size: 11px; color: var(--gray-700); border: 1px solid var(--gray-200); border-radius: 5px; margin-bottom: 4px; background: white; }
+  .pfr-row .pfr-name { flex: 1; font-weight: 500; }
+  .pfr-row .pfr-date { color: var(--gray-400); font-size: 10px; }
+  .pfr-row .pfr-status { font-size: 10px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- ═══ Control Bar ═══ -->
+<div class="control-bar">
+  <h1>Helix — Portfolio Tailoring</h1>
+  <div class="screen-tabs" id="screen-tabs">
+    <button class="screen-tab active" onclick="showScreen('s1')">Add Details</button>
+    <button class="screen-tab" onclick="showScreen('s2')">Try an Edit</button>
+    <button class="screen-tab" onclick="showScreen('s3')">Joblink Flow</button>
+    <div class="tab-sep"></div>
+    <button class="screen-tab" onclick="showScreen('s4')">Dashboard</button>
+    <button class="screen-tab" onclick="showScreen('s5')">Resumes</button>
+    <button class="screen-tab" onclick="showScreen('s6')">Resume Detail</button>
+    <div class="tab-sep"></div>
+    <button class="screen-tab" onclick="showScreen('s7')">Portfolios</button>
+    <button class="screen-tab" onclick="showScreen('s8')">Portfolio Detail</button>
+    <button class="screen-tab" onclick="showScreen('s9')">Tailor for Job</button>
+  </div>
+</div>
+
+<!-- ═══ State Bars ═══ -->
+<div class="state-bar" id="state-bar-s1">
+  <span class="label">State</span>
+  <button class="state-btn active" onclick="showState('s1','1A')">1A Empty</button>
+  <button class="state-btn" onclick="showState('s1','1B')">1B Analyzing</button>
+  <button class="state-btn" onclick="showState('s1','1C')">1C Diagnosis</button>
+</div>
+<div class="state-bar hidden" id="state-bar-s2">
+  <span class="label">State</span>
+  <button class="state-btn active" onclick="showState('s2','2A')">2A Loading</button>
+  <button class="state-btn" onclick="showState('s2','2B')">2B Editor Ready</button>
+  <button class="state-btn" onclick="showState('s2','2C')">2C After Edit</button>
+</div>
+<div class="state-bar hidden" id="state-bar-s3">
+  <span class="label">State</span>
+  <button class="state-btn active" onclick="showState('s3','3A')">3A JD Preview</button>
+  <button class="state-btn" onclick="showState('s3','3B')">3B Auto-Tailoring</button>
+  <button class="state-btn" onclick="showState('s3','3C')">3C Tailored Review</button>
+</div>
+<div class="state-bar hidden" id="state-bar-s4">
+  <span class="label">State</span>
+  <button class="state-btn active" onclick="showState('s4','4A')">4A Default</button>
+</div>
+<div class="state-bar hidden" id="state-bar-s5">
+  <span class="label">State</span>
+  <button class="state-btn active" onclick="showState('s5','5A')">5A List</button>
+</div>
+<div class="state-bar hidden" id="state-bar-s6">
+  <span class="label">State</span>
+  <button class="state-btn active" onclick="showState('s6','6A')">6A Default Resume</button>
+  <button class="state-btn" onclick="showState('s6','6B')">6B Chat Open</button>
+  <button class="state-btn" onclick="showState('s6','6C')">6C Editing</button>
+  <button class="state-btn" onclick="showState('s6','6D')">6D Tailored View</button>
+  <button class="state-btn" onclick="showState('s6','6E')">6E Tailored Chat</button>
+</div>
+<div class="state-bar hidden" id="state-bar-s7">
+  <span class="label">State</span>
+  <button class="state-btn active" onclick="showState('s7','7A')">7A List</button>
+</div>
+<div class="state-bar hidden" id="state-bar-s8">
+  <span class="label">State</span>
+  <button class="state-btn active" onclick="showState('s8','8A')">8A Overview</button>
+  <button class="state-btn" onclick="showState('s8','8B')">8B Resume Tab</button>
+  <button class="state-btn" onclick="showState('s8','8C')">8C Stale Banner</button>
+  <button class="state-btn" onclick="showState('s8','8D')">8D First Visit</button>
+</div>
+<div class="state-bar hidden" id="state-bar-s9">
+  <span class="label">State</span>
+  <button class="state-btn active" onclick="showState('s9','9A')">9A JD Input</button>
+  <button class="state-btn" onclick="showState('s9','9B')">9B Tailoring</button>
+  <button class="state-btn" onclick="showState('s9','9C')">9C Review</button>
+  <button class="state-btn" onclick="showState('s9','9D')">9D Created</button>
+</div>
+
+<!-- ═══ Canvas ═══ -->
+<div class="canvas">
+
+  <!-- ══════════ SCREEN 1: Add Details (Onboarding Wizard) ══════════ -->
+  <div class="screen active" id="screen-s1">
+    <div class="wizard-modal">
+      <div class="wizard-header"><h2>Create your AI-forward profile</h2><button class="wizard-close">&#10005;</button></div>
+      <div class="wizard-steps">
+        <div class="wizard-step active"><span class="dot"></span>Resume Details</div>
+        <div class="wizard-step-line"></div>
+        <div class="wizard-step"><span class="dot"></span>Try an edit</div>
+        <div class="wizard-step-line"></div>
+        <div class="wizard-step"><span class="dot"></span>Add job</div>
+      </div>
+      <div class="wizard-body">
+        <div class="hero-card"><div class="icon">&#128203;</div><p><strong>First, let us know the basics of your background</strong><br>We use this to create your modern profile</p></div>
+        <div class="field-label">Resume</div>
+        <!-- 1A: Empty -->
+        <div id="s1-1A"><div class="upload-zone"><div class="icon">&#128196;</div><p>Click to upload or drag your resume</p><div class="hint">PDF only</div></div></div>
+        <!-- 1B: Analyzing -->
+        <div id="s1-1B" class="hidden">
+          <div class="file-chip">&#128196; Debsourabh_Resume.pdf <span class="check">&#10003;</span></div>
+          <div class="analysis-card">
+            <div class="card-header"><div class="left">&#9889; Analyzing your resume...</div><div class="badge">Helix AI</div></div>
+            <ul class="analysis-steps">
+              <li><span class="done">&#10003;</span> Extracting content</li>
+              <li><span class="active-step">&#9679;</span> Checking ATS compatibility</li>
+              <li><span class="pending">&#9675;</span> Identifying improvement opportunities</li>
+            </ul>
+          </div>
+        </div>
+        <!-- 1C: Diagnosis Ready -->
+        <div id="s1-1C" class="hidden">
+          <div class="file-chip">&#128196; Debsourabh_Resume.pdf <span class="check">&#10003;</span></div>
+          <div class="analysis-card">
+            <div class="card-header"><div class="left">&#9889; Resume Analysis</div><div class="badge">Helix AI</div></div>
+            <p style="font-size:12px; color:var(--gray-700); margin-bottom:10px;">Your resume has a few areas we can optimize:</p>
+            <ul class="diagnosis-list">
+              <li><span class="icon-warn">&#9888;</span> ATS compatibility &mdash; formatting may cause parsing issues</li>
+              <li><span class="icon-warn">&#9888;</span> Inconsistent date formatting across 3 roles</li>
+              <li><span class="icon-tip">&#128161;</span> 3 bullet points could be strengthened with measurable impact</li>
+            </ul>
+            <p class="template-prompt">Choose a template and we'll create an optimized, editable version of your resume:</p>
+            <div class="template-grid">
+              <div class="template-card selected" onclick="selectTemplate(this)"><div class="thumb"><div class="thumb-lines"><div class="thumb-line"></div><div class="thumb-line short"></div><div class="thumb-line med"></div><div class="thumb-line"></div><div class="thumb-line short"></div></div></div><div class="tname"><span class="radio"></span> Modern</div></div>
+              <div class="template-card" onclick="selectTemplate(this)"><div class="thumb"><div class="thumb-lines"><div class="thumb-line"></div><div class="thumb-line"></div><div class="thumb-line short"></div><div class="thumb-line med"></div><div class="thumb-line"></div></div></div><div class="tname"><span class="radio"></span> Classic</div></div>
+              <div class="template-card" onclick="selectTemplate(this)"><div class="thumb"><div class="thumb-lines"><div class="thumb-line short"></div><div class="thumb-line"></div><div class="thumb-line med"></div><div class="thumb-line"></div></div></div><div class="tname"><span class="radio"></span> Minimal</div></div>
+            </div>
+            <div class="info-note"><span>&#8505;&#65039;</span><span>We'll fix formatting issues automatically. Content suggestions will be available for you to review in the next step.</span></div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div><div class="field-label">Github Profile</div><input class="input-field" type="text" placeholder="github.com/username" id="github-field"></div>
+          <div><div class="field-label">Add Portfolio</div><input class="input-field" type="text" placeholder="portfolio.dev/username" id="portfolio-field"></div>
+        </div>
+      </div>
+      <div class="wizard-footer"><button class="btn-primary">Next &rarr;</button></div>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN 2: Try an Edit (Onboarding Wizard) ══════════ -->
+  <div class="screen" id="screen-s2">
+    <div class="wizard-modal" style="width: 780px;">
+      <div class="wizard-header"><h2>Create your AI-forward profile</h2><button class="wizard-close">&#10005;</button></div>
+      <div class="wizard-steps">
+        <div class="wizard-step completed"><span class="dot"></span>Resume Details</div>
+        <div class="wizard-step-line"></div>
+        <div class="wizard-step active"><span class="dot"></span>Try an edit</div>
+        <div class="wizard-step-line"></div>
+        <div class="wizard-step"><span class="dot"></span>Add job</div>
+      </div>
+      <div class="wizard-body">
+        <!-- 2A: Loading (conversion not ready) -->
+        <div id="s2-2A">
+          <div class="hero-card" style="background: var(--purple-bg);"><div class="icon">&#9889;</div><p><strong>Preparing your resume for editing...</strong><br>Your optimized resume is being generated. This usually takes a few seconds.</p></div>
+          <div class="loading-card" style="margin: 20px auto; box-shadow: none; border: none;">
+            <div class="spinner"></div>
+            <ul class="load-steps">
+              <li><span style="color:var(--green);">&#10003;</span> Applied Modern template</li>
+              <li><span style="color:var(--green);">&#10003;</span> Fixed ATS formatting</li>
+              <li><span style="color:var(--purple);" class="active-step">&#9679;</span> Typesetting content</li>
+            </ul>
+          </div>
+          <div style="text-align: center;"><button class="btn-ghost" style="font-size:12px;">Skip for now &rarr;</button></div>
+        </div>
+        <!-- 2B: Editor Ready -->
+        <div id="s2-2B" class="hidden">
+          <div class="hero-card" style="background: var(--green-light); padding: 12px 18px;"><p style="margin:0;"><strong>&#10024; Your optimized resume is ready!</strong> Try making an edit &mdash; suggestions from your analysis are below.</p></div>
+          <div class="wizard-editor">
+            <div class="we-preview">
+              <div class="resume-preview compact">
+                <div class="rp-name" style="font-size:15px;">Debsourabh Ghosh</div><div class="rp-title" style="font-size:11px;">Sr. Product Designer | Bangalore</div><div class="rp-contact" style="font-size:9px;">debsourabh@email.com | github.com/dg</div>
+                <div class="rp-section-title" style="margin-top:10px;">Experience</div>
+                <div class="rp-job"><div class="rp-job-header"><span class="rp-job-role" style="font-size:11px;">Senior Product Designer</span><span class="rp-job-dates" style="font-size:10px;">2022 &mdash; Present</span></div><div class="rp-job-company" style="font-size:10px;">Acme Corp</div><ul class="rp-bullets"><li>Led redesign of enterprise dashboard resulting in 40% reduction in task completion time</li><li>Managed design system serving 12 product teams</li></ul></div>
+                <div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag">Figma</span><span class="rp-skill-tag">User Research</span><span class="rp-skill-tag">Design Systems</span></div>
+              </div>
+            </div>
+            <div class="we-chat">
+              <div class="chat-messages" style="padding:10px;">
+                <div class="chat-msg ai" style="font-size:11px;"><strong>Suggestions from your analysis:</strong><ul><li>Your summary is generic &mdash; try making it role-specific</li><li>2 bullets could use quantifiable impact</li><li>Skills section could be richer</li></ul></div>
+              </div>
+              <div class="suggestion-chips" style="padding:6px 10px;">
+                <span class="suggestion-chip">Make summary focus on design leadership</span>
+                <span class="suggestion-chip">Add metrics to bullets</span>
+              </div>
+              <div class="chat-input" style="padding:8px 10px;"><input type="text" placeholder="Type a message..." style="font-size:10px;"><button class="send-btn" style="width:24px; height:24px; font-size:11px;">&#8593;</button></div>
+            </div>
+          </div>
+        </div>
+        <!-- 2C: After Edit -->
+        <div id="s2-2C" class="hidden">
+          <div class="hero-card" style="background: var(--green-light); padding: 12px 18px;"><p style="margin:0;"><strong>&#10024; Nice edit!</strong> You can keep going or continue to the next step.</p></div>
+          <div class="wizard-editor">
+            <div class="we-preview">
+              <div class="resume-preview compact">
+                <div class="rp-name" style="font-size:15px;">Debsourabh Ghosh</div><div class="rp-title" style="font-size:11px;">Sr. Product Designer | Bangalore</div><div class="rp-contact" style="font-size:9px;">debsourabh@email.com | github.com/dg</div>
+                <div class="rp-summary-updated" style="margin-top:10px;"><p>Design leader with 6+ years driving product design strategy across enterprise B2B and consumer products. Proven track record of building and scaling design teams.</p></div>
+                <div class="rp-section-title">Experience</div>
+                <div class="rp-job"><div class="rp-job-header"><span class="rp-job-role" style="font-size:11px;">Senior Product Designer</span><span class="rp-job-dates" style="font-size:10px;">2022 &mdash; Present</span></div><div class="rp-job-company" style="font-size:10px;">Acme Corp</div><ul class="rp-bullets"><li>Led redesign of enterprise dashboard resulting in 40% reduction in task completion time</li><li>Managed design system serving 12 product teams</li></ul></div>
+                <div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag">Figma</span><span class="rp-skill-tag">User Research</span><span class="rp-skill-tag">Design Systems</span></div>
+              </div>
+            </div>
+            <div class="we-chat">
+              <div class="chat-messages" style="padding:10px;">
+                <div class="chat-msg ai" style="font-size:11px;">Suggestions from your analysis...</div>
+                <div class="chat-msg user" style="font-size:11px;">Make my summary focus on design leadership</div>
+                <div class="chat-msg ai-success" style="font-size:11px;"><strong>&#10003; Updated your summary</strong> to emphasize design leadership and strategic impact.</div>
+              </div>
+              <div class="chat-input" style="padding:8px 10px;"><input type="text" placeholder="Type another edit..." style="font-size:10px;"><button class="send-btn" style="width:24px; height:24px; font-size:11px;">&#8593;</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-footer">
+        <button class="btn-ghost" style="margin-right:auto; font-size:12px;">Skip for now</button>
+        <button class="btn-secondary">&larr; Back</button>
+        <button class="btn-primary">Next &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN 3: Joblink Flow (Onboarding) ══════════ -->
+  <div class="screen" id="screen-s3">
+    <div class="wizard-modal" style="width: 720px;">
+      <div class="wizard-header"><h2>Welcome &mdash; you've been invited!</h2><button class="wizard-close">&#10005;</button></div>
+      <div class="wizard-body" style="padding-top: 18px;">
+        <!-- 3A: JD Preview + Fit Score -->
+        <div id="s3-3A">
+          <div class="joblink-banner">
+            <div class="jb-icon">&#128279;</div>
+            <div class="jb-text">
+              <div class="jb-title">You arrived via a job link from Google</div>
+              <div class="jb-sub">We'll auto-tailor your resume for this role after upload.</div>
+            </div>
+          </div>
+          <div style="padding:12px; background:var(--gray-50); border-radius:6px; margin-bottom:14px;">
+            <div style="font-size:13px; font-weight:600; color:var(--gray-900); margin-bottom:4px;">Senior Product Manager</div>
+            <div style="font-size:12px; color:var(--gray-600); margin-bottom:8px;">Google &middot; Mountain View, CA</div>
+            <div style="font-size:11px; color:var(--gray-700); line-height:1.5;">We're looking for a Senior Product Manager to lead product strategy for our enterprise platform. You'll define the roadmap, work cross-functionally with engineering and design...</div>
+          </div>
+          <div class="field-label">Upload your resume to get started</div>
+          <div class="file-chip">&#128196; Debsourabh_Resume.pdf <span class="check">&#10003;</span></div>
+          <div class="analysis-card" style="margin-bottom:14px;">
+            <div class="card-header"><div class="left">&#9889; Resume Analysis</div><div class="badge">Helix AI</div></div>
+            <ul class="diagnosis-list">
+              <li><span class="icon-warn">&#9888;</span> ATS compatibility issues detected</li>
+              <li><span class="icon-tip">&#128161;</span> 3 areas could be strengthened for this role</li>
+            </ul>
+            <div class="template-grid">
+              <div class="template-card selected" onclick="selectTemplate(this)"><div class="thumb"><div class="thumb-lines"><div class="thumb-line"></div><div class="thumb-line short"></div><div class="thumb-line med"></div></div></div><div class="tname"><span class="radio"></span> Modern</div></div>
+              <div class="template-card" onclick="selectTemplate(this)"><div class="thumb"><div class="thumb-lines"><div class="thumb-line"></div><div class="thumb-line"></div><div class="thumb-line short"></div></div></div><div class="tname"><span class="radio"></span> Classic</div></div>
+              <div class="template-card" onclick="selectTemplate(this)"><div class="thumb"><div class="thumb-lines"><div class="thumb-line short"></div><div class="thumb-line"></div><div class="thumb-line med"></div></div></div><div class="tname"><span class="radio"></span> Minimal</div></div>
+            </div>
+          </div>
+          <div class="info-note"><span>&#128161;</span><span>After template selection, we'll automatically tailor your resume for the Sr. Product Manager role.</span></div>
+        </div>
+        <!-- 3B: Auto-Tailoring -->
+        <div id="s3-3B" class="hidden">
+          <div class="joblink-banner">
+            <div class="jb-icon">&#128279;</div>
+            <div class="jb-text">
+              <div class="jb-title">Auto-tailoring for Google &mdash; Sr. Product Manager</div>
+              <div class="jb-sub">Your resume is being optimized for this role.</div>
+            </div>
+          </div>
+          <div class="loading-card blue" style="margin: 20px auto;">
+            <div class="spinner"></div>
+            <h3>&#127919; Tailoring your resume for Google...</h3>
+            <ul class="load-steps">
+              <li><span style="color:var(--green);">&#10003;</span> Resume converted (Modern template)</li>
+              <li><span style="color:var(--green);">&#10003;</span> Job description analyzed</li>
+              <li><span style="color:var(--green);">&#10003;</span> Evaluated fit (78% match)</li>
+              <li><span style="color:var(--blue);" class="active-step">&#9679;</span> Tailoring resume content</li>
+              <li><span style="color:var(--gray-400);">&#9675;</span> Creating job-linked portfolio</li>
+            </ul>
+            <div class="load-hint">This happens automatically &mdash; no input needed.</div>
+          </div>
+        </div>
+        <!-- 3C: Tailored Resume Review -->
+        <div id="s3-3C" class="hidden">
+          <div class="joblink-banner">
+            <div class="jb-icon">&#10003;</div>
+            <div class="jb-text">
+              <div class="jb-title">Your tailored resume is ready!</div>
+              <div class="jb-sub">Review below. You can make quick edits or finalize.</div>
+            </div>
+          </div>
+          <div class="fit-score" style="margin-bottom:12px;">
+            <div class="score-num" style="font-size:22px;">78%</div>
+            <div class="score-text" style="font-size:11px;"><strong>Strong fit</strong> for Sr. Product Manager at Google.</div>
+          </div>
+          <div class="wizard-editor" style="min-height:220px;">
+            <div class="we-preview">
+              <div class="resume-preview compact">
+                <div class="rp-name" style="font-size:14px;">Debsourabh Ghosh</div>
+                <div class="rp-title" style="font-size:10px;">Sr. Product Manager | Bangalore</div>
+                <div class="rp-section-title" style="margin-top:8px;">Experience</div>
+                <div class="rp-job"><div class="rp-job-header"><span class="rp-job-role" style="font-size:11px;">Senior Product Designer</span><span class="rp-job-dates" style="font-size:10px;">2022 &mdash; Present</span></div><ul class="rp-bullets"><li class="rp-tailored-highlight">Drove product strategy for enterprise dashboard, achieving 40% reduction in task completion time</li><li class="rp-tailored-highlight">Managed cross-functional design system serving 12 product teams</li></ul></div>
+                <div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag" style="background:var(--blue-light); color:var(--blue);">Product Strategy</span><span class="rp-skill-tag" style="background:var(--blue-light); color:var(--blue);">Cross-functional Leadership</span><span class="rp-skill-tag">Figma</span><span class="rp-skill-tag">User Research</span></div>
+              </div>
+            </div>
+            <div class="we-chat">
+              <div class="chat-messages" style="padding:10px;">
+                <div class="chat-msg ai-info" style="font-size:10px;"><strong>Tailored for Google</strong><br>Adjusted summary, reordered experience, and highlighted matching skills. Blue highlights show changes.</div>
+              </div>
+              <div class="chat-input" style="padding:8px 10px;"><input type="text" placeholder="Optional: make a quick edit..." style="font-size:10px;"><button class="send-btn" style="width:24px; height:24px; font-size:11px;">&#8593;</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-footer">
+        <button class="btn-secondary">&larr; Back</button>
+        <button class="btn-primary">Finalize &amp; create portfolio &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN 4: Dashboard ══════════ -->
+  <div class="screen" id="screen-s4">
+    <div class="profile-shell">
+      <div class="profile-topbar"><div class="logo">seekout<span>&gt;</span></div><div class="user-info"><div class="name">Debsourabh Ghosh</div><div class="title">Sr. Product Designer | Bangalore, India</div></div><div class="actions"><button>See Analytics</button></div></div>
+      <div class="profile-body">
+        <div class="sidebar">
+          <div class="section-label">Jobseekers</div>
+          <ul class="sidebar-nav">
+            <li class="active">&#9632; Dashboard</li>
+            <li>&#128196; Resumes</li>
+            <li>&#9678; Portfolios</li>
+            <li class="sub-item">Google &mdash; PM</li>
+            <li class="sub-item">Meta &mdash; PD</li>
+            <li class="sub-item">General</li>
+          </ul>
+          <div class="sidebar-user"><div class="avatar">SC</div><div class="uname">Sarah C.</div></div>
+        </div>
+        <div class="content-area">
+          <div class="content-main" id="s4-4A">
+            <div class="section-header"><h2>Dashboard</h2></div>
+            <div class="dashboard-grid">
+              <div class="dash-card">
+                <div class="dc-icon">&#128196;</div>
+                <div class="dc-title">Resumes</div>
+                <div class="dc-stat"><span class="num">4</span><span class="label">resumes</span></div>
+                <div class="dc-desc">1 default + 3 tailored. Last edited 2 days ago.</div>
+                <button class="dc-action primary" onclick="showScreen('s9')">&#127919; Tailor for a new job</button>
+                <span style="margin-left:6px;"></span>
+                <button class="dc-action secondary" onclick="showScreen('s5')">View all &rarr;</button>
+                <div class="dc-recent">
+                  <div class="dc-recent-row"><span class="icon">&#128196;</span> &#9733; Sarah Chen Resume <span class="date">Default &middot; Modern &middot; Mar 5</span></div>
+                  <div class="dc-recent-row"><span class="icon">&#127919;</span> Google &mdash; Sr. PM <span style="margin-left:auto; font-size:10px; font-weight:600; color:var(--green);">78%</span><span class="date" style="margin-left:6px;">2d ago</span></div>
+                  <div class="dc-recent-row"><span class="icon">&#127919;</span> Meta &mdash; Product Designer <span style="margin-left:auto; font-size:10px; font-weight:600; color:var(--green);">85%</span><span class="date" style="margin-left:6px;">5d ago</span></div>
+                </div>
+              </div>
+              <div class="dash-card">
+                <div class="dc-icon">&#9678;</div>
+                <div class="dc-title">Portfolios</div>
+                <div class="dc-stat"><span class="num">3</span><span class="label">portfolios</span></div>
+                <div class="dc-desc">2 job-linked, 1 general. 47 total views this month.</div>
+                <button class="dc-action green" onclick="showScreen('s7')">+ Create new portfolio</button>
+                <span style="margin-left:6px;"></span>
+                <button class="dc-action secondary" onclick="showScreen('s7')">View all &rarr;</button>
+                <div class="dc-recent">
+                  <div class="dc-recent-row"><span class="icon">&#127919;</span> Google &mdash; PM <span style="margin-left:auto; font-size:10px; font-weight:600; color:var(--green);">Shared</span><span class="date" style="margin-left:6px;">23 views</span></div>
+                  <div class="dc-recent-row"><span class="icon">&#127919;</span> Meta &mdash; PD <span style="margin-left:auto; font-size:10px; font-weight:600; color:var(--green);">Shared</span><span class="date" style="margin-left:6px;">18 views</span></div>
+                  <div class="dc-recent-row"><span class="icon">&#128196;</span> General <span style="margin-left:auto; font-size:10px; color:var(--gray-500);">Draft</span><span class="date" style="margin-left:6px;">6 views</span></div>
+                </div>
+              </div>
+            </div>
+            <div style="background:white; border:1px solid var(--gray-200); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow-sm);">
+              <div style="font-size:13px; font-weight:600; margin-bottom:10px;">Recent Activity</div>
+              <div style="font-size:11px; color:var(--gray-600); line-height:2;">
+                &#128065; Hiring manager at Google viewed your portfolio &middot; 1 hour ago<br>
+                &#128065; Recruiter at Meta viewed your portfolio &middot; 3 hours ago<br>
+                &#10024; You tailored your resume for Google &middot; 2 days ago<br>
+                &#128279; You shared your Google portfolio &middot; 2 days ago
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN 5: Resumes List ══════════ -->
+  <div class="screen" id="screen-s5">
+    <div class="profile-shell">
+      <div class="profile-topbar"><div class="logo">seekout<span>&gt;</span></div><div class="user-info"><div class="name">Debsourabh Ghosh</div><div class="title">Sr. Product Designer | Bangalore, India</div></div><div class="actions"><button>See Analytics</button></div></div>
+      <div class="profile-body">
+        <div class="sidebar">
+          <div class="section-label">Jobseekers</div>
+          <ul class="sidebar-nav">
+            <li>&#9632; Dashboard</li>
+            <li class="active">&#128196; Resumes</li>
+            <li>&#9678; Portfolios</li>
+            <li class="sub-item">Google &mdash; PM</li>
+            <li class="sub-item">Meta &mdash; PD</li>
+            <li class="sub-item">General</li>
+          </ul>
+          <div class="sidebar-user"><div class="avatar">SC</div><div class="uname">Sarah C.</div></div>
+        </div>
+        <div class="content-area">
+          <div class="content-main" id="s5-5A">
+            <div class="section-header">
+              <h2>Resumes</h2>
+              <div style="display:flex; gap:8px;">
+                <button class="btn-secondary" style="font-size:12px;">&#11014; Upload new resume</button>
+                <button class="btn-primary" style="font-size:12px;" onclick="showScreen('s9')">&#127919; Tailor for a new job</button>
+              </div>
+            </div>
+            <!-- Default resume (pinned) -->
+            <div class="list-row pinned" onclick="showScreen('s6')">
+              <span class="lr-icon">&#128196;</span>
+              <div class="lr-main">
+                <div class="lr-name">&#9733; Sarah Chen Resume <span class="lr-badge" style="background:var(--purple-bg); color:var(--purple); font-size:10px; padding:2px 6px; border-radius:4px; margin-left:6px;">Default</span></div>
+                <div class="lr-sub">Modern template &middot; Uploaded</div>
+              </div>
+              <div class="lr-meta">
+                <span>2 portfolios</span>
+                <span>Edited Mar 10</span>
+              </div>
+            </div>
+            <!-- Tailored resumes -->
+            <div class="list-row" onclick="showScreen('s6')">
+              <span class="lr-icon">&#127919;</span>
+              <div class="lr-main">
+                <div class="lr-name">Google &mdash; Sr. Product Manager <span class="lr-badge" style="background:var(--blue-light); color:var(--blue); font-size:10px; padding:2px 6px; border-radius:4px; margin-left:6px;">Tailored</span></div>
+                <div class="lr-sub">78% fit &middot; Source: Sarah Chen Resume</div>
+              </div>
+              <div class="lr-meta">
+                <span>1 portfolio</span>
+                <span>Created Mar 10</span>
+              </div>
+            </div>
+            <div class="list-row" onclick="showScreen('s6')">
+              <span class="lr-icon">&#127919;</span>
+              <div class="lr-main">
+                <div class="lr-name">Meta &mdash; Product Designer <span class="lr-badge" style="background:var(--blue-light); color:var(--blue); font-size:10px; padding:2px 6px; border-radius:4px; margin-left:6px;">Tailored</span></div>
+                <div class="lr-sub">85% fit &middot; Source: Sarah Chen Resume</div>
+              </div>
+              <div class="lr-meta">
+                <span>1 portfolio</span>
+                <span>Created Mar 7</span>
+              </div>
+            </div>
+            <div class="list-row" onclick="showScreen('s6')">
+              <span class="lr-icon">&#127919;</span>
+              <div class="lr-main">
+                <div class="lr-name">Stripe &mdash; Growth PM <span class="lr-badge" style="background:var(--blue-light); color:var(--blue); font-size:10px; padding:2px 6px; border-radius:4px; margin-left:6px;">Tailored</span></div>
+                <div class="lr-sub">62% fit &middot; Source: Sarah Chen Resume</div>
+              </div>
+              <div class="lr-meta">
+                <span>0 portfolios</span>
+                <span>Created Mar 5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN 6: Resume Detail ══════════ -->
+  <div class="screen" id="screen-s6">
+    <div class="profile-shell">
+      <div class="profile-topbar"><div class="logo">seekout<span>&gt;</span></div><div class="user-info"><div class="name">Debsourabh Ghosh</div><div class="title">Sr. Product Designer | Bangalore, India</div></div><div class="actions"><button>See Analytics</button></div></div>
+      <div class="profile-body">
+        <div class="sidebar">
+          <div class="section-label">Jobseekers</div>
+          <ul class="sidebar-nav">
+            <li>&#9632; Dashboard</li>
+            <li class="active">&#128196; Resumes</li>
+            <li>&#9678; Portfolios</li>
+            <li class="sub-item">Google &mdash; PM</li>
+            <li class="sub-item">Meta &mdash; PD</li>
+            <li class="sub-item">General</li>
+          </ul>
+          <div class="sidebar-user"><div class="avatar">SC</div><div class="uname">Sarah C.</div></div>
+        </div>
+        <div class="content-area">
+          <!-- 6A: Default Resume (no chat) -->
+          <div class="content-main" id="s6-6A">
+            <div style="font-size:11px; color:var(--gray-500); margin-bottom:8px; cursor:pointer;" onclick="showScreen('s5')">&larr; Back to Resumes</div>
+            <div class="resume-action-bar">
+              <div style="font-size:15px; font-weight:700;">Sarah Chen Resume <span style="background:var(--purple-bg); color:var(--purple); font-size:11px; padding:2px 8px; border-radius:4px; margin-left:8px; font-weight:600;">&#9733; Default</span></div>
+              <div class="right-actions">
+                <button class="btn-edit" onclick="showState('s6','6B')">&#10024; Edit with AI</button>
+                <button class="btn-download">&#11015; Download PDF</button>
+                <button class="btn-create-portfolio">&#9678; Create Portfolio</button>
+              </div>
+            </div>
+            <div class="resume-preview">
+              <div class="rp-name">Debsourabh Ghosh</div><div class="rp-title">Sr. Product Designer | Bangalore</div><div class="rp-contact">debsourabh@email.com | github.com/dg</div>
+              <div class="rp-section-title">Experience</div>
+              <div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Senior Product Designer</span><span class="rp-job-dates">2022 &mdash; Present</span></div><div class="rp-job-company">Acme Corp, Bangalore</div><ul class="rp-bullets"><li>Led redesign of enterprise dashboard resulting in 40% reduction in task completion time</li><li>Managed design system serving 12 product teams</li></ul></div>
+              <div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Product Designer</span><span class="rp-job-dates">2019 &mdash; 2022</span></div><div class="rp-job-company">StartupCo, Mumbai</div><ul class="rp-bullets"><li>Designed B2B SaaS onboarding flow from scratch</li><li>Increased trial-to-paid conversion by 25%</li></ul></div>
+              <div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag">Figma</span><span class="rp-skill-tag">Sketch</span><span class="rp-skill-tag">User Research</span><span class="rp-skill-tag">Prototyping</span><span class="rp-skill-tag">Design Systems</span><span class="rp-skill-tag">Usability Testing</span></div>
+              <div class="rp-section-title">Education</div><div class="rp-edu"><div class="rp-edu-header"><span class="rp-edu-degree">B.Des in Communication Design</span><span class="rp-job-dates">2015 &mdash; 2019</span></div><div class="rp-edu-school">NID, Ahmedabad</div></div>
+            </div>
+            <div class="page-indicator">Page 1 of 1</div>
+            <div class="portfolio-from-resume">
+              <h4>Portfolios created from this resume</h4>
+              <div class="pfr-row"><span class="lr-icon" style="font-size:13px;">&#9678;</span><span class="pfr-name">General</span><span class="pfr-date">Created Mar 10</span><span class="pfr-status" style="color:var(--green);">Shared</span></div>
+            </div>
+          </div>
+
+          <!-- 6B: Default Resume with Chat Open -->
+          <div class="content-with-chat hidden" id="s6-6B">
+            <div class="resume-side">
+              <div style="font-size:11px; color:var(--gray-500); margin-bottom:8px; cursor:pointer;" onclick="showScreen('s5')">&larr; Back to Resumes</div>
+              <div class="resume-action-bar">
+                <div style="font-size:15px; font-weight:700;">Sarah Chen Resume <span style="background:var(--purple-bg); color:var(--purple); font-size:10px; padding:2px 6px; border-radius:4px; margin-left:6px; font-weight:600;">&#9733; Default</span></div>
+                <div class="right-actions"><button class="btn-download">&#11015; Download</button><button class="btn-create-portfolio">&#9678; Create Portfolio</button></div>
+              </div>
+              <div class="resume-preview"><div class="rp-name">Debsourabh Ghosh</div><div class="rp-title">Sr. Product Designer | Bangalore</div><div class="rp-contact">debsourabh@email.com | github.com/dg</div><div class="rp-section-title">Experience</div><div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Senior Product Designer</span><span class="rp-job-dates">2022 &mdash; Present</span></div><div class="rp-job-company">Acme Corp, Bangalore</div><ul class="rp-bullets"><li>Led redesign of enterprise dashboard resulting in 40% reduction in task completion time</li><li>Managed design system serving 12 product teams</li></ul></div><div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Product Designer</span><span class="rp-job-dates">2019 &mdash; 2022</span></div><div class="rp-job-company">StartupCo, Mumbai</div><ul class="rp-bullets"><li>Designed B2B SaaS onboarding flow from scratch</li><li>Increased trial-to-paid conversion by 25%</li></ul></div><div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag">Figma</span><span class="rp-skill-tag">User Research</span><span class="rp-skill-tag">Design Systems</span></div><div class="rp-section-title">Education</div><div class="rp-edu"><div class="rp-edu-header"><span class="rp-edu-degree">B.Des in Communication Design</span><span class="rp-job-dates">2015 &mdash; 2019</span></div><div class="rp-edu-school">NID, Ahmedabad</div></div></div>
+              <div class="page-indicator">Page 1 of 1</div>
+            </div>
+            <div class="chat-panel">
+              <div class="chat-header"><div class="chat-title">&#10024; Resume Coach</div><button class="close-btn" onclick="showState('s6','6A')">&#10005;</button></div>
+              <div class="chat-messages"><div class="chat-msg ai"><strong>Welcome!</strong> I found 3 areas to improve:<ul><li>Summary is generic</li><li>2 bullets could use metrics</li><li>Skills section could be richer</li></ul></div></div>
+              <div class="chat-suggestion">Try saying:</div>
+              <div class="suggestion-chips"><span class="suggestion-chip">Focus summary on design leadership</span><span class="suggestion-chip">Add metrics to bullets</span></div>
+              <div class="chat-input"><input type="text" placeholder="Type a message..."><button class="send-btn">&#8593;</button></div>
+            </div>
+          </div>
+
+          <!-- 6C: Editing (after an edit) -->
+          <div class="content-with-chat hidden" id="s6-6C">
+            <div class="resume-side">
+              <div style="font-size:11px; color:var(--gray-500); margin-bottom:8px;">&larr; Back to Resumes</div>
+              <div class="resume-action-bar">
+                <div style="font-size:15px; font-weight:700;">Sarah Chen Resume <span style="background:var(--purple-bg); color:var(--purple); font-size:10px; padding:2px 6px; border-radius:4px; margin-left:6px; font-weight:600;">&#9733; Default</span></div>
+                <div class="right-actions"><button class="btn-download">&#11015; Download</button><button class="btn-create-portfolio">&#9678; Create Portfolio</button></div>
+              </div>
+              <div class="resume-preview"><div class="rp-name">Debsourabh Ghosh</div><div class="rp-title">Sr. Product Designer | Bangalore</div><div class="rp-contact">debsourabh@email.com | github.com/dg</div><div class="rp-summary-updated"><p>Design leader with 6+ years driving product design strategy across enterprise B2B and consumer products. Proven track record of building and scaling design teams, establishing design systems, and delivering measurable business impact through user-centered design.</p></div><div class="rp-section-title">Experience</div><div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Senior Product Designer</span><span class="rp-job-dates">2022 &mdash; Present</span></div><div class="rp-job-company">Acme Corp, Bangalore</div><ul class="rp-bullets"><li>Led redesign of enterprise dashboard resulting in 40% reduction in task completion time</li><li>Managed design system serving 12 product teams</li></ul></div><div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag">Figma</span><span class="rp-skill-tag">User Research</span><span class="rp-skill-tag">Design Systems</span></div></div>
+              <div class="page-indicator">Page 1 of 1</div>
+            </div>
+            <div class="chat-panel">
+              <div class="chat-header"><div class="chat-title">&#10024; Resume Coach</div><button class="close-btn" onclick="showState('s6','6A')">&#10005;</button></div>
+              <div class="chat-messages"><div class="chat-msg ai">I found 3 areas to improve...</div><div class="chat-msg user">Make my summary focus on design leadership</div><div class="chat-msg ai-success"><strong>&#10003; Updated your summary</strong> to emphasize design leadership, team management, and strategic impact.</div></div>
+              <div class="chat-input"><input type="text" placeholder="Type a message..."><button class="send-btn">&#8593;</button></div>
+            </div>
+          </div>
+
+          <!-- 6D: Tailored Resume View (no chat) -->
+          <div class="content-main hidden" id="s6-6D">
+            <div style="font-size:11px; color:var(--gray-500); margin-bottom:8px; cursor:pointer;" onclick="showScreen('s5')">&larr; Back to Resumes</div>
+            <div class="resume-action-bar">
+              <div style="font-size:15px; font-weight:700;">Google &mdash; Sr. Product Manager <span style="background:var(--blue-light); color:var(--blue); font-size:10px; padding:2px 6px; border-radius:4px; margin-left:6px; font-weight:600;">Tailored</span></div>
+              <div class="right-actions">
+                <button class="btn-edit" onclick="showState('s6','6E')">&#10024; Edit with AI</button>
+                <button class="btn-download">&#11015; Download PDF</button>
+                <button class="btn-create-portfolio">&#9678; Create Portfolio</button>
+              </div>
+            </div>
+            <div class="tailored-label">&#127919; Tailored for Sr. Product Manager at Google &middot; 78% fit &middot; Source: Sarah Chen Resume</div>
+            <div class="resume-preview">
+              <div class="rp-name">Debsourabh Ghosh</div><div class="rp-title">Sr. Product Manager | Bangalore</div><div class="rp-contact">debsourabh@email.com | github.com/dg</div>
+              <div class="rp-summary-updated" style="border-color: var(--blue); background: var(--blue-light);"><p>Product-focused design leader with 6+ years bridging user research, design systems, and product strategy to ship enterprise products at scale.</p></div>
+              <div class="rp-section-title">Experience</div>
+              <div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Senior Product Designer</span><span class="rp-job-dates">2022 &mdash; Present</span></div><div class="rp-job-company">Acme Corp, Bangalore</div><ul class="rp-bullets"><li class="rp-tailored-highlight">Drove product strategy for enterprise dashboard, achieving 40% reduction in task completion time</li><li class="rp-tailored-highlight">Managed cross-functional design system serving 12 product teams</li><li>Collaborated with PMs and engineers to define quarterly roadmap priorities</li></ul></div>
+              <div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag" style="background:var(--blue-light); color:var(--blue);">Product Strategy</span><span class="rp-skill-tag" style="background:var(--blue-light); color:var(--blue);">Cross-functional Leadership</span><span class="rp-skill-tag">Figma</span><span class="rp-skill-tag">User Research</span><span class="rp-skill-tag">Design Systems</span></div>
+              <div class="rp-section-title">Education</div><div class="rp-edu"><div class="rp-edu-header"><span class="rp-edu-degree">B.Des in Communication Design</span><span class="rp-job-dates">2015 &mdash; 2019</span></div><div class="rp-edu-school">NID, Ahmedabad</div></div>
+            </div>
+            <div class="page-indicator">Page 1 of 1</div>
+            <div class="portfolio-from-resume">
+              <h4>Portfolios created from this resume</h4>
+              <div class="pfr-row"><span class="lr-icon" style="font-size:13px;">&#127919;</span><span class="pfr-name">Google &mdash; PM</span><span class="pfr-date">Created Mar 10</span><span class="pfr-status" style="color:var(--green);">Shared</span></div>
+            </div>
+          </div>
+
+          <!-- 6E: Tailored with Chat -->
+          <div class="content-with-chat hidden" id="s6-6E">
+            <div class="resume-side">
+              <div style="font-size:11px; color:var(--gray-500); margin-bottom:8px;">&larr; Back to Resumes</div>
+              <div class="resume-action-bar">
+                <div style="font-size:15px; font-weight:700;">Google &mdash; Sr. PM</div>
+                <div class="right-actions"><button class="btn-download">&#11015; Download</button><button class="btn-create-portfolio">&#9678; Create Portfolio</button></div>
+              </div>
+              <div class="tailored-label">&#127919; Tailored for Sr. Product Manager at Google</div>
+              <div class="resume-preview"><div class="rp-name">Debsourabh Ghosh</div><div class="rp-title">Sr. Product Manager | Bangalore</div><div class="rp-contact">debsourabh@email.com | github.com/dg</div><div class="rp-summary-updated" style="border-color:var(--blue); background:var(--blue-light);"><p>Product-focused design leader with 6+ years bridging user research, design systems, and product strategy...</p></div><div class="rp-section-title">Experience</div><div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Senior Product Designer</span><span class="rp-job-dates">2022 &mdash; Present</span></div><div class="rp-job-company">Acme Corp</div><ul class="rp-bullets"><li>Drove product strategy for enterprise dashboard...</li><li>Managed cross-functional design system...</li></ul></div><div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag" style="background:var(--blue-light); color:var(--blue);">Product Strategy</span><span class="rp-skill-tag">Figma</span><span class="rp-skill-tag">User Research</span></div></div>
+            </div>
+            <div class="chat-panel">
+              <div class="chat-header"><div class="chat-title">&#10024; Edit &mdash; Google Resume</div><button class="close-btn" onclick="showState('s6','6D')">&#10005;</button></div>
+              <div class="chat-messages">
+                <div class="chat-msg ai-info"><strong>Editing tailored resume</strong><br>Changes here only affect the Google &mdash; Sr. PM resume. Your other resumes stay unchanged.</div>
+                <div class="chat-msg user">Add a bullet about launching 0&rarr;1 products</div>
+                <div class="chat-msg ai-success"><strong>&#10003; Added bullet</strong> to Acme Corp role: "Led 0&rarr;1 product initiative from concept to launch."</div>
+              </div>
+              <div class="chat-input"><input type="text" placeholder="Type a message..."><button class="send-btn">&#8593;</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN 7: Portfolio List ══════════ -->
+  <div class="screen" id="screen-s7">
+    <div class="profile-shell">
+      <div class="profile-topbar"><div class="logo">seekout<span>&gt;</span></div><div class="user-info"><div class="name">Debsourabh Ghosh</div><div class="title">Sr. Product Designer | Bangalore, India</div></div><div class="actions"><button>See Analytics</button></div></div>
+      <div class="profile-body">
+        <div class="sidebar">
+          <div class="section-label">Jobseekers</div>
+          <ul class="sidebar-nav">
+            <li>&#9632; Dashboard</li>
+            <li>&#128196; Resumes</li>
+            <li class="active">&#9678; Portfolios</li>
+            <li class="sub-item">Google &mdash; PM</li>
+            <li class="sub-item">Meta &mdash; PD</li>
+            <li class="sub-item">General</li>
+          </ul>
+          <div class="sidebar-user"><div class="avatar">SC</div><div class="uname">Sarah C.</div></div>
+        </div>
+        <div class="content-area">
+          <div class="content-main" id="s7-7A">
+            <div class="section-header">
+              <h2>Portfolios</h2>
+              <button class="btn-primary" style="font-size:12px; background:var(--green);">+ Create new portfolio</button>
+            </div>
+            <div class="info-note" style="margin-bottom:14px;"><span>&#128203;</span><span>Each portfolio is a snapshot of your resume at the time it was created. Resume-derived content is frozen &mdash; but you can still edit extras like photo, video, and links.</span></div>
+            <!-- Job-linked portfolios -->
+            <div class="list-row" onclick="showScreen('s8')">
+              <span class="lr-icon">&#127919;</span>
+              <div class="lr-main">
+                <div class="lr-name">Google &mdash; Sr. Product Manager</div>
+                <div class="lr-sub">Job-linked &middot; Created from Google &mdash; Sr. Product Manager on Mar 10</div>
+              </div>
+              <div class="lr-meta">
+                <span class="lr-badge shared">Shared</span>
+                <span>23 views</span>
+              </div>
+            </div>
+            <div class="list-row" onclick="showScreen('s8')">
+              <span class="lr-icon">&#127919;</span>
+              <div class="lr-main">
+                <div class="lr-name">Meta &mdash; Product Designer</div>
+                <div class="lr-sub">Job-linked &middot; Created from Meta &mdash; Product Designer on Mar 7</div>
+              </div>
+              <div class="lr-meta">
+                <span class="lr-badge shared">Shared</span>
+                <span>18 views</span>
+                <span class="lr-badge stale">Resume updated</span>
+              </div>
+            </div>
+            <!-- General portfolio -->
+            <div class="list-row" onclick="showScreen('s8')">
+              <span class="lr-icon">&#128196;</span>
+              <div class="lr-main">
+                <div class="lr-name">My Portfolio</div>
+                <div class="lr-sub">General &middot; Created from Sarah Chen Resume on Mar 8</div>
+              </div>
+              <div class="lr-meta">
+                <span class="lr-badge draft">Draft</span>
+                <span>6 views</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN 8: Portfolio Detail ══════════ -->
+  <div class="screen" id="screen-s8">
+    <div class="profile-shell">
+      <div class="profile-topbar"><div class="logo">seekout<span>&gt;</span></div><div class="user-info"><div class="name">Debsourabh Ghosh</div><div class="title">Sr. Product Designer | Bangalore, India</div></div><div class="actions"><button>See Analytics</button><button>&#9673; Preview</button><button>Share</button></div></div>
+      <div class="profile-body">
+        <div class="sidebar">
+          <div class="section-label">Jobseekers</div>
+          <ul class="sidebar-nav">
+            <li>&#9632; Dashboard</li>
+            <li>&#128196; Resumes</li>
+            <li>&#9678; Portfolios</li>
+            <li class="sub-item active">Google &mdash; PM</li>
+            <li class="sub-item">Meta &mdash; PD</li>
+            <li class="sub-item">General</li>
+          </ul>
+          <div class="sidebar-user"><div class="avatar">SC</div><div class="uname">Sarah C.</div></div>
+        </div>
+        <div class="content-area" style="position:relative;">
+          <div class="content-tabs">
+            <div class="content-tab active" onclick="showState('s8','8A')">Overview</div>
+            <div class="content-tab" onclick="showState('s8','8B')">Resume</div>
+            <div class="content-tab">Github</div>
+            <div class="content-tab">Links</div>
+            <div class="content-tab">Video</div>
+          </div>
+
+          <!-- 8A: Overview Tab (frozen, read-only) -->
+          <div class="content-main" id="s8-8A">
+            <div style="font-size:11px; color:var(--gray-500); margin-bottom:8px; cursor:pointer;" onclick="showScreen('s7')">&larr; Back to Portfolios</div>
+            <div class="read-only-bar">&#128274; Resume-derived content is frozen. To update, <a href="#" onclick="showScreen('s6'); return false;" style="color:var(--purple); text-decoration:underline; font-weight:600;">edit your resume</a> and create a new portfolio.</div>
+            <div class="snapshot-label">&#128247; Created from <strong>Google &mdash; Sr. PM</strong> on <strong>Mar 10, 2026</strong></div>
+            <div class="overview-grid">
+              <div class="overview-left"><div class="overview-avatar">DG</div><div class="overview-name">Debsourabh Ghosh</div><div class="overview-title-text">Sr. Product Manager</div><div class="overview-summary">Product-focused design leader with 6+ years bridging user research, design systems, and product strategy to ship enterprise products at scale.</div></div>
+              <div class="overview-right">
+                <h3>Skills</h3><div class="overview-skills"><span class="overview-skill-tag" style="background:var(--blue-light); color:var(--blue);">Product Strategy</span><span class="overview-skill-tag" style="background:var(--blue-light); color:var(--blue);">Cross-functional Leadership</span><span class="overview-skill-tag">Figma</span><span class="overview-skill-tag">User Research</span><span class="overview-skill-tag">Design Systems</span></div>
+                <h3>Journey</h3><div class="journey-timeline"><div class="journey-card"><div class="jc-year">2022</div><div class="jc-role">Sr. Product Designer</div><div class="jc-company">Acme Corp</div></div><div class="journey-card"><div class="jc-year">2019</div><div class="jc-role">Product Designer</div><div class="jc-company">StartupCo</div></div><div class="journey-card"><div class="jc-year">2015</div><div class="jc-role">B.Des Communication</div><div class="jc-company">NID Ahmedabad</div></div></div>
+                <h3>Work Experience</h3>
+                <div class="overview-exp-block"><div class="exp-header"><div class="exp-logo">A</div><div class="exp-meta"><div class="exp-company-name">Acme Corp &mdash; Sr. Product Designer</div><div class="exp-dates-loc">2022 &mdash; Present &middot; Bangalore</div></div></div><div class="exp-desc"><ul><li>Drove product strategy for enterprise dashboard, achieving 40% reduction in task completion time</li><li>Managed cross-functional design system serving 12 product teams</li></ul></div><div class="exp-tags"><span class="exp-tag" style="background:var(--blue-light); color:var(--blue);">Product Strategy</span><span class="exp-tag">Figma</span><span class="exp-tag">Design Systems</span></div></div>
+                <div class="overview-exp-block"><div class="exp-header"><div class="exp-logo">S</div><div class="exp-meta"><div class="exp-company-name">StartupCo &mdash; Product Designer</div><div class="exp-dates-loc">2019 &mdash; 2022 &middot; Mumbai</div></div></div><div class="exp-desc"><ul><li>Designed and launched B2B SaaS onboarding, increasing trial-to-paid conversion by 25%</li><li>Led product discovery through 50+ customer interviews</li></ul></div><div class="exp-tags"><span class="exp-tag" style="background:var(--blue-light); color:var(--blue);">Cross-functional Leadership</span><span class="exp-tag">Prototyping</span></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8B: Resume Tab (frozen PDF snapshot) -->
+          <div class="content-main hidden" id="s8-8B">
+            <div style="font-size:11px; color:var(--gray-500); margin-bottom:8px; cursor:pointer;" onclick="showScreen('s7')">&larr; Back to Portfolios</div>
+            <div class="read-only-bar">&#128274; This is a frozen snapshot. No editing available here.</div>
+            <div class="snapshot-label">&#128247; Created from <strong>Google &mdash; Sr. PM</strong> on <strong>Mar 10, 2026</strong></div>
+            <div class="resume-preview">
+              <div class="rp-name">Debsourabh Ghosh</div><div class="rp-title">Sr. Product Manager | Bangalore</div><div class="rp-contact">debsourabh@email.com | github.com/dg</div>
+              <div class="rp-section-title">Experience</div>
+              <div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Senior Product Designer</span><span class="rp-job-dates">2022 &mdash; Present</span></div><div class="rp-job-company">Acme Corp, Bangalore</div><ul class="rp-bullets"><li>Drove product strategy for enterprise dashboard, achieving 40% reduction in task completion time</li><li>Managed cross-functional design system serving 12 product teams</li></ul></div>
+              <div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Product Designer</span><span class="rp-job-dates">2019 &mdash; 2022</span></div><div class="rp-job-company">StartupCo, Mumbai</div><ul class="rp-bullets"><li>Designed and launched B2B SaaS onboarding, increasing trial-to-paid conversion by 25%</li><li>Led product discovery through 50+ customer interviews</li></ul></div>
+              <div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag" style="background:var(--blue-light); color:var(--blue);">Product Strategy</span><span class="rp-skill-tag" style="background:var(--blue-light); color:var(--blue);">Cross-functional Leadership</span><span class="rp-skill-tag">Figma</span><span class="rp-skill-tag">User Research</span></div>
+              <div class="rp-section-title">Education</div><div class="rp-edu"><div class="rp-edu-header"><span class="rp-edu-degree">B.Des in Communication Design</span><span class="rp-job-dates">2015 &mdash; 2019</span></div><div class="rp-edu-school">NID, Ahmedabad</div></div>
+            </div>
+            <div class="page-indicator">Page 1 of 1</div>
+          </div>
+
+          <!-- 8C: Resume Tab with Stale Banner -->
+          <div class="content-main hidden" id="s8-8C">
+            <div style="font-size:11px; color:var(--gray-500); margin-bottom:8px; cursor:pointer;" onclick="showScreen('s7')">&larr; Back to Portfolios</div>
+            <div class="stale-banner">
+              &#9888; Your resume has been updated since this portfolio was created.
+              <button class="sb-action" onclick="showScreen('s6')">Create new portfolio &rarr;</button>
+              <button class="sb-dismiss">Keep this version</button>
+            </div>
+            <div class="read-only-bar">&#128274; This is a frozen snapshot. No editing available here.</div>
+            <div class="snapshot-label">&#128247; Created from <strong>Google &mdash; Sr. PM</strong> on <strong>Mar 10, 2026</strong></div>
+            <div class="resume-preview">
+              <div class="rp-name">Debsourabh Ghosh</div><div class="rp-title">Sr. Product Manager | Bangalore</div><div class="rp-contact">debsourabh@email.com | github.com/dg</div>
+              <div class="rp-section-title">Experience</div>
+              <div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Senior Product Designer</span><span class="rp-job-dates">2022 &mdash; Present</span></div><div class="rp-job-company">Acme Corp</div><ul class="rp-bullets"><li>Drove product strategy for enterprise dashboard...</li><li>Managed cross-functional design system...</li></ul></div>
+              <div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag" style="background:var(--blue-light); color:var(--blue);">Product Strategy</span><span class="rp-skill-tag">Figma</span></div>
+            </div>
+            <div class="page-indicator">Page 1 of 1</div>
+          </div>
+
+          <!-- 8D: First Visit Tooltip -->
+          <div class="content-main hidden" id="s8-8D" style="position:relative;">
+            <div class="tooltip-callout">
+              &#128196; <strong>Want to update your resume later?</strong><br>You'll find it in the Resumes section in the sidebar.
+              <span class="tooltip-dismiss">Got it</span>
+            </div>
+            <div style="font-size:11px; color:var(--gray-500); margin-bottom:8px;">&larr; Back to Portfolios</div>
+            <div class="snapshot-label">&#128247; Created from <strong>Sarah Chen Resume</strong> on <strong>Mar 8, 2026</strong></div>
+            <div class="overview-grid">
+              <div class="overview-left"><div class="overview-avatar">DG</div><div class="overview-name">Debsourabh Ghosh</div><div class="overview-title-text">Sr. Product Designer</div><div class="overview-summary">Design leader with 6+ years driving product design strategy across enterprise B2B and consumer products.</div></div>
+              <div class="overview-right">
+                <h3>Skills</h3><div class="overview-skills"><span class="overview-skill-tag">Figma</span><span class="overview-skill-tag">User Research</span><span class="overview-skill-tag">Design Systems</span><span class="overview-skill-tag">Prototyping</span></div>
+                <h3>Journey</h3><div class="journey-timeline"><div class="journey-card"><div class="jc-year">2022</div><div class="jc-role">Sr. Product Designer</div><div class="jc-company">Acme Corp</div></div><div class="journey-card"><div class="jc-year">2019</div><div class="jc-role">Product Designer</div><div class="jc-company">StartupCo</div></div></div>
+                <h3>Work Experience</h3>
+                <div class="overview-exp-block"><div class="exp-header"><div class="exp-logo">A</div><div class="exp-meta"><div class="exp-company-name">Acme Corp &mdash; Sr. Product Designer</div><div class="exp-dates-loc">2022 &mdash; Present</div></div></div><div class="exp-desc"><ul><li>Led redesign of enterprise dashboard resulting in 40% reduction in task completion time</li><li>Managed design system serving 12 product teams</li></ul></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN 9: Tailor for New Job ══════════ -->
+  <div class="screen" id="screen-s9">
+    <div class="profile-shell">
+      <div class="profile-topbar"><div class="logo">seekout<span>&gt;</span></div><div class="user-info"><div class="name">Debsourabh Ghosh</div><div class="title">Sr. Product Designer | Bangalore, India</div></div><div class="actions"><button>See Analytics</button></div></div>
+      <div class="profile-body">
+        <div class="sidebar">
+          <div class="section-label">Jobseekers</div>
+          <ul class="sidebar-nav">
+            <li>&#9632; Dashboard</li>
+            <li class="active">&#128196; Resumes</li>
+            <li>&#9678; Portfolios</li>
+            <li class="sub-item">Google &mdash; PM</li>
+            <li class="sub-item">Meta &mdash; PD</li>
+            <li class="sub-item">General</li>
+          </ul>
+          <div class="sidebar-user"><div class="avatar">SC</div><div class="uname">Sarah C.</div></div>
+        </div>
+        <div class="content-area">
+          <!-- 9A: JD Input -->
+          <div class="content-main" id="s9-9A">
+            <div style="font-size:11px; color:var(--gray-500); margin-bottom:8px; cursor:pointer;" onclick="showScreen('s5')">&larr; Back to Resumes</div>
+            <div class="section-header"><h2>&#127919; Tailor for a new job</h2></div>
+            <div class="info-note" style="margin-bottom:16px;"><span>&#128161;</span><span>Provide a job description and we'll create a tailored resume + a job-linked portfolio snapshot, all in one flow.</span></div>
+            <div class="field-label">Source resume</div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px; padding:10px 14px; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:var(--radius);">
+              <span style="color:var(--purple); font-size:14px;">&#9733;</span>
+              <span style="font-size:13px; font-weight:600;">Sarah Chen Resume</span>
+              <span style="font-size:11px; color:var(--gray-500);">Default</span>
+              <button style="margin-left:auto; font-size:11px; color:var(--purple); background:none; border:1px solid var(--purple-light); border-radius:4px; padding:3px 10px; cursor:pointer;">Change &#9662;</button>
+            </div>
+            <div class="field-label">How would you like to provide the job description?</div>
+            <div class="jd-input-methods">
+              <div class="jd-method active"><div class="jd-icon">&#128279;</div><div class="jd-label">Paste URL</div><div class="jd-desc">LinkedIn, Indeed, etc.</div></div>
+              <div class="jd-method"><div class="jd-icon">&#128196;</div><div class="jd-label">Upload</div><div class="jd-desc">PDF or DOCX</div></div>
+              <div class="jd-method"><div class="jd-icon">&#9999;&#65039;</div><div class="jd-label">Paste Text</div><div class="jd-desc">Copy-paste JD text</div></div>
+            </div>
+            <div class="field-label">Job posting URL</div>
+            <input class="input-field" type="text" placeholder="https://linkedin.com/jobs/view/..." style="margin-bottom:14px;">
+            <div style="text-align:right;"><button class="btn-primary">Analyze &amp; tailor &rarr;</button></div>
+          </div>
+
+          <!-- 9B: Tailoring Progress -->
+          <div class="content-main hidden" id="s9-9B">
+            <div class="loading-card blue">
+              <div class="spinner"></div>
+              <h3>&#127919; Tailoring your resume for Spotify...</h3>
+              <ul class="load-steps">
+                <li><span style="color:var(--green);">&#10003;</span> Analyzed job description</li>
+                <li><span style="color:var(--green);">&#10003;</span> Evaluated fit (72% match)</li>
+                <li><span style="color:var(--blue);" class="active-step">&#9679;</span> Tailoring resume content</li>
+                <li><span style="color:var(--gray-400);">&#9675;</span> Preparing for review</li>
+              </ul>
+              <div class="load-hint">Reordering experience, adjusting summary, highlighting matching skills...</div>
+            </div>
+          </div>
+
+          <!-- 9C: Review Tailored Resume -->
+          <div class="content-with-chat hidden" id="s9-9C">
+            <div class="resume-side">
+              <div class="fit-score" style="margin-bottom:12px;">
+                <div class="score-num" style="font-size:22px;">72%</div>
+                <div class="score-text" style="font-size:11px;"><strong>Good fit</strong> for Sr. Product Manager at Spotify. Review your tailored resume below.</div>
+              </div>
+              <div class="tailored-label">&#127919; Tailored for Sr. Product Manager at Spotify</div>
+              <div class="resume-preview">
+                <div class="rp-name">Debsourabh Ghosh</div><div class="rp-title">Sr. Product Manager | Bangalore</div><div class="rp-contact">debsourabh@email.com | github.com/dg</div>
+                <div class="rp-summary-updated" style="border-color:var(--blue); background:var(--blue-light);"><p>Product-focused design leader passionate about music and content platforms, with 6+ years shipping consumer-facing products at scale...</p></div>
+                <div class="rp-section-title">Experience</div>
+                <div class="rp-job"><div class="rp-job-header"><span class="rp-job-role">Senior Product Designer</span><span class="rp-job-dates">2022 &mdash; Present</span></div><div class="rp-job-company">Acme Corp</div><ul class="rp-bullets"><li class="rp-tailored-highlight">Drove product strategy for consumer-facing dashboard with 2M+ monthly active users</li><li>Managed design system serving 12 product teams</li></ul></div>
+                <div class="rp-section-title">Skills</div><div class="rp-skills"><span class="rp-skill-tag" style="background:var(--blue-light); color:var(--blue);">Consumer Products</span><span class="rp-skill-tag" style="background:var(--blue-light); color:var(--blue);">Data-driven Design</span><span class="rp-skill-tag">Figma</span><span class="rp-skill-tag">User Research</span></div>
+              </div>
+            </div>
+            <div class="chat-panel">
+              <div class="chat-header"><div class="chat-title">&#10024; Review &amp; Edit</div></div>
+              <div class="chat-messages">
+                <div class="chat-msg ai-info"><strong>Tailored for Spotify</strong><br>Adjusted summary for consumer/music focus. Highlighted consumer product experience. Blue sections show changes.</div>
+              </div>
+              <div class="chat-suggestion">Optional: make quick edits before creating the portfolio</div>
+              <div class="chat-input"><input type="text" placeholder="Make a quick edit..."><button class="send-btn">&#8593;</button></div>
+              <div style="padding:10px 14px; border-top:1px solid var(--gray-200); text-align:center;">
+                <button class="btn-primary" style="width:100%; font-size:12px;" onclick="showState('s9','9D')">Finalize &amp; create portfolio &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 9D: Portfolio Created -->
+          <div class="content-main hidden" id="s9-9D">
+            <div style="text-align:center; padding:60px 20px;">
+              <div style="font-size:48px; margin-bottom:14px;">&#10003;</div>
+              <h2 style="font-size:20px; margin-bottom:8px;">Portfolio created!</h2>
+              <p style="font-size:13px; color:var(--gray-600); margin-bottom:6px;">Your <strong>Spotify &mdash; Sr. PM</strong> portfolio has been created as a snapshot of your tailored resume.</p>
+              <p style="font-size:11px; color:var(--gray-500); margin-bottom:24px;">Resume content is frozen in this portfolio. You can still edit extras like photo, video, and links.</p>
+              <div style="display:flex; gap:10px; justify-content:center;">
+                <button class="btn-primary" onclick="showScreen('s8')">View portfolio &rarr;</button>
+                <button class="btn-secondary">Share now</button>
+                <button class="btn-secondary" onclick="showScreen('s5')">Back to Resumes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /canvas -->
+
+<script>
+  const stateMap = {
+    s1: ['1A','1B','1C'],
+    s2: ['2A','2B','2C'],
+    s3: ['3A','3B','3C'],
+    s4: ['4A'],
+    s5: ['5A'],
+    s6: ['6A','6B','6C','6D','6E'],
+    s7: ['7A'],
+    s8: ['8A','8B','8C','8D'],
+    s9: ['9A','9B','9C','9D']
+  };
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.state-bar').forEach(b => b.classList.add('hidden'));
+
+    const screen = document.getElementById('screen-' + id);
+    if (screen) screen.classList.add('active');
+    const bar = document.getElementById('state-bar-' + id);
+    if (bar) bar.classList.remove('hidden');
+
+    const tabs = document.querySelectorAll('.screen-tab');
+    const map = { s1:0, s2:1, s3:2, s4:3, s5:4, s6:5, s7:6, s8:7, s9:8 };
+    if (map[id] !== undefined && tabs[map[id]]) tabs[map[id]].classList.add('active');
+  }
+
+  function showState(screen, state) {
+    const bar = document.getElementById('state-bar-' + screen);
+    if (bar) bar.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+    if (event && event.target) event.target.classList.add('active');
+    showStateById(screen, state);
+  }
+
+  function showStateById(screen, state) {
+    if (stateMap[screen]) {
+      stateMap[screen].forEach(s => {
+        const el = document.getElementById(screen + '-' + s);
+        if (el) el.classList.toggle('hidden', s !== state);
+      });
+    }
+    if (screen === 's1') {
+      const gh = document.getElementById('github-field');
+      const pf = document.getElementById('portfolio-field');
+      if (state === '1C') { gh.value = 'github.com/debsourabh'; gh.classList.add('filled'); pf.value = 'portfolio.dev/debsourabh'; pf.classList.add('filled'); }
+      else { gh.value = ''; gh.classList.remove('filled'); pf.value = ''; pf.classList.remove('filled'); }
+    }
+  }
+
+  function selectTemplate(card) {
+    card.closest('.template-grid').querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+  }
+</script>
+</body>
+</html>
